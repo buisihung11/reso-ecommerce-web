@@ -11,3 +11,6 @@ export const getAllProductPaths = () =>
       },
     })
     .then((res) => res.data.data.map(({ product_id }) => product_id));
+
+export const getAllProduct = (params: any): Promise<BaseResponse<TProduct>> =>
+  request.get('/products', { params }).then((res) => res.data);

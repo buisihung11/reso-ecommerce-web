@@ -1,21 +1,22 @@
+import { Container } from '@chakra-ui/layout';
 import React, { FC } from 'react';
-import Header from '@/components/header';
 import Footer from './Footer';
+import { NavBar } from './NavBar';
 
 interface Props {
   // pageProps: {
-  //   pages?: Page[];
-  //   categories: Category[];
+  //   pages?: any[];
+  //   collections?: TCollection[];
   // };
 }
 
 const Layout: FC<Props> = ({ children }) => {
   return (
-    <div>
-      <Header />
+    <Container maxW="100%">
+      <NavBar />
       {children}
       <Footer />
-    </div>
+    </Container>
   );
 };
 

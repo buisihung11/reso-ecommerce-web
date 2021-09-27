@@ -1,6 +1,6 @@
 import Layout from '@/layouts/Layout';
 import { TProduct } from '@/types/product';
-import { Image } from '@chakra-ui/image';
+import { Image, Img } from '@chakra-ui/image';
 import { AspectRatio, Box, Center, Stack, Text } from '@chakra-ui/layout';
 import Link from 'next/link';
 import * as React from 'react';

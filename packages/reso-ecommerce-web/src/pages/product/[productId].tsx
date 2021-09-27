@@ -14,7 +14,7 @@ import {
   Stack,
   Text,
 } from '@chakra-ui/layout';
-import { Button } from '@chakra-ui/react';
+import { Button, CircularProgress } from '@chakra-ui/react';
 import { Select } from '@chakra-ui/select';
 import { GetStaticPathsContext, GetStaticPropsContext } from 'next';
 import { NextSeo } from 'next-seo';
@@ -69,7 +69,15 @@ export async function getStaticPaths({ locales }: GetStaticPathsContext) {
 const ProductDetailPage = () => {
   const router = useRouter();
   const { productId } = router.query;
-  const { data } = useProduct({ id: Number(productId) });
+  const { data, status } = useProduct({ id: Number(productId) });
+
+  if (status === 'loading') {
+    return (
+      <Center>
+        <CircularProgress isIndeterminate />
+      </Center>
+    );
+  }
 
   if (!data) {
     return <Text>Không tìm thấy sản phẩm với id {productId}</Text>;
@@ -102,6 +110,7 @@ const ProductDetailPage = () => {
             src={pic_url}
             height="auto"
             maxW="100%"
+            w="100%"
             objectFit="cover"
             objectPosition="center center"
             fallback={

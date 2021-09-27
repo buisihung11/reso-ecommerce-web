@@ -15,17 +15,17 @@ export default function MyApp({ Component, pageProps }: AppProps) {
   const Layout = (Component as any).Layout || Noop;
 
   return (
-    <ChakraProvider>
-      <StoreProvider>
-        <Layout>
-          <QueryClientProvider client={queryClient}>
+    <QueryClientProvider client={queryClient}>
+      <ChakraProvider>
+        <StoreProvider>
+          <Layout>
             <Hydrate state={pageProps.dehydratedState}>
               <Component {...pageProps} />
               <ReactQueryDevtools initialIsOpen={true} />
             </Hydrate>
-          </QueryClientProvider>
-        </Layout>
-      </StoreProvider>
-    </ChakraProvider>
+          </Layout>
+        </StoreProvider>
+      </ChakraProvider>
+    </QueryClientProvider>
   );
 }

@@ -1,3 +1,5 @@
+import { getAllCollections } from '@/api/collection';
+import { getAllProduct, getAllProductPaths } from '@/api/product';
 import Filter from '@/components/filter';
 import ProductCard from '@/components/product-card';
 import useProducts from '@/hooks/product/useProducts';
@@ -10,8 +12,34 @@ import {
   Text,
 } from '@chakra-ui/layout';
 import { CircularProgress, Skeleton } from '@chakra-ui/react';
+import { GetStaticPropsContext } from 'next';
 import Head from 'next/head';
 import { useState } from 'react';
+import { dehydrate, QueryClient } from 'react-query';
+
+export async function getStaticProps({
+  params,
+  locale,
+  locales,
+  preview,
+}: GetStaticPropsContext) {
+  const queryClient = new QueryClient();
+
+  await queryClient.prefetchQuery(['products'], () =>
+    getAllProduct({ page: 1, size: 50 }),
+  );
+
+  await queryClient.prefetchQuery(['collections'], () =>
+    getAllCollections({ page: 1, size: 50 }),
+  );
+
+  return {
+    props: {
+      dehydratedState: dehydrate(queryClient),
+    },
+    revalidate: 60 * 2,
+  };
+}
 
 export default function Home() {
   const [params, setParams] = useState({});
