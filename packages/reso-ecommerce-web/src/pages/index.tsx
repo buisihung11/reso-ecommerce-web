@@ -44,7 +44,6 @@ export async function getStaticProps({
 export default function Home() {
   const [params, setParams] = useState({});
   const { data, metadata, status, isFetching } = useProducts(params);
-  console.log(`data`, data, status);
 
   if (status === 'loading') {
     return (
@@ -65,7 +64,7 @@ export default function Home() {
   return (
     <div>
       <Head>
-        <title>TypeScript starter for Next.js</title>
+        <title>Reso website</title>
         <meta
           name="description"
           content="TypeScript starter for Next.js that includes all you need to build amazing apps"

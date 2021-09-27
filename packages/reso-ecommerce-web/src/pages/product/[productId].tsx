@@ -104,7 +104,7 @@ const ProductDetailPage = () => {
           ],
         }}
       />
-      <Grid templateColumns="repeat(12, 1fr)" gap={8}>
+      <Grid templateColumns="repeat(12, 1fr)" gap={[0, 8]}>
         <GridItem colSpan={[12, 7]}>
           <Image
             src={pic_url}

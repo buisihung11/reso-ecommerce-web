@@ -24,7 +24,7 @@ const NavLink = chakra(Text, {
 export function Navigation({ className, navigations }: Props) {
   return (
     <HStack py={2} spacing={4} maxW="100%" overflowY="scroll">
-      <Link key="Tất cả" href="/collections/all">
+      <Link key="Tất cả" href="/">
         <a>
           <NavLink noOfLines={1}>Tất cả</NavLink>
         </a>

@@ -13,8 +13,7 @@ interface Props {}
 export const NavBar = (props: Props) => {
   const { data: collections } = useCollections();
 
-  const { checkout, loading, didJustAddToCart } =
-    React.useContext(StoreContext);
+  const { checkout, loading } = React.useContext(StoreContext);
 
   const items = checkout ? checkout.lineItems : [];
 
