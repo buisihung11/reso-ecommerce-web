@@ -5,7 +5,7 @@ import React from 'react';
 import Link from 'next/link';
 import SearchIcon from '@/icons/search';
 import useCollections from '@/hooks/collection/useCollections';
-import { StoreContext } from '@/context/store-context';
+import { StoreContext } from '@/contexts/store-context';
 import { CartButton } from '@/components/cart-button';
 import { Navigation } from '@/components/navigation';
 interface Props {}
