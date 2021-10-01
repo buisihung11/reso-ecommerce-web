@@ -6,8 +6,10 @@ export default function IconButton(theme: Theme) {
   return {
     MuiIconButton: {
       styleOverrides: {
-        root: {}
-      }
-    }
+        root: {
+          color: 'black',
+        },
+      },
+    },
   };
 }

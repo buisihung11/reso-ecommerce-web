@@ -1,18 +1,43 @@
-import Layout from '@/layouts/Layout';
 import { TProduct } from '@/types/product';
-import { Image, Img } from '@chakra-ui/image';
-import { AspectRatio, Box, Center, Stack, Text } from '@chakra-ui/layout';
+import { Theme } from '@mui/material/styles';
+import { Stack, Box, Typography } from '@mui/material';
+import { makeStyles } from '@mui/styles';
 import Link from 'next/link';
 import * as React from 'react';
 import { FC } from 'react';
+import { Img } from 'react-image';
 
 type Props = {
   product: Partial<TProduct>;
 };
 
+const useProductStyles = makeStyles((theme: Theme) => ({
+  wrapper: {
+    cursor: 'pointer',
+    overflow: 'hidden',
+    '&:hover': {
+      '& $thumbnail': {
+        transform: 'scale(1.03)',
+      },
+      '& $productTitle': {
+        textDecoration: 'underline',
+        'text-underline-offset': '0.03rem',
+      },
+    },
+  },
+  thumbnail: {
+    borderWidth: `1px solid ${theme.palette.grey[400]}`,
+    transition: 'all ease-in-out 300ms',
+  },
+  productTitle: {
+    ...theme.typography.caption,
+    fontWeight: 400,
+  },
+}));
+
 const ProductCard: FC<Props> = ({ product }) => {
   const { product_name, pic_url, product_id } = product;
-
+  const classes = useProductStyles();
   // const price = formatPrice(
   //   priceRangeV2.minVariantPrice.currencyCode,
   //   priceRangeV2.minVariantPrice.amount,
@@ -30,36 +55,52 @@ const ProductCard: FC<Props> = ({ product }) => {
       aria-label={`View ${product_name} product page`}
       passHref
     >
-      <Box cursor="pointer">
-        <Stack>
-          <Image
-            src={pic_url}
+      <Box className={classes.wrapper}>
+        <Stack spacing={2}>
+          <Img
+            className={classes.thumbnail}
+            src={pic_url!}
             height="auto"
-            maxW="100%"
-            objectFit="cover"
-            objectPosition="center center"
-            fallback={
-              <AspectRatio maxW="100%" ratio={1}>
-                <Box p={2} textAlign="center" bg="gray.100" w="100%" h="aut">
-                  <Center>
-                    <Text fontSize={['md', 'lg']} noOfLines={2}>
-                      {product_name}
-                    </Text>
-                  </Center>
-                </Box>
-              </AspectRatio>
+            loader={
+              <Box
+                p={2}
+                bgcolor="grey.100"
+                width="100%"
+                sx={{
+                  aspectRatio: '1 / 1',
+                }}
+              />
+            }
+            unloader={
+              <Box
+                p={2}
+                textAlign="center"
+                bgcolor="grey.100"
+                width="100%"
+                position="relative"
+                sx={{
+                  aspectRatio: '1 / 1',
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}
+              >
+                <Typography className={classes.productTitle} noWrap>
+                  {product_name}
+                </Typography>
+              </Box>
             }
           />
 
           {hasImage && (
-            <Text py={2} fontSize={['xs']} fontWeight="400" noOfLines={2}>
+            <Typography className={classes.productTitle} noWrap>
               {product_name}
-            </Text>
+            </Typography>
           )}
 
-          <Text fontSize={['md', 'lg']} noOfLines={2}>
+          <Typography variant="body1" noWrap>
             Từ 20.000 VND
-          </Text>
+          </Typography>
         </Stack>
       </Box>
     </Link>

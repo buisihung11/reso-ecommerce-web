@@ -4,6 +4,10 @@ import ThemeConfig from '@/theme';
 import GlobalStyles from '@/theme/globalStyles';
 import ThemePrimaryColor from '@/components/ThemePrimaryColor';
 
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+
+import 'simplebar/dist/simplebar.min.css';
 import '@/styles/reset.css';
 import '@/styles/variables.css';
 import '@/styles/global.css';

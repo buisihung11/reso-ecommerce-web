@@ -32,16 +32,16 @@ export type ParentItemProps = {
   open?: boolean;
   hasSub?: boolean;
   onClick?: VoidFunction;
-  onMouseEnter?: VoidFunction;
+  onMouseEnter?: (e: any) => void;
   onMouseLeave?: VoidFunction;
   component?: ReactNode;
-  to?: string;
+  href?: string;
 };
 
 export type MegaMenuItemProps = {
   title: string;
   path: string;
-  icon: JSX.Element;
+  icon?: JSX.Element;
   more?: {
     title: string;
     path: string;
