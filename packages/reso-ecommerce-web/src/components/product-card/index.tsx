@@ -51,63 +51,65 @@ const ProductCard: FC<Props> = ({ product }) => {
 
   return (
     <Link
-      href={`/product/${product_id}` || '#'}
+      href={`/products/${product_id}` || '#'}
       aria-label={`View ${product_name} product page`}
       passHref
     >
-      <Box className={classes.wrapper}>
-        <Stack spacing={2}>
-          <Img
-            className={classes.thumbnail}
-            src={pic_url!}
-            height="auto"
-            loader={
-              <Box
-                p={2}
-                bgcolor="grey.100"
-                width="100%"
-                sx={{
-                  aspectRatio: '1 / 1',
-                  display: 'flex',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                }}
-              >
-                {product_name}
-              </Box>
-            }
-            unloader={
-              <Box
-                p={2}
-                textAlign="center"
-                bgcolor="grey.100"
-                width="100%"
-                position="relative"
-                sx={{
-                  aspectRatio: '1 / 1',
-                  display: 'flex',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                }}
-              >
-                <Typography className={classes.productTitle} noWrap>
+      <a>
+        <Box className={classes.wrapper}>
+          <Stack spacing={2}>
+            <Img
+              className={classes.thumbnail}
+              src={pic_url!}
+              height="auto"
+              loader={
+                <Box
+                  p={2}
+                  bgcolor="grey.100"
+                  width="100%"
+                  sx={{
+                    aspectRatio: '1 / 1',
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                  }}
+                >
                   {product_name}
-                </Typography>
-              </Box>
-            }
-          />
+                </Box>
+              }
+              unloader={
+                <Box
+                  p={2}
+                  textAlign="center"
+                  bgcolor="grey.100"
+                  width="100%"
+                  position="relative"
+                  sx={{
+                    aspectRatio: '1 / 1',
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                  }}
+                >
+                  <Typography className={classes.productTitle} noWrap>
+                    {product_name}
+                  </Typography>
+                </Box>
+              }
+            />
 
-          {hasImage && (
-            <Typography className={classes.productTitle} noWrap>
-              {product_name}
+            {hasImage && (
+              <Typography className={classes.productTitle} noWrap>
+                {product_name}
+              </Typography>
+            )}
+
+            <Typography variant="body1" noWrap>
+              Từ 20.000 VND
             </Typography>
-          )}
-
-          <Typography variant="body1" noWrap>
-            Từ 20.000 VND
-          </Typography>
-        </Stack>
-      </Box>
+          </Stack>
+        </Box>
+      </a>
     </Link>
   );
 };

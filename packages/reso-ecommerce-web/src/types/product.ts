@@ -7,4 +7,28 @@ export type TProduct = {
   is_available: boolean;
   code: string;
   product_type: number;
+  images?: string[];
+  price: number;
+  priceSale: number;
+  variants?: ProductVariant[];
+  options?: ProductOption[];
 };
+
+export type ProductOption = {
+  type?: 'select' | 'radio';
+  id: string;
+  displayName: string;
+  values: ProductOptionValues[];
+};
+
+export type ProductOptionValues = {
+  label: string;
+  value: string;
+};
+
+export type ProductVariant = {
+  id: string | number;
+  options: ProductOption[];
+};
+
+export type SelectedOptions = Record<string, string | null>;

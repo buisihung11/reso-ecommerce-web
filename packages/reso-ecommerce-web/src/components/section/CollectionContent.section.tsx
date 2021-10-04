@@ -5,7 +5,6 @@ import usePagination from '@/hooks/usePagination';
 import {
   Box,
   CircularProgress,
-  Container,
   Pagination,
   Stack,
   Typography,
@@ -57,7 +56,7 @@ const CollectionContentSection = (props: Props) => {
   }
 
   return (
-    <Container px={[4, 12]} maxW="xl" pt={12} pb={100}>
+    <Box maxWidth="xl" px={[4, 12]} pt={12} pb={100}>
       <NextSeo
         title={collectionInfo?.name ?? 'Bộ sưu tập'}
         description={collectionInfo?.name}
@@ -77,7 +76,7 @@ const CollectionContentSection = (props: Props) => {
           onCloseFilter={handleCloseFilter}
         />
         <Stack direction="row" spacing={2}>
-          {isFetching && <CircularProgress isIndeterminate size={6} />}
+          {isFetching && <CircularProgress size={6} />}
           <Typography color="grey.400">
             {data?.length} / {metadata?.total} sản phẩm
           </Typography>
@@ -86,12 +85,12 @@ const CollectionContentSection = (props: Props) => {
       <ProductGridSection products={data} />
       <Box py={4} textAlign="center" display="flex" justifyContent="center">
         <Pagination
-          onChange={(_: never, page: number) => onPageChange(page)}
+          onChange={(_: any, page: number) => onPageChange(page)}
           count={totalPage}
           shape="rounded"
         />
       </Box>
-    </Container>
+    </Box>
   );
 };
 

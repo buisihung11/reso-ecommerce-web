@@ -11,13 +11,12 @@ import {
   AppBar,
   Badge,
   Container,
-  createStyles,
   Grid,
   IconButton,
   Stack,
   styled,
 } from '@mui/material';
-import { makeStyles } from '@mui/styles';
+import { makeStyles, createStyles } from '@mui/styles';
 import React from 'react';
 import { MHidden } from '../@material-extend';
 import HideOnScroll from '../HideOnScroll';

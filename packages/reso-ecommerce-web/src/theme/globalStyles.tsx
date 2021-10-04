@@ -20,6 +20,9 @@ export default function GlobalStyles() {
           height: '100%',
           WebkitOverflowScrolling: 'touch',
         },
+        ul: {
+          listStyleType: 'none',
+        },
         body: {
           width: '100%',
           height: '100%',
