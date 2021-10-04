@@ -25,8 +25,6 @@ export interface SectionProps {
 
 const SectionInstances: FC<SectionProps> = ({ settings, name, ...others }) => {
   const Section = sections[name] ?? React.Fragment;
-  console.log(`settings`, settings);
-  console.log(`others`, others);
   // workaround
   return <Section settings={settings} {...(others as any)} />;
 };

@@ -28,7 +28,6 @@ const CollectionContentSection = (props: Props) => {
   });
 
   const totalPage = Math.ceil((metadata?.total ?? 1) / size);
-  console.log(`totalPage`, metadata?.total, size, totalPage);
   const [openFilter, setOpenFilter] = useState(false);
 
   const handleOpenFilter = () => {

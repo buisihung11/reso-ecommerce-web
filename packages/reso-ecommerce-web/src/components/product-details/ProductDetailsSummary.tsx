@@ -161,8 +161,6 @@ export default function ProductDetailsSummary({
     selectedOptions,
   );
 
-  console.log(`variant`, variant);
-
   const form = useForm<any>({
     defaultValues: {
       quantity: quantity ?? 1,
