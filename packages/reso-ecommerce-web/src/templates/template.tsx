@@ -15,6 +15,7 @@ type Props<T extends {}> = {
     settings?: {
       [key: string]: any;
     };
+    props?: any;
   }[];
   /** Tên layout dùng cho template, empty nếu để trống */
   layout?: KeyOfObject<typeof layouts>;
@@ -37,11 +38,13 @@ const TemplateFactory = <T extends {}>({
 
   const sectionContent = useMemo(() => {
     // TODO: Add order section
-    return sections.map((section) => (
+    return sections.map(({ name, settings = {}, props, ...others }) => (
       <SectionInstances
-        key={section.name}
-        name={section.name}
-        settings={section.settings}
+        key={name}
+        name={name}
+        settings={settings}
+        {...(props as any)}
+        {...(others as any)}
       />
     ));
   }, [sections]);

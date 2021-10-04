@@ -1,3 +1,9 @@
+- [ ] Product detail page
+- [ ] Checkout page
+- [ ] Fix loi build
+
+
+
 <p align="center">
   <img src="https://user-images.githubusercontent.com/26466516/118417547-e9409d00-b68a-11eb-8162-6afccf9288a9.png" alt="Next.js TypeScript Starter">
 </p>

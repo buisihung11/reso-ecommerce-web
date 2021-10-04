@@ -9,15 +9,15 @@ import ProductCard from '../product-card';
 import { SectionProps } from './Section';
 
 interface Props {
-  settings: {
+  settings?: {
     [key: string]: any;
   };
 }
 
 const CollectionGridSection: FC<Props> = ({ settings = {} }) => {
   const { data } = useProducts({});
-
   const bgColorSetting = settings['bgColor'];
+
   return (
     <Box bgcolor={bgColorSetting} py={[6, 10]}>
       <Stack spacing={[4, 8]}>

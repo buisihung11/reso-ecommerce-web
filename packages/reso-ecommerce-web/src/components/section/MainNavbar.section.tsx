@@ -2,7 +2,6 @@ import Logo from '@/components/logo';
 import useCollections from '@/hooks/collection/useCollections';
 import useOffSetTop from '@/hooks/useOffSetTop';
 import {
-  ArrowRightAlt,
   PersonOutlined,
   Search,
   SearchRounded,
@@ -17,10 +16,8 @@ import {
   IconButton,
   Stack,
   styled,
-  Typography,
 } from '@mui/material';
 import { makeStyles } from '@mui/styles';
-import { Box } from '@mui/system';
 import React from 'react';
 import { MHidden } from '../@material-extend';
 import HideOnScroll from '../HideOnScroll';

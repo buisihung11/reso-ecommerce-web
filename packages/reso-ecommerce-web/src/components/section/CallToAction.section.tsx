@@ -7,11 +7,11 @@ interface Props {}
 
 const CallToActionSection = (props: Props) => {
   return (
-    <Box py={[4, 8]} textAlign="center">
+    <Box py={[6, 12]} textAlign="center">
       <Container maxWidth="md" sx={{ margin: '0 auto' }}>
         <Stack spacing={2}>
           <Box>
-            <Typography variant="h6">Liên hệ với chúng tôi</Typography>
+            <Typography variant="h5">Liên hệ với chúng tôi</Typography>
             <Typography variant="body1">
               Luôn sẵn sáng hỗ trợ và tư vấn cho bạn để có sản phẩm tốt nhất.
             </Typography>

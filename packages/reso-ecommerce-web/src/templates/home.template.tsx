@@ -1,3 +1,4 @@
+import useProducts from '@/hooks/product/useProducts';
 import React from 'react';
 import TemplateFactory from './template';
 
@@ -17,7 +18,7 @@ const HomeTemplate = (props: Props) => {
           },
         },
         {
-          name: 'collection-grid',
+          name: 'home-content',
           settings: {
             bgColor: 'inherit',
           },

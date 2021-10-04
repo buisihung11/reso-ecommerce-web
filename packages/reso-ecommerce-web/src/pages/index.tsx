@@ -7,7 +7,7 @@ import Head from 'next/head';
 import { useState } from 'react';
 import { dehydrate, QueryClient } from 'react-query';
 
-const CollectionTemplate = getTemplateInstance({ name: 'collection' });
+const HomeTemplate = getTemplateInstance({ name: 'home' });
 
 export async function getStaticProps({
   params,
@@ -63,7 +63,7 @@ export default function Home() {
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <CollectionTemplate />
+      <HomeTemplate />
     </div>
   );
 }

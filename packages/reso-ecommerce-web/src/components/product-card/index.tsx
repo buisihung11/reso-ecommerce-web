@@ -68,8 +68,13 @@ const ProductCard: FC<Props> = ({ product }) => {
                 width="100%"
                 sx={{
                   aspectRatio: '1 / 1',
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
                 }}
-              />
+              >
+                {product_name}
+              </Box>
             }
             unloader={
               <Box

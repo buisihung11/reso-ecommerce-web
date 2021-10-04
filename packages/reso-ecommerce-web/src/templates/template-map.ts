@@ -1,7 +1,9 @@
+import CollectionTemplate from './collection.template';
 import HomeTemplate from './home.template';
 
 const templates = {
-  collection: HomeTemplate,
+  home: HomeTemplate,
+  collection: CollectionTemplate,
 };
 
 export default templates;

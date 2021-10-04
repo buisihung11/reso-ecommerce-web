@@ -9,7 +9,7 @@ import {
 import { TSetting } from './Section';
 
 interface Props {
-  settings: TSetting & {
+  settings?: TSetting & {
     carouselType?: 'type1' | 'type2' | 'type3' | 'type4';
   };
 }
