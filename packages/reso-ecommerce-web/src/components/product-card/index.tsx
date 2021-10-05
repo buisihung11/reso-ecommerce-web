@@ -6,9 +6,11 @@ import Link from 'next/link';
 import * as React from 'react';
 import { FC } from 'react';
 import { Img } from 'react-image';
+import classNames from 'classnames';
 
-type Props = {
+export type ProductCardProps = {
   product: Partial<TProduct>;
+  imgStyle?: 'auto' | 'square';
 };
 
 const useProductStyles = makeStyles((theme: Theme) => ({
@@ -28,6 +30,12 @@ const useProductStyles = makeStyles((theme: Theme) => ({
   thumbnail: {
     borderWidth: `1px solid ${theme.palette.grey[400]}`,
     transition: 'all ease-in-out 300ms',
+    height: 'auto',
+  },
+  squareImg: {
+    width: '100%',
+    aspectRatio: '1/1',
+    objectFit: 'cover',
   },
   productTitle: {
     ...theme.typography.caption,
@@ -35,13 +43,13 @@ const useProductStyles = makeStyles((theme: Theme) => ({
   },
 }));
 
-const ProductCard: FC<Props> = ({ product }) => {
+const ProductCard: FC<ProductCardProps> = ({
+  product,
+  imgStyle = 'square',
+}) => {
   const { product_name, pic_url, product_id } = product;
   const classes = useProductStyles();
-  // const price = formatPrice(
-  //   priceRangeV2.minVariantPrice.currencyCode,
-  //   priceRangeV2.minVariantPrice.amount,
-  // );
+
   const price = 100;
 
   const defaultImageHeight = 200;
@@ -59,9 +67,11 @@ const ProductCard: FC<Props> = ({ product }) => {
         <Box className={classes.wrapper}>
           <Stack spacing={2}>
             <Img
-              className={classes.thumbnail}
+              className={classNames({
+                [classes.thumbnail]: imgStyle === 'auto',
+                [classes.squareImg]: imgStyle === 'square',
+              })}
               src={pic_url!}
-              height="auto"
               loader={
                 <Box
                   p={2}

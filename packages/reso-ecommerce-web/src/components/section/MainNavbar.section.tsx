@@ -17,6 +17,7 @@ import {
   styled,
 } from '@mui/material';
 import { makeStyles, createStyles } from '@mui/styles';
+import { useRouter } from 'next/router';
 import React from 'react';
 import { MHidden } from '../@material-extend';
 import HideOnScroll from '../HideOnScroll';
@@ -54,6 +55,7 @@ const useNavBarClasses = makeStyles((theme) =>
 const MainNavbarSection = (props: Props) => {
   const { data: collections } = useCollections();
   const classes = useNavBarClasses();
+  const router = useRouter();
 
   const triggerHide = useOffSetTop(70);
   const navConfig =
@@ -107,7 +109,10 @@ const MainNavbarSection = (props: Props) => {
                       <PersonOutlined />
                     </IconButton>
                   </MHidden>
-                  <IconButton size="medium">
+                  <IconButton
+                    onClick={() => router.push('/cart')}
+                    size="medium"
+                  >
                     <StyledBadge badgeContent={10}>
                       <ShoppingBagOutlined />
                     </StyledBadge>

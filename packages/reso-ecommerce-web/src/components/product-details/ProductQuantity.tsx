@@ -1,27 +1,42 @@
+import { useState } from 'react';
+
 import { MIconButton } from '@/components/@material-extend';
 import minusFill from '@iconify/icons-eva/minus-fill';
 import plusFill from '@iconify/icons-eva/plus-fill';
 import { Icon } from '@iconify/react';
 import { Box, Typography } from '@mui/material';
 import { useController } from 'react-hook-form';
+import { Function } from 'lodash';
+
+export type ProductQuantityProps = {
+  onInc?: () => void;
+  onDec?: () => void;
+  onChange?: (quantity: number) => void;
+  value?: number;
+  defaultValue?: number;
+};
 
 const ProductQuantity = ({
-  name,
-  available,
-}: {
-  name: string;
-  available?: number;
-}) => {
-  const { field } = useController({
-    name,
-  });
-  const { value, onChange: setValue } = field;
+  defaultValue,
+  value,
+  onInc,
+  onDec,
+  onChange,
+}: ProductQuantityProps) => {
+  const [_counter, setCounter] = useState(defaultValue ?? 1);
+  const counter = value ?? _counter;
 
   const incrementQuantity = () => {
-    setValue(value + 1);
+    if (onInc) {
+      onInc();
+    }
+    setCounter(counter + 1);
   };
   const decrementQuantity = () => {
-    setValue(value - 1);
+    if (onDec) {
+      onDec();
+    }
+    setCounter(counter - 1);
   };
 
   return (
@@ -40,7 +55,7 @@ const ProductQuantity = ({
       <MIconButton
         size="small"
         color="inherit"
-        disabled={value <= 1}
+        disabled={counter <= 1}
         onClick={decrementQuantity}
       >
         <Icon icon={minusFill} width={16} height={16} />
@@ -54,7 +69,7 @@ const ProductQuantity = ({
           display: 'inline-block',
         }}
       >
-        {value}
+        {counter}
       </Typography>
       <MIconButton
         size="small"

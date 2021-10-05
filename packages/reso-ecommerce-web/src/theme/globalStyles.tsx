@@ -14,6 +14,7 @@ export default function GlobalStyles() {
           margin: 0,
           padding: 0,
           boxSizing: 'border-box',
+          'text-underline-offset': '0.3rem',
         },
         html: {
           width: '100%',

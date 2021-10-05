@@ -237,7 +237,7 @@ export default function ProductDetailsSummary({
           </Typography>
 
           <div>
-            <ProductQuantity name="quantity" available={available} />
+            <ProductQuantity />
           </div>
         </Box>
         <Box sx={{ mt: 5 }}>
@@ -279,9 +279,6 @@ export default function ProductDetailsSummary({
         <MHidden width="mdUp">
           <ProductActionBottomBar
             onAddToCart={handleAddCart}
-            controlProps={{
-              name: 'quantity',
-            }}
             btnProps={{
               disabled: isMaxQuantity,
             }}

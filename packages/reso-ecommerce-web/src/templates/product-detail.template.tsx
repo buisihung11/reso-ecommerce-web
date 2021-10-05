@@ -14,6 +14,9 @@ const ProductDetailTemplate = (props: Props) => {
       sections={[
         {
           name: 'product-view',
+          props: {
+            imgStyle: 'square',
+          },
         },
         {
           name: 'call-to-action',

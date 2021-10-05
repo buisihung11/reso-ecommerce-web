@@ -1,28 +1,26 @@
-import { getAllProductPaths } from '@/api/product';
 import {
   ProductDetailsCarousel,
   ProductDetailsSummary,
 } from '@/components/product-details';
-import useProduct, { getProductDetail } from '@/hooks/product/useProduct';
+import useProduct from '@/hooks/product/useProduct';
 import useProducts from '@/hooks/product/useProducts';
 import {
+  Box,
   CircularProgress,
   Container,
-  Typography,
-  Card,
   Grid,
-  Box,
+  Typography,
 } from '@mui/material';
-import { GetStaticPathsContext, GetStaticPropsContext } from 'next';
 import { NextSeo } from 'next-seo';
 import { useRouter } from 'next/router';
 import React from 'react';
-import { dehydrate, QueryClient } from 'react-query';
 import { ProductCarousel } from '../carousel';
 
-interface Props {}
+interface Props {
+  imgStyle?: any;
+}
 
-const ProductViewSection = () => {
+const ProductViewSection = ({ imgStyle }: Props) => {
   const router = useRouter();
   const { productId } = router.query;
   const { data: product, status } = useProduct({ id: Number(productId) });
@@ -85,7 +83,12 @@ const ProductViewSection = () => {
           <Typography variant="h4" mb={2}>
             Có thể bạn thích
           </Typography>
-          <ProductCarousel products={relatedProducts} />
+          <ProductCarousel
+            CardProps={{
+              imgStyle,
+            }}
+            products={relatedProducts}
+          />
         </Box>
       )}
     </Container>

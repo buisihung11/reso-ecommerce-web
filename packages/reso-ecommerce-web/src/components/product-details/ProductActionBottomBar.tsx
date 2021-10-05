@@ -9,15 +9,12 @@ import Box from '@mui/material/Box';
 import IconButton from '@mui/material/IconButton';
 import Toolbar from '@mui/material/Toolbar';
 import * as React from 'react';
-import ProductQuantity from './ProductQuantity';
+import ProductQuantity, { ProductQuantityProps } from './ProductQuantity';
 
 type Props = {
   onAddToCart: () => void;
   /** Name control for quantity field */
-  controlProps: {
-    name: string;
-    available?: number;
-  };
+  controlProps?: ProductQuantityProps;
   btnProps: {
     disabled: boolean;
   };
@@ -25,7 +22,7 @@ type Props = {
 
 const ProductActionBottomBar = ({
   onAddToCart,
-  controlProps,
+  controlProps = {},
   btnProps,
 }: Props) => {
   return (
