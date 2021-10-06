@@ -11,7 +11,7 @@ import {
 } from '@mui/material';
 // material
 import { styled } from '@mui/material/styles';
-import RouterLink from 'next/link';
+import RouterLink from '@/components/Link';
 import { Link as ScrollLink } from 'react-scroll';
 
 import googleFill from '@iconify/icons-eva/google-fill';

@@ -1,13 +1,11 @@
 import { Typography } from '@mui/material';
-import Link from 'next/link';
+import Link from '@/components/Link';
 
 const Logo = () => (
-  <Link href="/" passHref>
-    <a>
-      <Typography color="grey" variant="h6">
-        BeanOi Store
-      </Typography>
-    </a>
+  <Link href="/">
+    <Typography color="grey" variant="h6">
+      BeanOi Store
+    </Typography>
   </Link>
 );
 

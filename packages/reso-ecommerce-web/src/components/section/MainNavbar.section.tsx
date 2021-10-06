@@ -89,6 +89,7 @@ const MainNavbarSection = (props: Props) => {
               </Grid>
 
               <Grid
+                item
                 xs={6}
                 textAlign="center"
                 display="flex"

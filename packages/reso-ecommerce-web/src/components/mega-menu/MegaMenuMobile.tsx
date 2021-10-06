@@ -2,7 +2,7 @@ import { Icon } from '@iconify/react';
 import { useState, useEffect } from 'react';
 import listFill from '@iconify/icons-eva/list-fill';
 import menu2Fill from '@iconify/icons-eva/menu-2-fill';
-import Link from 'next/link';
+import Link from '@/components/Link';
 import { useRouter } from 'next/router';
 import arrowIosBackFill from '@iconify/icons-eva/arrow-ios-back-fill';
 import arrowIosForwardFill from '@iconify/icons-eva/arrow-ios-forward-fill';

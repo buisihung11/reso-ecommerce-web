@@ -6,12 +6,14 @@ export default function Link(theme: Theme) {
   return {
     MuiLink: {
       defaultProps: {
-        underline: 'hover'
+        underline: 'hover',
       },
 
       styleOverrides: {
-        root: {}
-      }
-    }
+        root: {
+          color: theme.palette.text.primary,
+        },
+      },
+    },
   };
 }

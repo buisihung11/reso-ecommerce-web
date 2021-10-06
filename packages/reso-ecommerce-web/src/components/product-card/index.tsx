@@ -2,11 +2,11 @@ import { TProduct } from '@/types/product';
 import { Theme } from '@mui/material/styles';
 import { Stack, Box, Typography } from '@mui/material';
 import { makeStyles } from '@mui/styles';
-import Link from 'next/link';
+import Link from '@/components/Link';
 import * as React from 'react';
 import { FC } from 'react';
 import { Img } from 'react-image';
-import classNames from 'classnames';
+import clsx from 'clsx';
 
 export type ProductCardProps = {
   product: Partial<TProduct>;
@@ -63,63 +63,61 @@ const ProductCard: FC<ProductCardProps> = ({
       aria-label={`View ${product_name} product page`}
       passHref
     >
-      <a>
-        <Box className={classes.wrapper}>
-          <Stack spacing={2}>
-            <Img
-              className={classNames({
-                [classes.thumbnail]: imgStyle === 'auto',
-                [classes.squareImg]: imgStyle === 'square',
-              })}
-              src={pic_url!}
-              loader={
-                <Box
-                  p={2}
-                  bgcolor="grey.100"
-                  width="100%"
-                  sx={{
-                    aspectRatio: '1 / 1',
-                    display: 'flex',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                  }}
-                >
-                  {product_name}
-                </Box>
-              }
-              unloader={
-                <Box
-                  p={2}
-                  textAlign="center"
-                  bgcolor="grey.100"
-                  width="100%"
-                  position="relative"
-                  sx={{
-                    aspectRatio: '1 / 1',
-                    display: 'flex',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                  }}
-                >
-                  <Typography className={classes.productTitle} noWrap>
-                    {product_name}
-                  </Typography>
-                </Box>
-              }
-            />
-
-            {hasImage && (
-              <Typography className={classes.productTitle} noWrap>
+      <Box className={classes.wrapper}>
+        <Stack spacing={2}>
+          <Img
+            className={clsx({
+              [classes.thumbnail]: imgStyle === 'auto',
+              [classes.squareImg]: imgStyle === 'square',
+            })}
+            src={pic_url!}
+            loader={
+              <Box
+                p={2}
+                bgcolor="grey.100"
+                width="100%"
+                sx={{
+                  aspectRatio: '1 / 1',
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}
+              >
                 {product_name}
-              </Typography>
-            )}
+              </Box>
+            }
+            unloader={
+              <Box
+                p={2}
+                textAlign="center"
+                bgcolor="grey.100"
+                width="100%"
+                position="relative"
+                sx={{
+                  aspectRatio: '1 / 1',
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}
+              >
+                <Typography className={classes.productTitle} noWrap>
+                  {product_name}
+                </Typography>
+              </Box>
+            }
+          />
 
-            <Typography variant="body1" noWrap>
-              Từ 20.000 VND
+          {hasImage && (
+            <Typography className={classes.productTitle} noWrap>
+              {product_name}
             </Typography>
-          </Stack>
-        </Box>
-      </a>
+          )}
+
+          <Typography variant="body1" noWrap>
+            Từ 20.000 VND
+          </Typography>
+        </Stack>
+      </Box>
     </Link>
   );
 };

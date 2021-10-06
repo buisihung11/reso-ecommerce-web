@@ -10,7 +10,7 @@ import {
   StackProps,
   Typography,
 } from '@mui/material';
-import NextLink from 'next/link';
+import NextLink from '@/components/Link';
 import { useState } from 'react';
 // @types
 import { MegaMenuItemProps, ParentItemProps } from '../../@types/mega-menu';
@@ -46,7 +46,7 @@ function ParentItem({
 
   return (
     <Box onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
-      <NextLink href={path ?? '#'} passHref>
+      <NextLink href={path ?? '#'}>
         <Link
           noWrap
           underline="none"
