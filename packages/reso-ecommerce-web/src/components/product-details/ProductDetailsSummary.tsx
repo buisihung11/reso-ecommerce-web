@@ -11,6 +11,7 @@ import {
   SelectedOptions,
   TProduct,
 } from '@/types/product';
+import useCart from '@/hooks/cart/useCart';
 import { fCurrency } from '@/utils/formatNumber';
 import facebookFill from '@iconify/icons-eva/facebook-fill';
 import twitterFill from '@iconify/icons-eva/twitter-fill';
@@ -25,10 +26,12 @@ import Box from '@mui/material/Box';
 import { styled, useTheme } from '@mui/material/styles';
 import Tab from '@mui/material/Tab';
 import { useEffect, useState } from 'react';
-import { FormProvider, useForm } from 'react-hook-form';
+import { Controller, FormProvider, useForm } from 'react-hook-form';
 import ProductActionBottomBar from './ProductActionBottomBar';
 import ProductOptions from './ProductOptions';
 import ProductQuantity from './ProductQuantity';
+import { toast } from 'react-toastify';
+import useAddItem from '@/hooks/cart/useAddItem';
 
 // ----------------------------------------------------------------------
 
@@ -59,22 +62,12 @@ const DEFAULT_VARIANTS: ProductVariant[] = [
       {
         id: 'asd',
         displayName: 'Size',
-        values: [
-          {
-            label: 'S',
-            value: 'S',
-          },
-        ],
+        value: 'S',
       },
       {
         id: 'asd',
         displayName: 'Color',
-        values: [
-          {
-            label: 'color',
-            value: '#222',
-          },
-        ],
+        value: '#222',
       },
     ],
   },
@@ -127,6 +120,8 @@ export default function ProductDetailsSummary({
   ...other
 }: ProductDetailsSumaryprops) {
   const theme = useTheme();
+  const addItem = useAddItem();
+
   const status = 'sale';
   const available = 100;
   const {
@@ -161,27 +156,27 @@ export default function ProductDetailsSummary({
     selectedOptions,
   );
 
-  const form = useForm<any>({
+  const form = useForm({
     defaultValues: {
       quantity: quantity ?? 1,
     },
   });
+  const { control, getValues } = form;
 
   const handleAddCart = () => {
     try {
-      // onAddCart({
-      //   ...values,
-      //   subtotal: values.price * values.quantity,
-      // });
-      // setSubmitting(false);
-      // onGotoStep(0);
-      // navigate(PATH_DASHBOARD.eCommerce.checkout);
+      const { quantity } = getValues();
+      addItem.mutate({ product, quantity, selectedOptions });
+      toast('Thêm vào giỏ hàng thành công', {
+        type: 'success',
+      });
     } catch (error) {
       // setSubmitting(false);
+      toast('Có lỗi khi thêm sản phẩm', {
+        type: 'error',
+      });
     }
   };
-
-  const { register, handleSubmit } = form;
 
   return (
     <RootStyle {...other}>
@@ -237,7 +232,13 @@ export default function ProductDetailsSummary({
           </Typography>
 
           <div>
-            <ProductQuantity />
+            <Controller
+              control={control}
+              name="quantity"
+              render={({ field: { onChange, onBlur, value, name, ref } }) => (
+                <ProductQuantity value={value} onChange={onChange} />
+              )}
+            />
           </div>
         </Box>
         <Box sx={{ mt: 5 }}>
@@ -277,11 +278,21 @@ export default function ProductDetailsSummary({
         </Box>
 
         <MHidden width="mdUp">
-          <ProductActionBottomBar
-            onAddToCart={handleAddCart}
-            btnProps={{
-              disabled: isMaxQuantity,
-            }}
+          <Controller
+            control={control}
+            name="quantity"
+            render={({ field: { onChange, value } }) => (
+              <ProductActionBottomBar
+                onAddToCart={handleAddCart}
+                btnProps={{
+                  disabled: isMaxQuantity,
+                }}
+                controlProps={{
+                  value,
+                  onChange,
+                }}
+              />
+            )}
           />
         </MHidden>
       </FormProvider>

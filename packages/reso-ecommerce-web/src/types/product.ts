@@ -28,7 +28,7 @@ export type ProductOptionValues = {
 
 export type ProductVariant = {
   id: string | number;
-  options: ProductOption[];
+  options: { displayName: string; value: any; [key: string]: any }[];
 };
 
 export type SelectedOptions = Record<string, string | null>;

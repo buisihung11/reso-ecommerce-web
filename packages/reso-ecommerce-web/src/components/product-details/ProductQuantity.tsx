@@ -9,8 +9,6 @@ import { useController } from 'react-hook-form';
 import { Function } from 'lodash';
 
 export type ProductQuantityProps = {
-  onInc?: () => void;
-  onDec?: () => void;
   onChange?: (quantity: number) => void;
   value?: number;
   defaultValue?: number;
@@ -19,22 +17,20 @@ export type ProductQuantityProps = {
 const ProductQuantity = ({
   defaultValue,
   value,
-  onInc,
-  onDec,
   onChange,
 }: ProductQuantityProps) => {
   const [_counter, setCounter] = useState(defaultValue ?? 1);
   const counter = value ?? _counter;
 
   const incrementQuantity = () => {
-    if (onInc) {
-      onInc();
+    if (onChange) {
+      onChange(counter + 1);
     }
     setCounter(counter + 1);
   };
   const decrementQuantity = () => {
-    if (onDec) {
-      onDec();
+    if (onChange) {
+      onChange(counter - 1);
     }
     setCounter(counter - 1);
   };

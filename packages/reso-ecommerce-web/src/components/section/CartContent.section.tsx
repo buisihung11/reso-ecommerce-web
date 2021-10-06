@@ -19,6 +19,8 @@ import { Img } from 'react-image';
 import { MHidden } from '../@material-extend';
 import { ProductCarousel } from '../carousel';
 import ProductQuantity from '../product-details/ProductQuantity';
+import useCart from '@/hooks/cart/useCart';
+import ProductThumbnail from '../product-card/product-thumbnail';
 
 interface Props {
   imgStyle?: any;
@@ -42,11 +44,12 @@ const useCartStyles = makeStyles((theme: Theme) => ({
 
 const CartContentSection = ({ imgStyle }: Props) => {
   const classes = useCartStyles();
+  const { cart } = useCart();
   const { data: relatedProducts } = useProducts({
     params: { page: 1, size: 10 },
   });
 
-  const cartItems = ['San pham 1', 'San pham 2'];
+  const cartItems = cart.items;
 
   const imagePlaceHolder = (title: string) => (
     <Box
@@ -130,31 +133,34 @@ const CartContentSection = ({ imgStyle }: Props) => {
 
           {/* PRODUCT ITEMS */}
           <Stack py={4} spacing={[2, 4, 6]}>
-            {[...new Array(3)].map((_, idx) => (
+            {cartItems.map((cartItem, idx) => (
               <Box key={`cart-item-${idx}`}>
                 <Grid container spacing={2}>
                   <Grid item xs={8} md={7}>
                     <Stack direction="row" spacing={[2, 4]}>
-                      <Img
-                        className={classes.thumbnail}
-                        src={
-                          'https://cdn.shopify.com/s/files/1/0551/7626/5784/products/mlouye-bo-ivy-emerald-1_73c3987e-5ec7-4e72-879a-2ba2e560648f_150x.jpg?v=1630363134'
-                        }
-                        loader={imagePlaceHolder('Tên sp')}
-                        unloader={imagePlaceHolder('Tên sp')}
+                      <ProductThumbnail
+                        title={cartItem.product_name}
+                        ImgProps={{
+                          className: classes.thumbnail,
+                        }}
+                        src={cartItem.pic_url}
                       />
                       <Stack spacing={2}>
                         <Box>
                           <Typography noWrap variant="body1" mb={1}>
-                            Áo thun T-shirt
+                            {cartItem.product_name}
                           </Typography>
                           <Typography variant="caption">
-                            Màu sắc: Đen
+                            {cartItem.selectedVariant?.options.map((opt) => (
+                              <>
+                                {opt.displayName}: {opt.value}
+                              </>
+                            ))}
                           </Typography>
                         </Box>
                         <MHidden width="mdUp">
                           <Stack direction="row">
-                            <ProductQuantity />
+                            <ProductQuantity defaultValue={cartItem.quantity} />
                             <IconButton>
                               <DeleteOutline />
                             </IconButton>
@@ -167,7 +173,7 @@ const CartContentSection = ({ imgStyle }: Props) => {
                   <MHidden width="mdDown">
                     <Grid item md={3}>
                       <Stack direction="row">
-                        <ProductQuantity />
+                        <ProductQuantity defaultValue={cartItem.quantity} />
                         <IconButton>
                           <DeleteOutline />
                         </IconButton>

@@ -1,4 +1,5 @@
 import Logo from '@/components/logo';
+import useCart from '@/hooks/cart/useCart';
 import useCollections from '@/hooks/collection/useCollections';
 import useOffSetTop from '@/hooks/useOffSetTop';
 import {
@@ -54,9 +55,11 @@ const useNavBarClasses = makeStyles((theme) =>
 
 const MainNavbarSection = (props: Props) => {
   const { data: collections } = useCollections();
+  const { cart } = useCart();
   const classes = useNavBarClasses();
   const router = useRouter();
 
+  const totalItem = cart.items.length;
   const triggerHide = useOffSetTop(70);
   const navConfig =
     collections
@@ -114,7 +117,7 @@ const MainNavbarSection = (props: Props) => {
                     onClick={() => router.push('/cart')}
                     size="medium"
                   >
-                    <StyledBadge badgeContent={10}>
+                    <StyledBadge badgeContent={totalItem}>
                       <ShoppingBagOutlined />
                     </StyledBadge>
                   </IconButton>
