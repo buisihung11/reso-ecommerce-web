@@ -1,8 +1,8 @@
-import {
-  ArrowBack,
-  Shop2Outlined,
-  ShoppingCartOutlined,
-} from '@mui/icons-material';
+import CartTemplate from '@/templates/cart.template';
+import { fCurrency } from '@/utils/formatNumber';
+import { sleep } from '@/utils/utils';
+import { ShoppingCartOutlined } from '@mui/icons-material';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import {
   Breadcrumbs,
@@ -11,21 +11,23 @@ import {
   Container,
   Grid,
   Stack,
-  TextField,
   Typography,
 } from '@mui/material';
 import IconButton, { IconButtonProps } from '@mui/material/IconButton';
 import { styled, Theme } from '@mui/material/styles';
 import { makeStyles } from '@mui/styles';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { Box } from '@mui/system';
-import classNames from 'classnames';
-import Link from 'next/link';
+import clsx from 'clsx';
 import React, { useState } from 'react';
+import { toast } from 'react-toastify';
 import { MHidden } from '../@material-extend';
 import Logo from '../logo';
 import CartSummarySeciton from './CartSummary.section';
-import { fCurrency } from '@/utils/formatNumber';
+import CheckoutActionStepSection from './checkout/CheckoutActionStep.section';
+import CheckoutInfoStepSection from './checkout/CheckoutInfoStep.section';
+import CheckoutPaymentStepSection from './checkout/CheckoutPaymentStep.section';
+import CheckoutReviewSection from './checkout/CheckoutReview.section';
+import CheckoutShippingStepSection from './checkout/CheckoutShippingStep.section';
 
 interface Props {}
 
@@ -37,7 +39,7 @@ const useCheckoutStyles = makeStyles((theme: Theme) => ({
   },
   activeBreadcrumb: {
     color: theme.palette.text.primary,
-    fontWeght: 400,
+    fontWeight: 'bold',
   },
   previousBreadcrumb: {
     color: theme.palette.text.primary,
@@ -70,27 +72,63 @@ const CheckoutContentSection = (props: Props) => {
   };
   const breadCrumbs = ['Giỏ hàng', 'Thông tin', 'Vận chuyển', 'Thanh toán'];
 
+  const steps = [
+    {
+      btnTitle: 'Nhập thông tin',
+      component: <CartTemplate />,
+      breadcrumb: 'Giỏ hàng',
+    },
+    {
+      btnTitle: 'Đến bước vận chuyển',
+      component: <CheckoutInfoStepSection />,
+      breadcrumb: 'Thông tin',
+    },
+    {
+      btnTitle: 'Đến bước thanh toán',
+      component: <CheckoutShippingStepSection />,
+      breadcrumb: 'Vận chuyển',
+    },
+    {
+      btnTitle: 'Hoàn tất',
+      component: <CheckoutPaymentStepSection />,
+      breadcrumb: 'Thanh toán',
+    },
+  ];
+
+  const handleNextStep = async () => {
+    await sleep(1000);
+    if (currentStep < 4) {
+      setCurrentStep(currentStep + 1);
+    } else {
+      toast('Thanh toán đơn hàng thành công', {
+        type: 'success',
+      });
+    }
+    return true;
+  };
+
   return (
     <Box>
       <Grid minHeight="100vh" container>
-        <Grid item xs={12} md={8} py={4}>
+        <Grid item xs={12} md={7} py={4}>
           <Stack spacing={4} alignItems="center">
             <Logo />
 
             <MHidden width="mdUp">
               <Box
                 width="100%"
-                borderTop="1px"
-                borderBottom="1px"
+                borderTop="1px solid"
+                borderBottom="1px solid"
+                borderColor="grey.400"
                 bgcolor="grey.200"
-                onClick={handleExpandClick}
-                py={2}
+                py={1}
               >
                 <Container maxWidth="sm">
                   <Stack
                     direction="row"
                     justifyContent="space-between"
                     alignItems="center"
+                    onClick={handleExpandClick}
                   >
                     <Button
                       color="inherit"
@@ -130,94 +168,42 @@ const CheckoutContentSection = (props: Props) => {
                 },
               }}
             >
-              {breadCrumbs.map((title, idx) => (
+              {steps.map(({ breadcrumb }, idx) => (
                 <Typography
+                  key={`breadcrumb-${idx}`}
                   onClick={() => setCurrentStep(idx + 1)}
-                  className={classNames(classes.breadcrumbItem, {
-                    [classes.activeBreadcrumb]: idx + 1 === currentStep,
-                    [classes.previousBreadcrumb]: idx + 1 < currentStep,
+                  className={clsx(classes.breadcrumbItem, {
+                    [classes.previousBreadcrumb]: idx < currentStep - 1,
+                    [classes.activeBreadcrumb]: idx === currentStep - 1,
                   })}
                 >
-                  {title}
+                  {breadcrumb}
                 </Typography>
               ))}
             </Breadcrumbs>
             <Container maxWidth="sm">
               <Stack spacing={4}>
-                <Box width="100%">
-                  <Stack
-                    pb={2}
-                    direction={['column', 'row']}
-                    justifyContent="space-between"
-                  >
-                    <Typography fontWeight={700}>Thông tin liên hệ</Typography>
-                    <Typography fontWeight={200}>
-                      Đã có tài khoản?{' '}
-                      <Typography sx={{ cursor: 'pointer' }} component="span">
-                        Đăng nhập
-                      </Typography>
-                    </Typography>
-                  </Stack>
+                {currentStep >= 3 && <CheckoutReviewSection />}
 
-                  <TextField label="Email" placeholder="Email" fullWidth />
-                </Box>
+                {steps[currentStep - 1].component}
 
-                <Box width="100%">
-                  <Typography fontWeight={700} mb={2}>
-                    Thông tin giao hàng
-                  </Typography>
-                  <Grid container spacing={2}>
-                    <Grid item xs={6}>
-                      <TextField label="Tên" fullWidth />
-                    </Grid>
-                    <Grid item xs={6}>
-                      <TextField label="Họ" fullWidth />
-                    </Grid>
-                    <Grid item xs={12}>
-                      <TextField
-                        helperText="Số điện thoại để liên lạc khi giao hàng"
-                        label="Số điện thoại"
-                        fullWidth
-                      />
-                    </Grid>
-                    <Grid item xs={12}>
-                      <TextField label="Địa chỉ" fullWidth />
-                    </Grid>
-                    <Grid item xs={12}>
-                      <TextField label="Chung cư, căn hộ" fullWidth />
-                    </Grid>
-                  </Grid>
-                </Box>
-
-                <Box width="100%">
-                  <Stack
-                    direction={['column-reverse', 'row']}
-                    justifyContent="space-between"
-                    alignItems="center"
-                  >
-                    <Box>
-                      <Link passHref href="/cart">
-                        <Button
-                          fullWidth
-                          color="inherit"
-                          variant="text"
-                          startIcon={<ArrowBack />}
-                        >
-                          Giỏ hàng
-                        </Button>
-                      </Link>
-                    </Box>
-                    <Button variant="contained" size="large" disableElevation>
-                      TIẾP TỤC BƯỚC TIẾP THEO
-                    </Button>
-                  </Stack>
-                </Box>
+                <CheckoutActionStepSection
+                  onNextStep={handleNextStep}
+                  btnTitle={steps[currentStep - 1].btnTitle}
+                />
               </Stack>
             </Container>
           </Stack>
         </Grid>
         <MHidden width="mdDown">
-          <Grid item md={4} py={4} bgcolor="grey.200">
+          <Grid
+            item
+            md={5}
+            py={4}
+            bgcolor="grey.200"
+            borderLeft="1px solid"
+            borderColor="grey.400"
+          >
             <Container maxWidth="md">
               <CartSummarySeciton />
             </Container>

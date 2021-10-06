@@ -1,24 +1,27 @@
 import { Typography } from '@mui/material';
 import { Box, BoxProps } from '@mui/system';
 import React from 'react';
-import { Img } from 'react-image';
+import { Img, ImgProps } from 'react-image';
 
 interface Props {
   src: string;
   title: string;
   LoaderProps?: BoxProps;
   UnloaderProps?: BoxProps;
+  ImgProps?: Omit<ImgProps, 'src'>;
 }
 
 const ProductThumbnail = ({
   src,
   title,
+  ImgProps,
   LoaderProps = {},
   UnloaderProps,
 }: Props) => {
   return (
     <Img
-      src={src!}
+      {...ImgProps}
+      src={src}
       loader={
         <Box
           p={2}

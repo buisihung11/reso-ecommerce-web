@@ -37,7 +37,9 @@ const CartSummarySeciton = (props: Props) => {
               <Typography noWrap variant="body1" mb={1}>
                 Áo thun T-shirt
               </Typography>
-              <Typography variant="caption">Màu sắc: Đen</Typography>
+              <Typography variant="caption" color="GrayText">
+                Màu sắc: Đen
+              </Typography>
             </Box>
           </Stack>
           <Typography>{fCurrency(1000000)}</Typography>

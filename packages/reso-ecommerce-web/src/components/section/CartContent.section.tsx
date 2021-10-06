@@ -14,7 +14,7 @@ import { Theme } from '@mui/material/styles';
 import { makeStyles } from '@mui/styles';
 import { Box } from '@mui/system';
 import { NextSeo } from 'next-seo';
-import Link from 'next/link';
+import Link from '@/components/Link';
 import { Img } from 'react-image';
 import { MHidden } from '../@material-extend';
 import { ProductCarousel } from '../carousel';
@@ -80,7 +80,7 @@ const CartContentSection = ({ imgStyle }: Props) => {
   );
 
   return (
-    <Container maxWidth="xl">
+    <Container maxWidth="lg">
       <NextSeo title="Giỏ hàng của bạn" description="Giỏ hàng của bạn" />
 
       {cartItems.length === 0 && emptyCart}
@@ -98,15 +98,13 @@ const CartContentSection = ({ imgStyle }: Props) => {
               Giỏ hàng của bạn
             </Typography>
             <Link href="/">
-              <a>
-                <Typography
-                  variant="h6"
-                  fontWeight="300"
-                  sx={{ textDecoration: 'underline' }}
-                >
-                  Tiếp tục mua sắm
-                </Typography>
-              </a>
+              <Typography
+                variant="h6"
+                fontWeight="300"
+                sx={{ textDecoration: 'underline' }}
+              >
+                Tiếp tục mua sắm
+              </Typography>
             </Link>
           </Stack>
 
@@ -207,11 +205,9 @@ const CartContentSection = ({ imgStyle }: Props) => {
               </Box>
               <Box>
                 <Link href="/checkout" passHref>
-                  <a>
-                    <Button size="large" fullWidth variant="contained">
-                      THANH TOÁN
-                    </Button>
-                  </a>
+                  <Button size="large" fullWidth variant="contained">
+                    THANH TOÁN
+                  </Button>
                 </Link>
               </Box>
             </Stack>

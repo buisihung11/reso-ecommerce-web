@@ -7,6 +7,7 @@ import * as React from 'react';
 import { FC } from 'react';
 import { Img } from 'react-image';
 import clsx from 'clsx';
+import ProductThumbnail from './product-thumbnail';
 
 export type ProductCardProps = {
   product: Partial<TProduct>;
@@ -65,46 +66,15 @@ const ProductCard: FC<ProductCardProps> = ({
     >
       <Box className={classes.wrapper}>
         <Stack spacing={2}>
-          <Img
-            className={clsx({
-              [classes.thumbnail]: imgStyle === 'auto',
-              [classes.squareImg]: imgStyle === 'square',
-            })}
+          <ProductThumbnail
+            ImgProps={{
+              className: clsx({
+                [classes.thumbnail]: imgStyle === 'auto',
+                [classes.squareImg]: imgStyle === 'square',
+              }),
+            }}
             src={pic_url!}
-            loader={
-              <Box
-                p={2}
-                bgcolor="grey.100"
-                width="100%"
-                sx={{
-                  aspectRatio: '1 / 1',
-                  display: 'flex',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                }}
-              >
-                {product_name}
-              </Box>
-            }
-            unloader={
-              <Box
-                p={2}
-                textAlign="center"
-                bgcolor="grey.100"
-                width="100%"
-                position="relative"
-                sx={{
-                  aspectRatio: '1 / 1',
-                  display: 'flex',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                }}
-              >
-                <Typography className={classes.productTitle} noWrap>
-                  {product_name}
-                </Typography>
-              </Box>
-            }
+            title={product_name!}
           />
 
           {hasImage && (

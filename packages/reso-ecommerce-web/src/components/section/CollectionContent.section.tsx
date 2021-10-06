@@ -55,7 +55,7 @@ const CollectionContentSection = (props: Props) => {
   }
 
   return (
-    <Box maxWidth="xl" px={[4, 12]} pt={12} pb={100}>
+    <Box maxWidth="xl" px={[4, 12]} pt={{ xs: 6, md: 12 }} pb={10}>
       <NextSeo
         title={collectionInfo?.name ?? 'Bộ sưu tập'}
         description={collectionInfo?.name}

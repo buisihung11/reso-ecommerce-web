@@ -111,6 +111,7 @@ const ProductOptions = ({
     <Stack spacing={2}>
       {options.map((opt) => (
         <Box
+          key={`product-form-option-${opt.displayName}`}
           sx={{
             display: 'flex',
             justifyContent: 'space-between',
