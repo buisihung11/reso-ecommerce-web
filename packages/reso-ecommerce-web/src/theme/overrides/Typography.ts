@@ -13,7 +13,7 @@ export default function Typography(theme: Theme) {
           marginBottom: theme.spacing(1),
         },
         caption: {
-          color: theme.palette.grey[400],
+          // color: theme.palette.grey[400],
         },
       },
     },
