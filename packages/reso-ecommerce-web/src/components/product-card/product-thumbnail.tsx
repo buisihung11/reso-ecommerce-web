@@ -1,7 +1,10 @@
 import { Typography } from '@mui/material';
+import { Theme } from '@mui/material/styles';
+import { makeStyles } from '@mui/styles';
 import { Box, BoxProps } from '@mui/system';
 import React from 'react';
 import { Img, ImgProps } from 'react-image';
+import clsx from 'clsx';
 
 interface Props {
   src: string;
@@ -9,7 +12,21 @@ interface Props {
   LoaderProps?: BoxProps;
   UnloaderProps?: BoxProps;
   ImgProps?: Omit<ImgProps, 'src'>;
+  imgStyle?: 'auto' | 'square';
 }
+
+const useProductStyles = makeStyles((theme: Theme) => ({
+  thumbnail: {
+    borderWidth: `1px solid ${theme.palette.grey[400]}`,
+    transition: 'all ease-in-out 300ms',
+    height: 'auto',
+  },
+  squareImg: {
+    width: '100%',
+    aspectRatio: '1/1',
+    objectFit: 'cover',
+  },
+}));
 
 const ProductThumbnail = ({
   src,
@@ -17,9 +34,16 @@ const ProductThumbnail = ({
   ImgProps,
   LoaderProps = {},
   UnloaderProps,
+  imgStyle = 'auto',
 }: Props) => {
+  const classes = useProductStyles();
+
   return (
     <Img
+      className={clsx({
+        [classes.thumbnail]: imgStyle === 'auto',
+        [classes.squareImg]: imgStyle === 'square',
+      })}
       {...ImgProps}
       src={src}
       loader={

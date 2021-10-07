@@ -29,6 +29,7 @@ export type ProductOptionValues = {
 export type ProductVariant = {
   id: string | number;
   options: { displayName: string; value: any; [key: string]: any }[];
+  price?: number;
 };
 
 export type SelectedOptions = Record<string, string | null>;

@@ -1,3 +1,4 @@
+import { Cart } from '@/hooks/cart/useCart';
 import { fCurrency } from '@/utils/formatNumber';
 import {
   Badge,
@@ -13,7 +14,9 @@ import { Box } from '@mui/system';
 import React from 'react';
 import ProductThumbnail from '../product-card/product-thumbnail';
 
-interface Props {}
+interface Props {
+  cart: Cart;
+}
 
 const HStack = styled(Box)(({ theme }) => ({
   display: 'flex',
@@ -21,29 +24,40 @@ const HStack = styled(Box)(({ theme }) => ({
   alignItems: 'center',
 }));
 
-const CartSummarySeciton = (props: Props) => {
+const CartSummarySeciton = ({ cart }: Props) => {
   return (
     <Container maxWidth="md">
       <Stack spacing={2}>
-        <HStack>
-          <Stack direction="row" spacing={2} alignItems="center">
-            <Badge color="secondary" badgeContent={2}>
-              <ProductThumbnail
-                src="https://cdn.shopify.com/s/files/1/0264/0793/products/mlouye-thelma-sandal-gummy-1_small.jpg?v=1620013741"
-                title="Sản phẩm 1"
-              />
-            </Badge>
-            <Box>
-              <Typography noWrap variant="body1" mb={1}>
-                Áo thun T-shirt
-              </Typography>
-              <Typography variant="caption" color="GrayText">
-                Màu sắc: Đen
-              </Typography>
-            </Box>
-          </Stack>
-          <Typography>{fCurrency(1000000)}</Typography>
-        </HStack>
+        {cart.items.map((item) => (
+          <HStack key={`checkout-item-${item.product_id}`}>
+            <Stack direction="row" spacing={2} alignItems="center">
+              <Badge color="secondary" badgeContent={2}>
+                <Box width={72} height={72}>
+                  <ProductThumbnail
+                    imgStyle="square"
+                    src={item.pic_url}
+                    title={item.product_name}
+                  />
+                </Box>
+              </Badge>
+              <Box>
+                <Typography noWrap variant="body1" mb={1}>
+                  {item.product_name}
+                </Typography>
+                {item.selectedVariant?.options?.map((opt) => (
+                  <Typography
+                    key={`${opt.displayName}`}
+                    variant="caption"
+                    color="GrayText"
+                  >
+                    {opt.displayName}: {opt.value}
+                  </Typography>
+                ))}
+              </Box>
+            </Stack>
+            <Typography>{fCurrency(item.price)}</Typography>
+          </HStack>
+        ))}
 
         <Divider />
 
@@ -59,7 +73,7 @@ const CartSummarySeciton = (props: Props) => {
         <Box>
           <HStack>
             <Typography>Tổng</Typography>
-            <Typography fontWeight={400}>{fCurrency(100000)}</Typography>
+            <Typography fontWeight={400}>{fCurrency(cart.total)}</Typography>
           </HStack>
           <HStack>
             <Typography>Phí vận chuyển</Typography>
@@ -71,7 +85,7 @@ const CartSummarySeciton = (props: Props) => {
 
         <HStack>
           <Typography variant="h5">Tổng cộng</Typography>
-          <Typography variant="h4">{fCurrency(1000000)}</Typography>
+          <Typography variant="h4">{fCurrency(cart.finalAmount)}</Typography>
         </HStack>
       </Stack>
     </Container>

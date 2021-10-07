@@ -1,9 +1,14 @@
 import React from 'react';
 import { Box, Stack, Typography, TextField, Grid, Button } from '@mui/material';
+import { useFormContext } from 'react-hook-form';
+import { CheckoutFormState } from '../CheckoutContent.section';
+import RHKTextField from '@/components/form/RHKTextField';
 
 interface Props {}
 
 const CheckoutInfoStepSection = (props: Props) => {
+  const { register, control } = useFormContext<CheckoutFormState>();
+
   return (
     <>
       <Box width="100%">
@@ -21,7 +26,13 @@ const CheckoutInfoStepSection = (props: Props) => {
           </Typography>
         </Stack>
 
-        <TextField label="Email" placeholder="Email" fullWidth />
+        <RHKTextField
+          label="Email"
+          placeholder="Email"
+          fullWidth
+          name="email"
+          control={control}
+        />
       </Box>
 
       <Box width="100%">
@@ -30,23 +41,45 @@ const CheckoutInfoStepSection = (props: Props) => {
         </Typography>
         <Grid container spacing={2}>
           <Grid item xs={6}>
-            <TextField label="Tên" fullWidth />
+            <RHKTextField
+              control={control}
+              label="Tên"
+              fullWidth
+              name="lastName"
+            />
           </Grid>
           <Grid item xs={6}>
-            <TextField label="Họ" fullWidth />
-          </Grid>
-          <Grid item xs={12}>
-            <TextField
-              helperText="Số điện thoại để liên lạc khi giao hàng"
-              label="Số điện thoại"
+            <RHKTextField
+              control={control}
+              label="Họ"
               fullWidth
+              name="firstName"
             />
           </Grid>
           <Grid item xs={12}>
-            <TextField label="Địa chỉ" fullWidth />
+            <RHKTextField
+              control={control}
+              helperText="Số điện thoại để liên lạc khi giao hàng"
+              label="Số điện thoại"
+              fullWidth
+              name="phone"
+            />
           </Grid>
           <Grid item xs={12}>
-            <TextField label="Chung cư, căn hộ" fullWidth />
+            <RHKTextField
+              control={control}
+              label="Địa chỉ"
+              fullWidth
+              name="address"
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <RHKTextField
+              control={control}
+              label="Chung cư, căn hộ"
+              fullWidth
+              name="apartment"
+            />
           </Grid>
         </Grid>
       </Box>

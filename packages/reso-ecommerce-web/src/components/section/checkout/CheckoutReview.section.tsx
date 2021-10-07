@@ -1,9 +1,20 @@
 import { Box, Paper, Stack, Typography } from '@mui/material';
 import React from 'react';
+import { useFormContext, useWatch } from 'react-hook-form';
+import { CheckoutFormState } from '../CheckoutContent.section';
 
-interface Props {}
+interface Props {
+  show?: boolean;
+}
 
-const CheckoutReviewSection = (props: Props) => {
+const CheckoutReviewSection = ({ show }: Props) => {
+  const { watch } = useFormContext<CheckoutFormState>();
+  const email = watch('email');
+  const address = watch('address');
+  const shippingMethod = watch('shippingMethod');
+
+  if (!show) return <></>;
+
   return (
     <Paper
       sx={{
@@ -13,12 +24,11 @@ const CheckoutReviewSection = (props: Props) => {
       }}
     >
       <Stack spacing={2}>
-        <CheckoutReviewRow title="Liên hệ" value="buisihung321@gmail.com" />
-        <CheckoutReviewRow
-          title="Giao hàng"
-          value="129 Tay Hoa Street Disctrict 9, Ho Chi Minh 70000, Vietnam"
-        />
-        <CheckoutReviewRow title="Phương thức" value="Giao hàng tiết kiệm" />
+        {email && <CheckoutReviewRow title="Liên hệ" value={email} />}
+        {address && <CheckoutReviewRow title="Giao hàng" value={address} />}
+        {shippingMethod && (
+          <CheckoutReviewRow title="Phương thức" value={shippingMethod} />
+        )}
       </Stack>
     </Paper>
   );

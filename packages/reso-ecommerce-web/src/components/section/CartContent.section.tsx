@@ -238,9 +238,7 @@ const CartContentSection = ({ imgStyle }: Props) => {
                 <Typography variant="h5" pr={2}>
                   Tổng cộng
                 </Typography>
-                <Typography variant="h5">
-                  {fCurrency(cart.finalAmount)}
-                </Typography>
+                <Typography variant="h5">{fCurrency(cart.total)}</Typography>
               </Box>
               <Box>
                 <Typography variant="caption">
