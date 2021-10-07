@@ -13,7 +13,7 @@ import {
   Typography,
 } from '@mui/material';
 import React from 'react';
-import { useFormContext } from 'react-hook-form';
+import { Controller, useFormContext } from 'react-hook-form';
 import { CheckoutFormState } from '../CheckoutContent.section';
 
 interface Props {}
@@ -21,6 +21,7 @@ interface Props {}
 const CheckoutShippingStepSection = (props: Props) => {
   const {
     register,
+    control,
     formState: { errors },
   } = useFormContext<CheckoutFormState>();
 
@@ -52,30 +53,44 @@ const CheckoutShippingStepSection = (props: Props) => {
           }}
         >
           <List sx={{ width: '100%' }} disablePadding>
-            <RadioGroup
-              aria-label="shipping method"
-              {...register('shippingMethod')}
-            >
-              {shippingMethod.map(({ label, price }) => {
-                return (
-                  <ListItem
-                    key={label}
-                    secondaryAction={
-                      <Typography fontWeight="bold" variant="body2">
-                        {price === 0 ? 'Free' : fCurrency(price)}
-                      </Typography>
-                    }
-                    disablePadding
-                  >
-                    <FormControlLabel
-                      value={label}
-                      label={label}
-                      control={<Radio />}
-                    />
-                  </ListItem>
-                );
-              })}
-            </RadioGroup>
+            <Controller
+              control={control}
+              name="shippingMethod"
+              render={({
+                field: { onChange, onBlur, value, name, ref },
+                fieldState: { invalid, isTouched, isDirty, error },
+                formState,
+              }) => (
+                <RadioGroup
+                  aria-label="shipping method"
+                  name={name}
+                  value={value}
+                  onChange={onChange}
+                  onBlur={onBlur}
+                >
+                  {shippingMethod.map(({ label, price }) => {
+                    return (
+                      <ListItem
+                        key={label}
+                        secondaryAction={
+                          <Typography fontWeight="bold" variant="body2">
+                            {price === 0 ? 'Free' : fCurrency(price)}
+                          </Typography>
+                        }
+                        disablePadding
+                      >
+                        <FormControlLabel
+                          key={label}
+                          value={label}
+                          label={label}
+                          control={<Radio />}
+                        />
+                      </ListItem>
+                    );
+                  })}
+                </RadioGroup>
+              )}
+            />
           </List>
         </Paper>
       </FormControl>

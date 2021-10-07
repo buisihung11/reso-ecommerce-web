@@ -1,4 +1,5 @@
 import { MHidden } from '@/components/@material-extend';
+import { ErrorMessage } from '@hookform/error-message';
 import {
   Box,
   Button,
@@ -6,7 +7,6 @@ import {
   FormControlLabel,
   FormHelperText,
   List,
-  ListItem,
   Paper,
   Radio,
   RadioGroup,
@@ -15,8 +15,7 @@ import {
   Typography,
 } from '@mui/material';
 import React from 'react';
-import { ErrorMessage } from '@hookform/error-message';
-import { useFormContext } from 'react-hook-form';
+import { Controller, useFormContext } from 'react-hook-form';
 import { CheckoutFormState } from '../CheckoutContent.section';
 
 interface Props {}
@@ -24,6 +23,7 @@ interface Props {}
 const CheckoutPaymentStepSection = (props: Props) => {
   const {
     register,
+    control,
     formState: { errors },
   } = useFormContext<CheckoutFormState>();
 
@@ -72,6 +72,16 @@ const CheckoutPaymentStepSection = (props: Props) => {
             </FormHelperText>
           )}
         />
+        {/* <RadioGroupField
+          control={control}
+          name="paymentType"
+          options={paymentMethod.map(
+            (x) => ({ id: x.label, name: x.label } as RadioOption),
+            [],
+          )}
+          disabled={false}
+          label={'Payment'}
+        /> */}
         <FormControl fullWidth component="fieldset">
           <Paper
             sx={{
@@ -81,23 +91,35 @@ const CheckoutPaymentStepSection = (props: Props) => {
             }}
           >
             <List sx={{ width: '100%' }} disablePadding>
-              <RadioGroup
-                aria-label="payment type"
-                {...register('paymentType')}
-              >
-                {paymentMethod.map(({ label, disabled }) => {
-                  return (
-                    <ListItem key={label} disablePadding>
-                      <FormControlLabel
-                        value={label}
-                        disabled={disabled}
-                        control={<Radio />}
-                        label={label}
-                      />
-                    </ListItem>
-                  );
-                })}
-              </RadioGroup>
+              <Controller
+                control={control}
+                name="paymentType"
+                render={({
+                  field: { onChange, onBlur, value, name, ref },
+                  fieldState: { invalid, isTouched, isDirty, error },
+                  formState,
+                }) => (
+                  <RadioGroup
+                    aria-label="payment type"
+                    name={name}
+                    value={value}
+                    onChange={onChange}
+                    onBlur={onBlur}
+                  >
+                    {paymentMethod.map(({ label, disabled }) => {
+                      return (
+                        <FormControlLabel
+                          key={label}
+                          value={label}
+                          disabled={disabled}
+                          control={<Radio />}
+                          label={label}
+                        />
+                      );
+                    })}
+                  </RadioGroup>
+                )}
+              />
             </List>
           </Paper>
         </FormControl>
