@@ -1,4 +1,5 @@
 import useProducts from '@/hooks/product/useProducts';
+import useDeleteItem from '@/hooks/cart/useDeleteItem';
 import { fCurrency } from '@/utils/formatNumber';
 import { DeleteOutline } from '@mui/icons-material';
 import {
@@ -19,8 +20,10 @@ import { Img } from 'react-image';
 import { MHidden } from '../@material-extend';
 import { ProductCarousel } from '../carousel';
 import ProductQuantity from '../product-details/ProductQuantity';
-import useCart from '@/hooks/cart/useCart';
+import useCart, { CartItem } from '@/hooks/cart/useCart';
 import ProductThumbnail from '../product-card/product-thumbnail';
+import { LoadingButton } from '@mui/lab';
+import useUpdateItem from '@/hooks/cart/useUpdateItem';
 
 interface Props {
   imgStyle?: any;
@@ -44,7 +47,10 @@ const useCartStyles = makeStyles((theme: Theme) => ({
 
 const CartContentSection = ({ imgStyle }: Props) => {
   const classes = useCartStyles();
-  const { cart } = useCart();
+  const { cart, processing, error } = useCart();
+  const { mutate: deleteCartItem } = useDeleteItem();
+  const { mutate: updateCartItem } = useUpdateItem();
+
   const { data: relatedProducts } = useProducts({
     params: { page: 1, size: 10 },
   });
@@ -81,6 +87,36 @@ const CartContentSection = ({ imgStyle }: Props) => {
       </Box>
     </Stack>
   );
+
+  const deleteBtn = (cartItem: CartItem) => {
+    return (
+      <IconButton
+        onClick={() => {
+          deleteCartItem({
+            productId: cartItem.product_id,
+            productVariantId: cartItem.selectedVariant?.id,
+          });
+        }}
+      >
+        <DeleteOutline />
+      </IconButton>
+    );
+  };
+
+  const quantityInputBtn = (cartItem: CartItem) => {
+    return (
+      <ProductQuantity
+        onChange={(quantity) => {
+          updateCartItem({
+            productId: cartItem.product_id,
+            productVariantId: cartItem.selectedVariant?.id,
+            quantity,
+          });
+        }}
+        defaultValue={cartItem.quantity}
+      />
+    );
+  };
 
   return (
     <Container maxWidth="lg">
@@ -143,11 +179,15 @@ const CartContentSection = ({ imgStyle }: Props) => {
                         ImgProps={{
                           className: classes.thumbnail,
                         }}
+                        UnloaderProps={{
+                          width: '75px',
+                          height: '75px',
+                        }}
                         src={cartItem.pic_url}
                       />
                       <Stack spacing={2}>
                         <Box>
-                          <Typography noWrap variant="body1" mb={1}>
+                          <Typography variant="body1" mb={1}>
                             {cartItem.product_name}
                           </Typography>
                           <Typography variant="caption">
@@ -160,10 +200,8 @@ const CartContentSection = ({ imgStyle }: Props) => {
                         </Box>
                         <MHidden width="mdUp">
                           <Stack direction="row">
-                            <ProductQuantity defaultValue={cartItem.quantity} />
-                            <IconButton>
-                              <DeleteOutline />
-                            </IconButton>
+                            {quantityInputBtn(cartItem)}
+                            {deleteBtn(cartItem)}
                           </Stack>
                         </MHidden>
                       </Stack>
@@ -173,16 +211,14 @@ const CartContentSection = ({ imgStyle }: Props) => {
                   <MHidden width="mdDown">
                     <Grid item md={3}>
                       <Stack direction="row">
-                        <ProductQuantity defaultValue={cartItem.quantity} />
-                        <IconButton>
-                          <DeleteOutline />
-                        </IconButton>
+                        {quantityInputBtn(cartItem)}
+                        {deleteBtn(cartItem)}
                       </Stack>
                     </Grid>
                   </MHidden>
 
                   <Grid item xs={4} md={2} textAlign="right">
-                    <Typography>{fCurrency(1000000)}</Typography>
+                    <Typography>{fCurrency(cartItem.price)}</Typography>
                   </Grid>
                 </Grid>
               </Box>
@@ -202,18 +238,30 @@ const CartContentSection = ({ imgStyle }: Props) => {
                 <Typography variant="h5" pr={2}>
                   Tổng cộng
                 </Typography>
-                <Typography variant="h5">{fCurrency(3000000)}</Typography>
+                <Typography variant="h5">
+                  {fCurrency(cart.finalAmount)}
+                </Typography>
               </Box>
               <Box>
                 <Typography variant="caption">
                   Thuế và phí vận chuyển sẽ được tính khi thanh toán.
                 </Typography>
+                {error && (
+                  <Typography sx={{ color: 'error.main' }} variant="caption">
+                    {(error as Error).message}
+                  </Typography>
+                )}
               </Box>
               <Box>
                 <Link href="/checkout" passHref>
-                  <Button size="large" fullWidth variant="contained">
+                  <LoadingButton
+                    loading={processing}
+                    size="large"
+                    fullWidth
+                    variant="contained"
+                  >
                     THANH TOÁN
-                  </Button>
+                  </LoadingButton>
                 </Link>
               </Box>
             </Stack>

@@ -19,25 +19,39 @@ const addItem = async ({
   if (!variant && product.variants?.length) {
     variant = product.variants[0];
   }
-  return {
-    product,
+  const newCartItem = {
+    ...product,
     quantity,
-    selectedOptions,
+    selectedVariant: variant,
   };
+
+  return newCartItem;
 };
 
 const useAddItem = () => {
   const queryClient = useQueryClient();
   return useMutation(addItem, {
-    onSuccess: ({ product, selectedOptions, quantity }) => {
+    onSuccess: (newCartItem) => {
       const cart = queryClient.getQueryData<Cart>(['cart']);
-      let variant = getProductVariant(product, selectedOptions);
+      const cartItems = [...(cart?.items ?? [])];
 
-      if (!variant && product.variants?.length) {
-        variant = product.variants[0];
+      const updateIdx = cartItems.findIndex(
+        (item) =>
+          item.product_id === newCartItem.product_id &&
+          (!newCartItem.selectedVariant?.id ||
+            newCartItem.selectedVariant?.id === item.selectedVariant?.id),
+      );
+
+      if (updateIdx > -1) {
+        const updateItem = cartItems[updateIdx];
+        cartItems[updateIdx] = {
+          ...cartItems[updateIdx],
+          quantity: newCartItem.quantity + updateItem.quantity,
+        };
+        CartStorage.set({ ...cart, items: cartItems });
+      } else {
+        CartStorage.set({ ...cart, items: [...cart!.items, newCartItem] });
       }
-      const newCartItem = { ...product, quantity, selectedVariant: variant };
-      CartStorage.set({ ...cart, items: [...cart!.items, newCartItem] });
 
       queryClient.invalidateQueries(['cart']);
     },

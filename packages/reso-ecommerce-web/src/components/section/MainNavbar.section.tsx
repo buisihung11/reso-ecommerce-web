@@ -59,7 +59,8 @@ const MainNavbarSection = (props: Props) => {
   const classes = useNavBarClasses();
   const router = useRouter();
 
-  const totalItem = cart.items.length;
+  const totalItem = cart.totalItem;
+
   const triggerHide = useOffSetTop(70);
   const navConfig =
     collections

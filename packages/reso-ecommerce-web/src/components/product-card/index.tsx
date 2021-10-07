@@ -62,7 +62,6 @@ const ProductCard: FC<ProductCardProps> = ({
     <Link
       href={`/products/${product_id}` || '#'}
       aria-label={`View ${product_name} product page`}
-      passHref
     >
       <Box className={classes.wrapper}>
         <Stack spacing={2}>

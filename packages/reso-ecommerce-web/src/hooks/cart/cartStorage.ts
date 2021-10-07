@@ -5,7 +5,8 @@ const CartStorage = {
   get() {
     return getCookie('CART_LOCALSTORAGE_KEY');
   },
-  set(cart: Cart) {
+  set(cart: Partial<Cart | null | undefined>) {
+    console.log(`save cart`, cart);
     setCookie('CART_LOCALSTORAGE_KEY', JSON.stringify(cart));
   },
 };
