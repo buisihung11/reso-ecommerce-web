@@ -25,13 +25,14 @@ import Box from '@mui/material/Box';
 // material
 import { styled, useTheme } from '@mui/material/styles';
 import Tab from '@mui/material/Tab';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { Controller, FormProvider, useForm } from 'react-hook-form';
 import ProductActionBottomBar from './ProductActionBottomBar';
 import ProductOptions from './ProductOptions';
 import ProductQuantity from './ProductQuantity';
 import { toast } from 'react-toastify';
 import useAddItem from '@/hooks/cart/useAddItem';
+import { StoreContext } from '@/contexts/store-context';
 
 // ----------------------------------------------------------------------
 
@@ -121,6 +122,7 @@ export default function ProductDetailsSummary({
 }: ProductDetailsSumaryprops) {
   const theme = useTheme();
   const addItem = useAddItem();
+  const context = useContext(StoreContext);
 
   const status = 'sale';
   const available = 100;
@@ -167,6 +169,7 @@ export default function ProductDetailsSummary({
     try {
       const { quantity } = getValues();
       addItem.mutate({ product, quantity, selectedOptions });
+      context.setChangeShowReviewCart(true);
       toast('Thêm vào giỏ hàng thành công', {
         type: 'success',
       });

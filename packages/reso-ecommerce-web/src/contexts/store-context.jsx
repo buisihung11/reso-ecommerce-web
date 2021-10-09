@@ -8,11 +8,13 @@ const defaultValues = {
   cart: [],
   isOpen: false,
   loading: false,
+  isShowReviewCart: false,
   onOpen: () => {},
   onClose: () => {},
   addVariantToCart: () => {},
   removeLineItem: () => {},
   updateLineItem: () => {},
+  setChangeShowReviewCart: (isShow) => {},
   client,
   checkout: {
     lineItems: [
@@ -34,14 +36,18 @@ const localStorageKey = `shopify_checkout_id`;
 export const StoreProvider = ({ children }) => {
   const [checkout, setCheckout] = React.useState(defaultValues.checkout);
   const [loading, setLoading] = React.useState(false);
+  const [isShowReviewCart, setIsShowReviewCart] = React.useState(false);
   const [didJustAddToCart, setDidJustAddToCart] = React.useState(false);
 
   const setCheckoutItem = (checkout) => {
     if (isBrowser) {
       localStorage.setItem(localStorageKey, checkout?.id);
     }
-
     setCheckout(checkout);
+  };
+
+  const setChangeShowReviewCart = (isShow) => {
+    setIsShowReviewCart(isShow);
   };
 
   React.useEffect(() => {
@@ -127,6 +133,8 @@ export const StoreProvider = ({ children }) => {
         checkout,
         loading,
         didJustAddToCart,
+        isShowReviewCart,
+        setChangeShowReviewCart,
       }}
     >
       {children}

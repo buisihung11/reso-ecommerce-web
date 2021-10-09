@@ -24,6 +24,7 @@ import { MHidden } from '../@material-extend';
 import HideOnScroll from '../HideOnScroll';
 import { MegaMenuMobile } from '../mega-menu';
 import MegaMenuDesktopHorizon from '../mega-menu/MegaMenuDesktopHorizon';
+import ProductCardReview from '../product-card/product-card-review';
 
 interface Props {}
 
@@ -114,14 +115,8 @@ const MainNavbarSection = (props: Props) => {
                       <PersonOutlined />
                     </IconButton>
                   </MHidden>
-                  <IconButton
-                    onClick={() => router.push('/cart')}
-                    size="medium"
-                  >
-                    <StyledBadge badgeContent={totalItem}>
-                      <ShoppingBagOutlined />
-                    </StyledBadge>
-                  </IconButton>
+
+                  <ProductCardReview />
                 </HStack>
               </Grid>
             </Grid>
