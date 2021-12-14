@@ -1,29 +1,9 @@
-import { SelectedOptions, TProduct } from '@/types/product';
+import { Cart, CartItem } from '@/types/cart';
 import { useMutation, useQueryClient } from 'react-query';
-import { getProductVariant } from '../product/helpers';
 import CartStorage from './cartStorage';
-import useCart, { Cart } from './useCart';
 
-const addItem = async ({
-  product,
-  quantity,
-  selectedOptions,
-}: {
-  product: TProduct;
-  quantity: number;
-  selectedOptions?: SelectedOptions | null;
-}) => {
-  let variant = getProductVariant(product, selectedOptions);
-
-  const newCartItem = {
-    ...product,
-    quantity,
-    selectedVariant: variant,
-  };
-
-  delete newCartItem.variants;
-
-  return newCartItem;
+const addItem = async (cartItem: CartItem) => {
+  return cartItem;
 };
 
 const useAddItem = () => {

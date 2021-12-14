@@ -36,6 +36,9 @@ import { toast } from 'react-toastify';
 import useAddItem from '@/hooks/cart/useAddItem';
 import { StoreContext } from '@/contexts/store-context';
 import { ProductExtras, ProductModifiers } from '.';
+import useItemBuilder from '@/hooks/cart/useItemBuilder';
+import useProductPrice from '@/hooks/product/useProductPrice';
+import ProductBuilder from './ProductBuilder';
 
 // ----------------------------------------------------------------------
 
@@ -76,44 +79,11 @@ export default function ProductDetailsSummary({
   const theme = useTheme();
   const addItem = useAddItem();
   const context = useContext(StoreContext);
-
+  const { buildItem, variant } = useItemBuilder();
   const status = 'sale';
-  const available = 100;
-  const {
-    product_id,
-    product_name,
-    product_in_menu,
-    priceSale,
-    pic_url: cover,
-    options,
-    variants,
-    extras,
-    modifiers,
-  } = product;
+  const { product_name, priceSale, pic_url: cover } = product;
 
-  const alreadyProduct = null;
   const isMaxQuantity = false;
-  const hasVariant = options?.length && variants?.length;
-  const hasExtra = extras?.length;
-  const hasModifier = modifiers?.length;
-
-  console.log(`extras`, extras);
-  const [selectedOptions, setSelectedOptions] =
-    useState<SelectedOptions | null>({});
-
-  useEffect(() => {
-    setSelectedOptions(
-      getDefaultOptionFromProduct({
-        ...product,
-      }),
-    );
-  }, [product]);
-
-  const variant = getProductVariant({ ...product }, selectedOptions);
-  // TODO: GET PRODUCT'S PRICE HOOK
-  const price = variant
-    ? variant.product_in_menu?.price1
-    : product_in_menu?.price1;
 
   const form = useForm({
     defaultValues: {
@@ -123,20 +93,24 @@ export default function ProductDetailsSummary({
   });
   const { control, getValues, watch } = form;
 
+  const currentQuantity = watch('quantity');
+  const finalPrice = useProductPrice(
+    (variant ?? product) as TProduct,
+    currentQuantity,
+  );
+
   const handleAddCart = async () => {
     try {
       const { quantity } = getValues();
-      await addItem.mutateAsync({ product, quantity, selectedOptions });
+      const itemCart = buildItem();
+      await addItem.mutateAsync({ ...itemCart, quantity });
       context.setChangeShowReviewCart(true);
     } catch (error) {
-      // setSubmitting(false);
-      toast('Có lỗi khi thêm sản phẩm', {
+      toast((error as any).message, {
         type: 'error',
       });
     }
   };
-
-  const selectedExtras = watch('selectedExtras');
 
   return (
     <RootStyle {...other}>
@@ -164,70 +138,10 @@ export default function ProductDetailsSummary({
           >
             {priceSale && fCurrency(priceSale)}
           </Box>
-          {fCurrency(price)}
+          {fCurrency(finalPrice)}
         </Typography>
 
-        {hasVariant && (
-          <>
-            <Divider sx={{ borderStyle: 'dashed' }} />
-            <Box py={2}>
-              {/* START ATTRIBUTES */}
-              {hasVariant && (
-                <ProductOptions
-                  options={options}
-                  selectedOptions={selectedOptions}
-                  onSelectOption={setSelectedOptions}
-                />
-              )}
-              {/* END ATTRIBUTES */}
-            </Box>
-            <Divider sx={{ borderStyle: 'dashed' }} />
-          </>
-        )}
-        {hasExtra && (
-          <>
-            <Divider sx={{ borderStyle: 'dashed' }} />
-            <Box py={2}>
-              <ProductExtras
-                extras={extras}
-                selected={selectedExtras}
-                onSelect={(selected) => {
-                  let updateSelected = [...selectedExtras];
-                  const selectedIndex = selectedExtras.findIndex(
-                    (s) => s.product_id === selected.product_id,
-                  );
-                  if (selectedIndex > -1) {
-                    updateSelected.splice(selectedIndex, 1, selected);
-                  } else {
-                    updateSelected.push(selected);
-                  }
-                  form.setValue('selectedExtras', updateSelected);
-                  return true;
-                }}
-                onRemove={(productId) => {
-                  let updateSelected = [...selectedExtras];
-                  const selectedIndex = selectedExtras.findIndex(
-                    (s) => s.product_id === productId,
-                  );
-                  if (selectedIndex > -1) {
-                    updateSelected.splice(selectedIndex, 1);
-                  }
-                  form.setValue('selectedExtras', updateSelected);
-                }}
-              />
-            </Box>
-            <Divider sx={{ borderStyle: 'dashed' }} />
-          </>
-        )}
-        {hasModifier && (
-          <>
-            <Divider sx={{ borderStyle: 'dashed' }} />
-            <Box py={2}>
-              <ProductModifiers modifiers={modifiers} />
-            </Box>
-            <Divider sx={{ borderStyle: 'dashed' }} />
-          </>
-        )}
+        <ProductBuilder />
 
         <MHidden width="mdDown">
           <Box

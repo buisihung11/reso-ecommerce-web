@@ -1,24 +1,18 @@
-- [ ] Product detail page
-- [ ] Checkout page
-- [ ] Fix loi build
+# Project Stack
 
+1. Server state - Fetch Query: `React Query` with `Axios`
+2. Local state - `useState`, `ReactContext`, `LocalStorage`
+3. UI Component - `Material UI`
 
+## Project Folder
 
-<p align="center">
-  <img src="https://user-images.githubusercontent.com/26466516/118417547-e9409d00-b68a-11eb-8162-6afccf9288a9.png" alt="Next.js TypeScript Starter">
-</p>
-
-<p align="center">
-  <img src="https://img.shields.io/static/v1?label=PRs&message=welcome&style=for-the-badge&color=5e17eb&labelColor=000000" alt="PRs welcome!" />
-
-  <img alt="License" src="https://img.shields.io/github/license/jpedroschmitz/typescript-nextjs-starter?style=for-the-badge&color=5e17eb&labelColor=000000">
-
-  <a href="https://twitter.com/intent/follow?screen_name=jpedroschmitz">
-    <img src="https://img.shields.io/twitter/follow/jpedroschmitz?style=for-the-badge&color=5e17eb&labelColor=000000" alt="Follow @jpedroschmitz" />
-  </a>
-</p>
-
-<br>
+1. **hooks**: contains custom hook for business logic
+2. **Types**: Typescript Defination
+3. **api**: Contains api for calling request to server that can be use in `hook`
+4. **components**: Reuse component for project
+5. **templates**: Template is built with `sections` that can be used in a page
+6. **theme**: Theme configuration for Material UI
+7. **layouts**: Reusable layout **component**
 
 A TypeScript starter for Next.js that includes all you need to build amazing projects 🔥
 

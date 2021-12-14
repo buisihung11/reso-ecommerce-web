@@ -8,7 +8,7 @@ import clsx from 'clsx';
 
 interface Props {
   src: string;
-  title: string;
+  title?: string;
   LoaderProps?: BoxProps;
   UnloaderProps?: BoxProps;
   ImgProps?: Omit<ImgProps, 'src'>;
@@ -20,6 +20,7 @@ const useProductStyles = makeStyles((theme: Theme) => ({
     borderWidth: `1px solid ${theme.palette.grey[400]}`,
     transition: 'all ease-in-out 300ms',
     height: 'auto',
+    width: '100%',
   },
   squareImg: {
     width: '100%',
@@ -74,6 +75,7 @@ const ProductThumbnail = ({
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',
+            maxHeight: '400px',
           }}
           {...UnloaderProps}
         >

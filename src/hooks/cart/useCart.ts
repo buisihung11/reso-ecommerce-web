@@ -1,25 +1,15 @@
-import { CustomerCartInfo } from '@/types/cart';
+import { Cart, CartItem, CustomerCartInfo, SelectedChoice } from '@/types/cart';
 import { useCallback } from 'react';
-import { ProductVariant, TProduct } from '@/types/product';
+import {
+  ProductVariant,
+  SelectedExtra,
+  SelectedOptions,
+  TProduct,
+} from '@/types/product';
 import { useQuery } from 'react-query';
 import CartStorage from './cartStorage';
 import { mapCartModelToPrepare } from './helper';
 import useCartPrice from './useCartPrice';
-
-export type CartItem = Omit<TProduct, 'variants'> & {
-  quantity: number;
-  /**
-   * if the product doesn't have variant this will be null
-   * */
-  selectedVariant?: ProductVariant | null;
-};
-
-export type Cart = {
-  items: CartItem[];
-  total: number;
-  totalItem: number;
-  // vouchers
-};
 
 const DEFAULT_CART: Cart = {
   items: [],

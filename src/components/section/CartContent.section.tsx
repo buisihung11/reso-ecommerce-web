@@ -207,6 +207,20 @@ const CartContentSection = ({ imgStyle }: Props) => {
                                 </Typography>
                               </Typography>
                             ))}
+                            {cartItem.selectedExtras?.map((extra) => (
+                              <Typography
+                                key={`selected-${cartItem.product_id}-opt-${extra.extra_id}`}
+                                variant="caption"
+                                color="GrayText"
+                              >
+                                <Typography pr={2}>
+                                  x {extra.quantity} - {fCurrency(5000)}
+                                </Typography>
+                              </Typography>
+                            ))}
+                            {Object.values(
+                              cartItem?.selectedModifiers ?? {},
+                            )?.join('-')}
                           </Box>
                           <MHidden width="mdUp">
                             <Stack direction="row">

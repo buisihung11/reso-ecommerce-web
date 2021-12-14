@@ -2,12 +2,13 @@ import { TProduct } from '@/types/product';
 import { BaseResponse } from '@/types/request';
 import request from '@/utils/request';
 
-export const getAllProductPaths = () =>
+export const getAllProductPaths = (params: any = {}) =>
   request
     .get<BaseResponse<TProduct>>('/products', {
       params: {
         page: 1,
         size: 100,
+        ...params,
       },
     })
     .then((res) => res.data.data.map(({ product_id }) => product_id));

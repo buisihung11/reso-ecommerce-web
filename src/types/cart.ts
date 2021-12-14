@@ -1,3 +1,10 @@
+import {
+  TProduct,
+  ProductVariant,
+  SelectedOptions,
+  SelectedExtra,
+} from './product';
+
 export interface OrderDetail {
   product_id: number;
   quantity: number;
@@ -23,6 +30,31 @@ export interface Payment {
   amount: number;
   type: number;
 }
+
+export type Cart = {
+  items: CartItem[];
+  total: number;
+  totalItem: number;
+  // vouchers
+};
+
+export type CartItem = Omit<TProduct, 'variants'> & {
+  quantity: number;
+  /**
+   * if the product doesn't have variant this will be null
+   * */
+  selectedVariant?: ProductVariant | null;
+  selectedModifiers?: SelectedOptions;
+  selectedExtras?: SelectedExtra[];
+
+  /** For combo */
+  productChilds?: SelectedChoice[];
+};
+
+export type SelectedChoice = {
+  groupId: number;
+  products: CartItem[];
+};
 
 export interface CartPrepareRequest {
   order_details: OrderDetail[];

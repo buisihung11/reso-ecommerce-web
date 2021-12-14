@@ -2,6 +2,7 @@ import {
   ProductDetailsCarousel,
   ProductDetailsSummary,
 } from '@/components/product-details';
+import ProductBuilderProvider from '@/contexts/ProductBuilderContext';
 import useProduct from '@/hooks/product/useProduct';
 import useProducts from '@/hooks/product/useProducts';
 import {
@@ -73,21 +74,23 @@ const ProductViewSection = ({ imgStyle }: Props) => {
             </Stack>
           )}
           {!error && product ? (
-            <Box>
-              <Grid container spacing={[2, 4, 6]}>
-                <Grid item xs={12} md={6} lg={7}>
-                  <ProductDetailsCarousel product={product} />
+            <ProductBuilderProvider product={product}>
+              <Box>
+                <Grid container spacing={[2, 4, 6]}>
+                  <Grid item xs={12} md={6} lg={7}>
+                    <ProductDetailsCarousel product={product} />
+                  </Grid>
+                  <Grid item xs={12} md={6} lg={5}>
+                    <ProductDetailsSummary
+                      product={product}
+                      quantity={1}
+                      // onAddCart={handleAddCart}
+                      // onGotoStep={handleGotoStep}
+                    />
+                  </Grid>
                 </Grid>
-                <Grid item xs={12} md={6} lg={5}>
-                  <ProductDetailsSummary
-                    product={product}
-                    quantity={1}
-                    // onAddCart={handleAddCart}
-                    // onGotoStep={handleGotoStep}
-                  />
-                </Grid>
-              </Grid>
-            </Box>
+              </Box>
+            </ProductBuilderProvider>
           ) : (
             <Typography>Không tìm thấy sản phẩm</Typography>
           )}

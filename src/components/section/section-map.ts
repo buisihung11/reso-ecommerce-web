@@ -8,6 +8,8 @@ import CartContentSection from './CartContent.section';
 import CheckoutContentSection from './CheckoutContent.section';
 import OrderContentSection from './OrderContent.section';
 import ProductListContentSection from './product-list/ProductListContent.section';
+import ComboListSection from './combos/ComboList.section';
+import ComboViewSection from './combos/ComboView.section';
 
 const sections = {
   'collection-content': CollectionContentSection,
@@ -20,6 +22,9 @@ const sections = {
   'product-view': ProductViewSection,
   'order-content': OrderContentSection,
   'productlist-content': ProductListContentSection,
+  // COMBOS
+  'combo-list': ComboListSection,
+  'combo-view': ComboViewSection,
 };
 
 export default sections;

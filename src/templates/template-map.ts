@@ -1,6 +1,8 @@
 import CartTemplate from './cart.template';
 import CheckoutTemplate from './checkout.template';
 import CollectionTemplate from './collection.template';
+import ComboDetailTemplate from './combo-detail.template';
+import ComboListTemplate from './combo.template';
 import HomeTemplate from './home.template';
 import OrderDetailTemplate from './order.template';
 import ProductListTemplate from './product-list.template';
@@ -12,6 +14,8 @@ const templates = {
   checkout: CheckoutTemplate,
   order: OrderDetailTemplate,
   'product-list': ProductListTemplate,
+  'combo-list': ComboListTemplate,
+  'combo-detail': ComboDetailTemplate,
 };
 
 export default templates;

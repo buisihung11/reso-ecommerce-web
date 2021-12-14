@@ -1,17 +1,16 @@
 import { TProduct } from '@/types/product';
+import { Box, Stack, Typography } from '@mui/material';
 import { Theme } from '@mui/material/styles';
-import { Stack, Box, Typography } from '@mui/material';
 import { makeStyles } from '@mui/styles';
-import Link from '@/components/Link';
+import clsx from 'clsx';
 import * as React from 'react';
 import { FC } from 'react';
-import { Img } from 'react-image';
-import clsx from 'clsx';
 import ProductThumbnail from './product-thumbnail';
 
 export type ProductCardProps = {
   product: Partial<TProduct>;
   imgStyle?: 'auto' | 'square';
+  navigate?: boolean;
 };
 
 const useProductStyles = makeStyles((theme: Theme) => ({
@@ -47,45 +46,39 @@ const useProductStyles = makeStyles((theme: Theme) => ({
 const ProductCard: FC<ProductCardProps> = ({
   product,
   imgStyle = 'square',
+  navigate = true,
 }) => {
-  const { product_name, pic_url, product_id, product_in_menu } = product;
+  const { product_name, pic_url, product_id, product_in_menu, product_type } =
+    product;
   const classes = useProductStyles();
-
-  const defaultImageHeight = 200;
-  const defaultImageWidth = 200;
-
   const hasImage = pic_url && pic_url?.length !== 0;
-  const price = product_in_menu?.price1;
+  const price = product.product_in_menu?.price1 ?? product.price;
+
   return (
-    <Link
-      href={`/products/${product_id}` || '#'}
-      aria-label={`View ${product_name} product page`}
-    >
-      <Box className={classes.wrapper}>
-        <Stack spacing={2}>
-          <ProductThumbnail
-            ImgProps={{
-              className: clsx({
-                [classes.thumbnail]: imgStyle === 'auto',
-                [classes.squareImg]: imgStyle === 'square',
-              }),
-            }}
-            src={pic_url!}
-            title={product_name!}
-          />
+    <Box className={classes.wrapper}>
+      <Stack spacing={2}>
+        <ProductThumbnail
+          ImgProps={{
+            className: clsx({
+              [classes.thumbnail]: imgStyle === 'auto',
+              [classes.squareImg]: imgStyle === 'square',
+            }),
+          }}
+          src={pic_url!}
+          title={product_name!}
+        />
 
-          {hasImage && (
-            <Typography className={classes.productTitle} noWrap>
-              {product_name}
-            </Typography>
-          )}
-
-          <Typography variant="body1" noWrap>
-            Từ {price} VND
+        {hasImage && (
+          <Typography className={classes.productTitle} noWrap>
+            {product_name}
           </Typography>
-        </Stack>
-      </Box>
-    </Link>
+        )}
+
+        <Typography variant="body1" noWrap>
+          Từ {price} VND
+        </Typography>
+      </Stack>
+    </Box>
   );
 };
 

@@ -1,4 +1,4 @@
-import { SelectType, TModifier } from '@/types/product';
+import { SelectedOptions, SelectType, TModifier } from '@/types/product';
 import {
   Box,
   Checkbox,
@@ -13,10 +13,12 @@ import React from 'react';
 
 type Props = {
   modifiers: TModifier[];
-  // selectedOptions: SelectedOptions | null;
+  selected: SelectedOptions;
+  onAddModifier: (option: SelectedOptions) => void;
+  onRemoveModifier: (optionName: string) => void;
 };
 
-const ProductModifiers = ({ modifiers }: Props) => {
+const ProductModifiers = ({ modifiers, ...props }: Props) => {
   if (!modifiers.length) {
     return <></>;
   }
@@ -24,16 +26,20 @@ const ProductModifiers = ({ modifiers }: Props) => {
   return (
     <Stack spacing={2}>
       {modifiers?.map((modifier) => (
-        <ModifierGroup key={modifier.id} modifier={modifier} />
+        <ModifierGroup key={modifier.id} modifier={modifier} {...props} />
       ))}
     </Stack>
   );
 };
 
-const ModifierGroup = ({ modifier }: { modifier: TModifier }) => {
-  const isOptional = modifier.is_required;
-  let control =
-    modifier.select_type === SelectType.SINGLE ? <Radio /> : <Checkbox />;
+const ModifierGroup = ({
+  modifier,
+  onAddModifier,
+  onRemoveModifier,
+  selected,
+}: Omit<Props, 'modifiers'> & { modifier: TModifier }) => {
+  const isOptional = !modifier.is_required;
+
   return (
     <Stack spacing={2}>
       <Stack direction="row" spacing={1} alignItems="center">
@@ -43,28 +49,44 @@ const ModifierGroup = ({ modifier }: { modifier: TModifier }) => {
         </Typography>
       </Stack>
       <Box maxWidth="340px">
-        <FormControl component="fieldset" sx={{ width: '100%' }}>
-          <FormGroup sx={{ width: '100%' }}>
-            {modifier.options.map((option, i: number) => {
-              return (
-                <Stack
-                  key={`${modifier.id}-${option.value}`}
-                  direction="row"
-                  justifyContent="space-between"
-                  width="100%"
-                  alignItems="center"
-                >
-                  <FormControlLabel
-                    key={`${option.value}-${i}`}
-                    value={option.value}
-                    control={control}
-                    label={option.label}
-                  />
-                </Stack>
+        <FormGroup sx={{ width: '100%' }}>
+          {modifier.options.map((option, i: number) => {
+            let control =
+              modifier.select_type === SelectType.SINGLE ? (
+                <Radio />
+              ) : (
+                <Checkbox
+                  onChange={(e) => {
+                    console.log(`e`, e.target.checked);
+                    if (e.target.checked) {
+                      onAddModifier({ [option.label]: option.value });
+                    } else {
+                      onRemoveModifier(option.label);
+                    }
+                  }}
+                />
               );
-            })}
-          </FormGroup>
-        </FormControl>
+            const checked = Boolean(selected[option.label]);
+            return (
+              <Stack
+                key={`${modifier.id}-${option.value}`}
+                direction="row"
+                justifyContent="space-between"
+                width="100%"
+                alignItems="center"
+              >
+                <FormControlLabel
+                  key={`${option.value}-${i}`}
+                  value={option.value}
+                  checked={checked}
+                  control={control}
+                  label={option.label}
+                  onChange={(ev) => console.log(ev)}
+                />
+              </Stack>
+            );
+          })}
+        </FormGroup>
       </Box>
     </Stack>
   );

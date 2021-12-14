@@ -19,7 +19,7 @@ import { get } from 'lodash';
 type Props = {
   options: ProductOption[];
   selectedOptions: SelectedOptions | null;
-  onSelectOption: (selected: SelectedOptions) => void;
+  onSelectOption: (optionName: string, value: string) => void;
 };
 
 const ProductOptions = ({
@@ -28,16 +28,17 @@ const ProductOptions = ({
   onSelectOption,
 }: Props) => {
   const renderInputOption = (opt: ProductOption) => {
+    const handleSelect = (e: any) => {
+      onSelectOption(optionName.toLowerCase(), e.target.value as string);
+    };
+
     const optionName = opt.display_name ?? 'Lựa chọn';
     if (optionName?.toLowerCase() === 'color') {
       const colors = opt.values;
       return (
         <ColorSinglePicker
           onChange={(e) => {
-            onSelectOption({
-              ...selectedOptions,
-              [optionName?.toLowerCase()]: e.target.value as string,
-            });
+            handleSelect(e);
           }}
           colors={colors}
           sx={{
@@ -56,12 +57,7 @@ const ProductOptions = ({
       return (
         <FormControl component="fieldset">
           <RadioGroup
-            onChange={(e) => {
-              onSelectOption({
-                ...selectedOptions,
-                [optionName.toLowerCase()]: e.target.value as string,
-              });
-            }}
+            onChange={handleSelect}
             value={get(
               selectedOptions,
               [optionName.toLowerCase()],
@@ -90,12 +86,7 @@ const ProductOptions = ({
         <FormControl fullWidth>
           <InputLabel>{optionName}</InputLabel>
           <Select
-            onChange={(e) => {
-              onSelectOption({
-                ...selectedOptions,
-                [optionName.toLowerCase()]: e.target.value as string,
-              });
-            }}
+            onChange={handleSelect}
             value={get(selectedOptions, [optionName.toLowerCase()], '')}
             size="small"
             placeholder={optionName}
