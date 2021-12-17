@@ -20,10 +20,11 @@ import { Img } from 'react-image';
 import { MHidden } from '../@material-extend';
 import { ProductCarousel } from '../carousel';
 import ProductQuantity from '../product-details/ProductQuantity';
-import useCart, { CartItem } from '@/hooks/cart/useCart';
+import useCart from '@/hooks/cart/useCart';
 import ProductThumbnail from '../product-card/product-thumbnail';
 import { LoadingButton } from '@mui/lab';
 import useUpdateItem from '@/hooks/cart/useUpdateItem';
+import { CartItem } from '@/types/cart';
 
 interface Props {
   imgStyle?: any;

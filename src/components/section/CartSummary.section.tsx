@@ -29,7 +29,7 @@ const CartSummarySeciton = ({ cart }: Props) => {
     <Container maxWidth="md">
       <Stack spacing={2}>
         {cart.items.map((item, idx) => (
-          <HStack key={`checkout-item-${item.product_id}-${idx}`}>
+          <HStack key={`checkout-item-${item.product_id}-${idx}`} pr={2}>
             <Stack direction="row" spacing={2} alignItems="center">
               <Badge color="secondary" badgeContent={2}>
                 <Box width={72} height={72}>
@@ -41,7 +41,7 @@ const CartSummarySeciton = ({ cart }: Props) => {
                 </Box>
               </Badge>
               <Box>
-                <Typography noWrap variant="body1" mb={1}>
+                <Typography variant="body1" mb={1}>
                   {item.product_name}
                 </Typography>
                 {item.selectedVariant?.options?.map((opt) => (
@@ -76,6 +76,12 @@ const CartSummarySeciton = ({ cart }: Props) => {
             <Typography>Tổng</Typography>
             <Typography fontWeight={400}>
               {fCurrency(cart?.total_amount!)}
+            </Typography>
+          </HStack>
+          <HStack>
+            <Typography>Giảm giá</Typography>
+            <Typography fontWeight={400}>
+              {fCurrency(cart?.discount ?? 0)}
             </Typography>
           </HStack>
           <HStack>
