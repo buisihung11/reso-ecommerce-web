@@ -1,5 +1,4 @@
-import { getCookie, setCookie } from '@/utils/utils';
-import { Cart } from './useCart';
+import { Cart } from '@/types/cart';
 
 const CartStorage = {
   get() {

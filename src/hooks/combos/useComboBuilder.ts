@@ -67,9 +67,16 @@ const useComboBuilder = (combo?: ProductCombo) => {
 
   const buildComboCartItem = (): Omit<CartItem, 'quantity'> | null => {
     if (!combo) return null;
+    const fixedChoices = fixedGroups.map<SelectedChoice>((fixedGroup) => ({
+      groupId: null,
+      products: fixedGroup.products.map((p) => ({
+        ...p,
+        quantity: fixedGroup.default ?? 1,
+      })),
+    }));
     return {
       ...combo,
-      productChilds: selectedChoices,
+      productChilds: fixedChoices.concat(selectedChoices),
     };
   };
 

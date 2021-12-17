@@ -1,8 +1,7 @@
-import { SelectedOptions, TProduct } from '@/types/product';
+import { Cart } from '@/types/cart';
 import { useMutation, useQueryClient } from 'react-query';
-import { getProductVariant } from '../product/helpers';
 import CartStorage from './cartStorage';
-import useCart, { Cart } from './useCart';
+import {} from './useCart';
 
 type UpdateParam = {
   productId: number;
