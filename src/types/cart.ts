@@ -8,12 +8,13 @@ import {
 export interface OrderDetail {
   product_id: number;
   quantity: number;
+  /** Parent Tmp Id */
   parent_id?: number;
+  tmp_id: number;
+  // Only when response
   total_amount?: number;
   discount?: number;
   final_amount?: number;
-  product_name?: string;
-  product_type?: number;
 }
 
 export interface CustomerCartInfo {
@@ -52,23 +53,17 @@ export type CartItem = Omit<TProduct, 'variants'> & {
 };
 
 export type SelectedChoice = {
-  groupId: number;
+  groupId?: number | null;
   products: CartItem[];
 };
 
 export interface CartPrepareRequest {
   order_details: OrderDetail[];
-  store_id?: number;
   payments?: Payment[];
   customer?: CustomerCartInfo;
-  booking_date?: Date;
-  notes?: string;
   order_type?: number;
-  return_url?: string;
-  total_amount?: number;
   discount?: number;
   discount_order_detail?: number;
-  final_amount?: number;
 }
 
 export interface CartPrepareResponse {

@@ -1,8 +1,7 @@
 import cartApi from '@/api/cart';
 import { CartPrepareRequest } from '@/types/cart';
-import { sleep } from '@/utils/utils';
 import { useQuery } from 'react-query';
-import { CartItem } from './useCart';
+import { hashCartRequest } from './helper';
 
 type CartItemPrepare = {
   id: string | number;
@@ -24,14 +23,16 @@ const prepareCart = async (cartPrepare: CartPrepareRequest) => {
   }
 };
 
-const useCartPrice = (props: CartPrepareRequest | null) => {
+// TODO: Fix this
+const useCartPrice = (cartRequest: CartPrepareRequest | null) => {
   return useQuery(
-    ['cart', props],
+    ['cart', ...(hashCartRequest(cartRequest) ?? [])],
     () => {
-      return prepareCart(props!);
+      return prepareCart(cartRequest!);
     },
     {
-      enabled: Boolean(props) && Boolean(props?.order_details?.length),
+      enabled:
+        Boolean(cartRequest) && Boolean(cartRequest?.order_details?.length),
       retry: 5,
     },
   );
