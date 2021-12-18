@@ -6,7 +6,7 @@ import { mapCartModelToPrepare } from './helper';
 import useCart from './useCart';
 
 const useCheckout = () => {
-  const { cart } = useCart();
+  const { cart, resetCart } = useCart();
   const { data: customerInfo } = useCustomer();
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -29,6 +29,7 @@ const useCheckout = () => {
 
       setSubmitting(true);
       const res = await cartApi.checkout(data);
+      resetCart();
       return res.data;
     } catch (error: any) {
       console.log(`error`, error);
