@@ -38,7 +38,7 @@ const OrderContentSection = () => {
               </Typography>
             </Link>
           </Typography>
-          <Typography align="left" sx={{ color: 'text.secondary' }}>
+          <Typography align="left">
             Vui lòng đợi nhân viên xác nhận đơn hàng và liên lạc cho bạn.
           </Typography>
         </Box>

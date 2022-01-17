@@ -60,21 +60,15 @@ interface ExpandMoreProps extends IconButtonProps {
 }
 
 const schema = yup.object().shape({
-  customer: yup.object().shape({
-    name: yup.string().required('Vui lòng nhập họ tên'),
-    address: yup.string().required('Vui lòng nhập địa chỉ giao'),
-    email: yup.string().required('Vui lòng nhập email'),
-    phone: yup.string().required('Vui lòng nhập số điện thoại'),
-  }),
+  name: yup.string().required('Vui lòng nhập họ tên'),
+  address: yup.string().required('Vui lòng nhập địa chỉ giao'),
+  email: yup.string().required('Vui lòng nhập email'),
+  phone: yup.string().required('Vui lòng nhập số điện thoại'),
   paymentType: yup.string().required('Vui lòng chọn pthuc thanh toán'),
   shippingMethod: yup.string().required('Vui lòng chọn pthuc vận chuyển'),
 });
 
 export type CheckoutFormState = CustomerCartInfo & {
-  email: string;
-  firstName: string;
-  lastName: string;
-  phone: string;
   address?: string;
   apartment?: string;
   shippingMethod: string;
@@ -107,8 +101,6 @@ const CheckoutContentSection = (props: Props) => {
     defaultValues: Object.assign(
       {
         email: '',
-        firstName: '',
-        lastName: '',
         address: '',
         apartment: '',
         shippingMethod: '',
@@ -149,12 +141,7 @@ const CheckoutContentSection = (props: Props) => {
   const validationStepFields: {
     [key: string]: any[];
   } = {
-    '2': [
-      'customer.email',
-      'customer.name',
-      'customer.phone',
-      'customer.address',
-    ],
+    '2': ['email', 'name', 'phone', 'address'],
     '3': ['shippingMethod'],
     '4': ['paymentType'],
   };

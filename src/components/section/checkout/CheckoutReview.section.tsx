@@ -9,8 +9,8 @@ interface Props {
 
 const CheckoutReviewSection = ({ show }: Props) => {
   const { watch } = useFormContext<CheckoutFormState>();
-  const email = watch('customer.email');
-  const address = watch('customer.address');
+  const email = watch('email');
+  const address = watch('address');
   const shippingMethod = watch('shippingMethod');
 
   if (!show) return <></>;

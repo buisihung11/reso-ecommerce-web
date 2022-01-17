@@ -30,7 +30,7 @@ const CheckoutInfoStepSection = (props: Props) => {
           label="Email"
           placeholder="Email"
           fullWidth
-          name="customer.email"
+          name="email"
           control={control}
         />
       </Box>
@@ -45,7 +45,7 @@ const CheckoutInfoStepSection = (props: Props) => {
               control={control}
               label="Họ Tên"
               fullWidth
-              name="customer.name"
+              name="name"
             />
           </Grid>
           <Grid item xs={12}>
@@ -54,7 +54,7 @@ const CheckoutInfoStepSection = (props: Props) => {
               helperText="Số điện thoại để liên lạc khi giao hàng"
               label="Số điện thoại"
               fullWidth
-              name="customer.phone"
+              name="phone"
             />
           </Grid>
           <Grid item xs={12}>
@@ -62,7 +62,7 @@ const CheckoutInfoStepSection = (props: Props) => {
               control={control}
               label="Địa chỉ"
               fullWidth
-              name="customer.address"
+              name="address"
             />
           </Grid>
           <Grid item xs={12}>
@@ -70,7 +70,7 @@ const CheckoutInfoStepSection = (props: Props) => {
               control={control}
               label="Chung cư, căn hộ"
               fullWidth
-              name="customer.apartment"
+              name="apartment"
             />
           </Grid>
         </Grid>
