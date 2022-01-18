@@ -52,7 +52,7 @@ const ThumbWrapperStyle = styled('div')(({ theme }) => ({
 const ProductThumbnailStyle = styled(ProductThumbnail)(({ theme }) => ({
   top: 0,
   width: '100%',
-  height: '100%',
+  height: 'auto',
   objectFit: 'cover',
   position: 'absolute',
 }));
@@ -147,11 +147,13 @@ export default function ProductDetailsCarousel({
   const [nav2, setNav2] = useState<Slider>();
   const slider1 = useRef<Slider | null>(null);
   const slider2 = useRef<Slider | null>(null);
-  const imagesLightbox = [product.pic_url].concat(
-    ...(product.images?.map((_image) => _image) ?? []),
-  );
-  const totalImage = imagesLightbox.length ?? 0;
+  const imagesLightbox =
+    product.product_image
+      ?.map(({ image_url }) => image_url)
+      .concat([product.pic_url]) ?? [];
+  const totalImage = imagesLightbox?.length ?? 0;
 
+  console.log(`imagesLightbox`, imagesLightbox);
   const handleOpenLightbox = (url: string) => {
     const selectedImage = findIndex(
       imagesLightbox,
@@ -180,7 +182,7 @@ export default function ProductDetailsCarousel({
     focusOnSelect: true,
     variableWidth: true,
     centerPadding: '0px',
-    slidesToShow: totalImage > 3 ? 3 : totalImage,
+    slidesToShow: imagesLightbox.length > 3 ? 3 : imagesLightbox.length,
   };
 
   useEffect(() => {

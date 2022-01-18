@@ -40,6 +40,7 @@ export type TProduct = {
   variants?: ProductVariant[];
   options?: ProductOption[];
   product_in_menu?: ProductInMenu;
+  product_image?: { id: number; image_url: string; description: string }[];
 };
 
 export type ProductInMenu = {

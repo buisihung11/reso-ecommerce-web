@@ -4,6 +4,7 @@ import React, { useRef, useState } from 'react';
 import Slider from 'react-slick';
 import { CarouselControlsArrowsBasic2, CarouselControlsArrowsIndex } from '.';
 import ProductCard, { ProductCardProps } from '../product-card';
+import Link from '@/components/Link';
 
 interface Props {
   products: TProduct[];
@@ -65,11 +66,16 @@ const ProductCarousel = ({ products, CardProps = {} }: Props) => {
     <RootStyle>
       <Slider {...settings} ref={carouselRef}>
         {products?.map((item) => (
-          <ProductCard
-            key={`relate-product-${item.product_id}`}
-            product={item}
-            {...CardProps}
-          />
+          <Link
+            href={`/products/${item.product_id}`}
+            aria-label={`View ${item.product_name} product page`}
+          >
+            <ProductCard
+              key={`relate-product-${item.product_id}`}
+              product={item}
+              {...CardProps}
+            />
+          </Link>
         ))}
       </Slider>
       <CarouselControlsArrowsBasic2

@@ -77,10 +77,10 @@ const ProductViewSection = ({ imgStyle }: Props) => {
             <ProductBuilderProvider product={product}>
               <Box>
                 <Grid container spacing={[2, 4, 6]}>
-                  <Grid item xs={12} md={6} lg={7}>
+                  <Grid item xs={12} sm={5} lg={5} xl={4}>
                     <ProductDetailsCarousel product={product} />
                   </Grid>
-                  <Grid item xs={12} md={6} lg={5}>
+                  <Grid item xs={12} sm={7} lg={7} xl={8}>
                     <ProductDetailsSummary
                       product={product}
                       quantity={1}
