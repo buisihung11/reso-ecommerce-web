@@ -25,7 +25,6 @@ import ProductThumbnail from '../product-card/product-thumbnail';
 import { LoadingButton } from '@mui/lab';
 import useUpdateItem from '@/hooks/cart/useUpdateItem';
 import { CartItem } from '@/types/cart';
-
 interface Props {
   imgStyle?: any;
 }
@@ -78,13 +77,15 @@ const CartContentSection = ({ imgStyle }: Props) => {
     <Stack p={[4, 8]} spacing={4} alignItems="center">
       <Typography variant="h3">Giỏ hàng trống</Typography>
       <Box>
-        <Button
-          size="large"
-          variant="contained"
-          sx={{ textTransform: 'uppercase' }}
-        >
-          Tiếp tục mua sắm
-        </Button>
+        <Link href="/">
+          <Button
+            size="large"
+            variant="contained"
+            sx={{ textTransform: 'uppercase' }}
+          >
+            Tiếp tục mua sắm
+          </Button>
+        </Link>
       </Box>
     </Stack>
   );

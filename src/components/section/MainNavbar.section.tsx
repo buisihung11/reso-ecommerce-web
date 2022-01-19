@@ -2,6 +2,7 @@ import Logo from '@/components/logo';
 import useCart from '@/hooks/cart/useCart';
 import useCollections from '@/hooks/collection/useCollections';
 import useOffSetTop from '@/hooks/useOffSetTop';
+import SearchIcon from '@mui/icons-material/Search';
 import {
   PersonOutlined,
   Search,
@@ -16,6 +17,7 @@ import {
   IconButton,
   Stack,
   styled,
+  TextField,
 } from '@mui/material';
 import { makeStyles, createStyles } from '@mui/styles';
 import { useRouter } from 'next/router';
@@ -93,9 +95,11 @@ const MainNavbarSection = (props: Props) => {
                 </MHidden>
 
                 <MHidden width="mdDown">
-                  <IconButton>
-                    <SearchRounded />
-                  </IconButton>
+                  <TextField
+                    placeholder="Tìm kiếm..."
+                    variant="outlined"
+                    size="small"
+                  />
                 </MHidden>
               </Grid>
 
