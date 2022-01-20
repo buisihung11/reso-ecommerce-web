@@ -23,7 +23,7 @@ const CollectionGridSection: FC<Props> = ({ imgStyle, settings = {} }) => {
       <Stack spacing={[4, 8]}>
         <Box>
           <Container
-            maxWidth="md"
+            maxWidth="lg"
             sx={{ textAlign: 'center', margin: '0 auto' }}
           >
             {relatedProducts && (

@@ -31,12 +31,14 @@ import { toast } from 'react-toastify';
 import * as yup from 'yup';
 import { MHidden } from '../@material-extend';
 import Logo from '../logo';
+import CartContentSection from './CartContent.section';
 import CartSummarySeciton from './CartSummary.section';
 import CheckoutActionStepSection from './checkout/CheckoutActionStep.section';
 import CheckoutInfoStepSection from './checkout/CheckoutInfoStep.section';
 import CheckoutPaymentStepSection from './checkout/CheckoutPaymentStep.section';
 import CheckoutReviewSection from './checkout/CheckoutReview.section';
 import CheckoutShippingStepSection from './checkout/CheckoutShippingStep.section';
+import CheckoutCartSection from './product-list/CheckoutCartStepSection';
 
 interface Props {}
 
@@ -118,7 +120,7 @@ const CheckoutContentSection = (props: Props) => {
   const steps = [
     {
       btnTitle: 'Nhập thông tin',
-      component: <CartTemplate />,
+      component: <CheckoutCartSection />,
       breadcrumb: 'Giỏ hàng',
     },
     {
