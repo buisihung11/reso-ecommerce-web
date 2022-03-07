@@ -5,7 +5,7 @@ import { CartItem, SelectedChoice } from '@/types/cart';
 const useComboBuilder = (combo?: ProductCombo) => {
   const [hasCompleted, setHasCompleted] = useState(false);
   const [selectedChoices, setSelectedChoices] = useState<SelectedChoice[]>([]);
-
+  const [activeStep, setActiveStep] = useState(0);
   const choiceGroups = useMemo(
     () =>
       (combo?.groups ?? [])
@@ -37,6 +37,7 @@ const useComboBuilder = (combo?: ProductCombo) => {
         updatedChoices[selectedChoice].products.push(item);
       }
       setSelectedChoices(updatedChoices);
+      setActiveStep((prevActiveStep) => prevActiveStep + 1);
     },
     [selectedChoices],
   );
@@ -63,6 +64,7 @@ const useComboBuilder = (combo?: ProductCombo) => {
   const reset = useCallback(() => {
     setSelectedChoices([]);
     setHasCompleted(false);
+    setActiveStep(0);
   }, []);
 
   const buildComboCartItem = (): Omit<CartItem, 'quantity'> | null => {
@@ -85,6 +87,7 @@ const useComboBuilder = (combo?: ProductCombo) => {
     currentStep,
     choice,
     choiceGroups,
+    activeStep,
     reset,
     buildComboCartItem,
     selectedChoices,

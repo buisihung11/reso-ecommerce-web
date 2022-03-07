@@ -53,6 +53,7 @@ const ComboListSection = (props: Props) => {
           <Empty />
         </Stack>
       )}
+
       {data && (
         <>
           <Stack direction="row" mb={4} justifyContent="flex-end">
@@ -79,7 +80,9 @@ const ComboListSection = (props: Props) => {
           </Grid>
           <Box py={4} textAlign="center" display="flex" justifyContent="center">
             <Pagination
-              onChange={(_: any, page: number) => onPageChange(page)}
+              onChange={(_: any, page: number) => {
+                onPageChange(page);
+              }}
               count={totalPage}
               shape="rounded"
             />

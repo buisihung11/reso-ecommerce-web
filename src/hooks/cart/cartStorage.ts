@@ -5,7 +5,7 @@ const CartStorage = {
     return localStorage.getItem('CART_LOCALSTORAGE_KEY');
   },
   set(cart?: Partial<Cart | null>) {
-    console.log(`save cart`, cart);
+    // console.log(`save cart`, cart);
     localStorage.setItem('CART_LOCALSTORAGE_KEY', JSON.stringify(cart));
   },
 };

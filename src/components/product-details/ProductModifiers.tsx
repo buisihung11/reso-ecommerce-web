@@ -57,7 +57,7 @@ const ModifierGroup = ({
               ) : (
                 <Checkbox
                   onChange={(e) => {
-                    console.log(`e`, e.target.checked);
+                    // console.log(`e`, e.target.checked);
                     if (e.target.checked) {
                       onAddModifier({ [option.label]: option.value });
                     } else {

@@ -79,7 +79,7 @@ const ProductBuilderProvider = ({
   // 1. Add extra
   const addExtra = useCallback(
     (selected: SelectedExtra) => {
-      console.log(`selected`, selected);
+      // console.log(`selected`, selected);
       if (!hasExtra || !selected) return;
       let updateSelected = [...selectedExtras];
       const selectedIndex = selectedExtras.findIndex(

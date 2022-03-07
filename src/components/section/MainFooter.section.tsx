@@ -83,7 +83,7 @@ export default function MainFooter() {
           spacing={[2, 10]}
         >
           <Grid item xs={12} md={2} sx={{ mb: 3 }}>
-            <Stack justifyContent="space-between">
+            <Stack justifyContent={{ xs: 'center', md: 'space-between' }}>
               <ScrollLink to="move_top" spy smooth>
                 <Box
                   sx={{
@@ -101,7 +101,7 @@ export default function MainFooter() {
             <Stack
               spacing={[2, 5]}
               direction={{ xs: 'row', md: 'row' }}
-              justifyContent="space-between"
+              justifyContent={{ xs: 'center', md: 'space-between' }}
               flexWrap="wrap"
             >
               {LINKS.map((list) => {
@@ -142,9 +142,11 @@ export default function MainFooter() {
               })}
               <Stack
                 margin="0 auto"
-                direction={['row', 'column']}
-                pt={4}
-                spacing={1}
+                direction={{ xs: 'row', md: 'column' }}
+                spacing={3}
+                justifyContent="center"
+                width={{ xs: '100%', md: 'auto' }}
+                paddingTop={{ xs: '16px', md: '0' }}
               >
                 {SOCIALS.map((social) => (
                   <IconButton key={social.name} color="primary" sx={{ p: 1 }}>

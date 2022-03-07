@@ -11,7 +11,7 @@ export const mapCartModelToPrepare = (cartModel: Cart | undefined) => {
   });
   // other data
 
-  console.log(`order_details`, order_details);
+  // console.log(`order_details`, order_details);
 
   const prepareCart: CartPrepareRequest = {
     order_details,
