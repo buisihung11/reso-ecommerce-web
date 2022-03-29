@@ -80,14 +80,14 @@ export default function MainFooter() {
           container
           justifyContent={{ xs: 'center', md: 'space-between' }}
           sx={{ textAlign: { xs: 'center', md: 'left' } }}
-          spacing={[2, 10]}
+          spacing={[2, 1]}
         >
           <Grid item xs={12} md={2} sx={{ mb: 3 }}>
             <Stack justifyContent="space-between">
               <ScrollLink to="move_top" spy smooth>
                 <Box
                   sx={{
-                    mx: { xs: 'auto', md: 'inherit' },
+                    mx: { xs: '0', md: 'inherit' },
                     width: '100%',
                     height: 'auto',
                   }}
@@ -99,9 +99,12 @@ export default function MainFooter() {
           </Grid>
           <Grid item xs={12} md={10}>
             <Stack
-              spacing={[2, 5]}
+              spacing={[0, 1]}
               direction={{ xs: 'row', md: 'row' }}
-              justifyContent="space-between"
+              justifyContent={{
+                xs: 'center',
+                md: 'space-between',
+              }}
               flexWrap="wrap"
             >
               {LINKS.map((list) => {
@@ -109,9 +112,9 @@ export default function MainFooter() {
                 return (
                   <Stack
                     key={headline}
-                    spacing={2}
-                    width={{ xs: '50%', md: 'auto' }}
-                    pt={[2, 0]}
+                    spacing={[2, 2]}
+                    width={{ xs: '100%', md: 'auto' }}
+                    pt={[2, 1]}
                   >
                     <Typography
                       sx={{ textTransform: 'uppercase' }}
@@ -140,12 +143,7 @@ export default function MainFooter() {
                   </Stack>
                 );
               })}
-              <Stack
-                margin="0 auto"
-                direction={['row', 'column']}
-                pt={4}
-                spacing={1}
-              >
+              <Stack direction={['row', 'row', 'column']} pt={4} spacing={2}>
                 {SOCIALS.map((social) => (
                   <IconButton key={social.name} color="primary" sx={{ p: 1 }}>
                     <Icon icon={social.icon} width={16} height={16} />
