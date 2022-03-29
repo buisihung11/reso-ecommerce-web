@@ -21,7 +21,7 @@ const useAddItem = () => {
               item.selectedVariant?.product_id),
       );
 
-      console.log(`updateIdx`, updateIdx);
+      // console.log(`updateIdx`, updateIdx);
       if (updateIdx > -1) {
         const updateItem = cartItems[updateIdx];
         cartItems[updateIdx] = {

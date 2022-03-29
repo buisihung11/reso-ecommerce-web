@@ -76,7 +76,7 @@ const ProductModal = ({
   const handleAddCart = () => {
     try {
       const itemCart = buildItem();
-      console.log(`itemCart`, itemCart);
+      // console.log(``, itemCart);
       onSubmit(itemCart);
     } catch (error) {
       toast((error as any).message, {

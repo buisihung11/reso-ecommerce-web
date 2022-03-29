@@ -23,7 +23,7 @@ const getCart = () => {
     const raw = CartStorage.get();
     if (!raw) return DEFAULT_CART;
     const cart = JSON.parse(raw) as Cart;
-    console.log(`cart`, cart);
+    // console.log(`cart`, cart);
     return cart;
   } catch (error) {
     return DEFAULT_CART;
