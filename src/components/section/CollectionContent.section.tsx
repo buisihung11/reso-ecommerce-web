@@ -43,7 +43,7 @@ const CollectionContentSection = (props: Props) => {
 
   return (
     <Box maxWidth="xl" px={[4, 12]} pt={{ xs: 6, md: 12 }} pb={10}>
-      <NextSeo
+      {/* <NextSeo
         title={collectionInfo?.name ?? 'Bộ sưu tập'}
         description={collectionInfo?.name}
         openGraph={{
@@ -51,7 +51,8 @@ const CollectionContentSection = (props: Props) => {
           title: collectionInfo?.name,
           description: collectionInfo?.name,
         }}
-      />
+      /> */}
+
       <Typography variant="h1" mb={[4, 6]}>
         {collectionInfo?.name ?? 'Bộ sưu tập'}
       </Typography>

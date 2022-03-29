@@ -7,4 +7,6 @@ export type TCollection = {
   brand_id: number;
   type: number;
   position: number;
+  banner_url: string;
+  description: string;
 };
