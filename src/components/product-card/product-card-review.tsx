@@ -185,7 +185,7 @@ export default function ProductCardReview() {
 
         <Divider />
 
-        <Box sx={{ p: 1 }}>
+        <Box sx={{ p: 1 }} onMouseLeave={handleClose}>
           <Stack spacing={2}>
             <Button
               fullWidth

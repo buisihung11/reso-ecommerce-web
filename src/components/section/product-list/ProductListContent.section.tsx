@@ -2,6 +2,7 @@ import Empty from '@/components/Empty';
 import Filter from '@/components/filter';
 import ProductGridSection from '@/components/section/ProductGrid.section';
 import useProducts from '@/hooks/product/useProducts';
+import useCategories from '@/hooks/category/useCategories';
 import usePagination from '@/hooks/usePagination';
 import { TProductQuery } from '@/types/product';
 import { ErrorResponse } from '@/types/request';
@@ -11,40 +12,45 @@ import {
   Pagination,
   Stack,
   Typography,
+  Button,
 } from '@mui/material';
+import ClearIcon from '@mui/icons-material/Clear';
 import { NextSeo } from 'next-seo';
 import { useRouter } from 'next/router';
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useForm, useWatch } from 'react-hook-form';
 
 interface Props {}
 
 const ProductListContentSection = (props: Props) => {
+  //States
   const router = useRouter();
+  const queryCate = router.query.cateid;
 
   const filterForm = useForm<TProductQuery>({
     defaultValues: {
-      'cat-id': '',
+      'cat-id': queryCate?.toString(),
       price: '',
       sort: '',
     },
   });
-
-  const filters = useWatch({ control: filterForm.control });
-
-  console.log(`filters`, filters);
-
-  const { page, size, onPageChange } = usePagination({
-    initValues: { page: 1, size: 20 },
-  });
-
-  const { data, isLoading, metadata, error } = useProducts({
-    params: { ...filters, page: page - 1, size },
-  });
-
-  const totalPage = Math.ceil((metadata?.total ?? 1) / size);
   const [openFilter, setOpenFilter] = useState(false);
-
+  const filters = useWatch({ control: filterForm.control });
+  const { page, size, onPageChange } = usePagination({
+    initValues: { page: 1, size: 12 },
+  });
+  //API
+  const { data, isLoading, metadata, error } = useProducts({
+    params: { ...filters, page: page, size },
+  });
+  const { data: categories } = useCategories();
+  const currentfilteredCate = filters['cat-id'];
+  //
+  const totalPage = Math.ceil((metadata?.total ?? 1) / size);
+  const [previousCate, setPreviousCate] = useState('');
+  const categoryFiltered = categories?.find(
+    (c) => c.cate_id.toString() == currentfilteredCate?.toString(),
+  );
   const handleResetFilter = useCallback(() => {
     filterForm.reset({ 'cat-id': '', price: '', sort: '' });
     setOpenFilter(false);
@@ -58,8 +64,13 @@ const ProductListContentSection = (props: Props) => {
     setOpenFilter(false);
   }, []);
 
+  useEffect(() => {
+    if (currentfilteredCate) setPreviousCate(currentfilteredCate);
+    filterForm.setValue('cat-id', queryCate?.toString());
+  }, [queryCate]);
+  //console.log('current: ' + currentfilteredCate + ', previous: ' + previousCate,);
   return (
-    <Box maxWidth="xl" px={[4, 12]} pt={{ xs: 6, md: 12 }} pb={10}>
+    <Box px={[4, 12]} pt={{ xs: 6, md: 12 }} pb={10}>
       <NextSeo title={'Tất cả sản phẩm'} description="Tất cả sản phẩm" />
       <Typography variant="h1" mb={[4, 6]}>
         Tất cả sản phẩm
@@ -78,13 +89,30 @@ const ProductListContentSection = (props: Props) => {
         justifyContent="space-between"
         alignItems="center"
       >
-        <Filter
-          isOpenFilter={openFilter}
-          onOpenFilter={handleOpenFilter}
-          onCloseFilter={handleCloseFilter}
-          onResetFilter={handleResetFilter}
-          control={filterForm.control}
-        />
+        <Stack direction="row">
+          <Filter
+            isOpenFilter={openFilter}
+            onOpenFilter={handleOpenFilter}
+            onCloseFilter={handleCloseFilter}
+            onResetFilter={handleResetFilter}
+            control={filterForm.control}
+          />
+          {currentfilteredCate && (
+            <Button
+              disableRipple
+              color="success"
+              variant="outlined"
+              onClick={() => {
+                if (queryCate) setPreviousCate(queryCate.toString());
+                filterForm.setValue('cat-id', '');
+              }}
+              endIcon={<ClearIcon />}
+            >
+              {categoryFiltered?.cate_name}
+            </Button>
+          )}
+        </Stack>
+
         <Stack direction="row" spacing={2}>
           {(isLoading || router.isFallback) && <CircularProgress size={6} />}
           <Typography color="grey.400">

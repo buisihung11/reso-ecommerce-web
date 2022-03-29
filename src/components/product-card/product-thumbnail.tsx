@@ -5,7 +5,7 @@ import { Box, BoxProps } from '@mui/system';
 import React from 'react';
 import { Img, ImgProps } from 'react-image';
 import clsx from 'clsx';
-
+import { motion } from 'framer-motion';
 interface Props {
   src: string;
   title?: string;
@@ -40,49 +40,57 @@ const ProductThumbnail = ({
   const classes = useProductStyles();
 
   return (
-    <Img
-      className={clsx({
-        [classes.thumbnail]: imgStyle === 'auto',
-        [classes.squareImg]: imgStyle === 'square',
-      })}
-      {...ImgProps}
-      src={src}
-      loader={
-        <Box
-          p={2}
-          bgcolor="grey.100"
-          width="100%"
-          sx={{
-            aspectRatio: '1 / 1',
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}
-          {...LoaderProps}
-        >
-          {title}
-        </Box>
-      }
-      unloader={
-        <Box
-          p={2}
-          textAlign="center"
-          bgcolor="grey.100"
-          width="100%"
-          position="relative"
-          sx={{
-            aspectRatio: '1 / 1',
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            maxHeight: '400px',
-          }}
-          {...UnloaderProps}
-        >
-          <Typography noWrap>{title}</Typography>
-        </Box>
-      }
-    />
+    <motion.div
+      whileHover={{
+        scale: 1.05,
+        transition: { type: 'spring', duration: 1, bounce: 0.5, mass: 0.5 },
+        opacity: 0.9,
+      }}
+    >
+      <Img
+        className={clsx({
+          [classes.thumbnail]: imgStyle === 'auto',
+          [classes.squareImg]: imgStyle === 'square',
+        })}
+        {...ImgProps}
+        src={src}
+        loader={
+          <Box
+            p={2}
+            bgcolor="grey.100"
+            width="100%"
+            sx={{
+              aspectRatio: '1 / 1',
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+            {...LoaderProps}
+          >
+            {title}
+          </Box>
+        }
+        unloader={
+          <Box
+            p={2}
+            textAlign="center"
+            bgcolor="grey.100"
+            width="100%"
+            position="relative"
+            sx={{
+              aspectRatio: '1 / 1',
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              maxHeight: '400px',
+            }}
+            {...UnloaderProps}
+          >
+            <Typography noWrap>{title}</Typography>
+          </Box>
+        }
+      />
+    </motion.div>
   );
 };
 
