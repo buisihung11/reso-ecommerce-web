@@ -15,6 +15,7 @@ import { useState } from 'react';
 // @types
 import { MegaMenuItemProps, ParentItemProps } from '../../@types/mega-menu';
 import Scrollbar from '../Scrollbar';
+import { linkSync } from 'fs';
 //
 
 // ----------------------------------------------------------------------
@@ -23,7 +24,7 @@ const CONTENT_HEIGHT = 400;
 const ITEM_SPACING = 4;
 const ITEM_HEIGHT = 64;
 const ITEM_ON_ROW = {
-  width: 'calc((100%/3) - 16px)',
+  width: 'calc((150%/3) - 16px',
   '&:nth-of-type(3n+1)': { order: 1 },
   '&:nth-of-type(3n+2)': { order: 2 },
   '&:nth-of-type(3n)': { order: 3 },
@@ -46,7 +47,7 @@ function ParentItem({
 
   return (
     <Box onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
-      <NextLink href={path ?? '#'}>
+      <NextLink href={path ?? '#'} underline="none">
         <Link
           noWrap
           underline="none"
@@ -57,6 +58,7 @@ function ParentItem({
             cursor: 'pointer',
             alignItems: 'center',
             textTransform: 'capitalize',
+            fontSize: '0.75rem',
             transition: (theme) => theme.transitions.create('all'),
             '&:hover': activeStyle,
             ...(open && activeStyle),
@@ -82,18 +84,18 @@ function ParentItem({
 function MegaMenuItem({ parent }: { parent: MegaMenuItemProps }) {
   const { title, path, more, products, tags, children } = parent;
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
+  //const open = Boolean(anchorEl);
+  const [open, setOpen] = useState(false);
+  const id = open ? 'mouse-over-popover' : undefined;
 
   const handleOpen = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
+    setOpen(true);
   };
 
   const handleClose = () => {
-    setAnchorEl(null);
+    setOpen(false);
   };
-
-  const open = Boolean(anchorEl);
-  const id = open ? 'simple-popover' : undefined;
-
   if (children) {
     return (
       <>
@@ -104,22 +106,31 @@ function MegaMenuItem({ parent }: { parent: MegaMenuItemProps }) {
           path={path}
           title={title}
           open={open}
-          hasSub
+          hasSub={children.length > 0}
         />
         <Popover
           id={id}
           open={open}
           anchorEl={anchorEl}
-          onClose={handleClose}
           anchorOrigin={{
             vertical: 'bottom',
             horizontal: 'left',
           }}
+          onClose={handleClose}
+          disableRestoreFocus
+          sx={{ pointerEvents: 'none' }}
         >
           <Stack
+            direction="row"
+            justifyContent="space-between"
             flexWrap="wrap"
-            alignContent="space-between"
-            height={CONTENT_HEIGHT}
+            width={children.length > 1 ? children.length * 100 : 'auto'}
+            height="auto"
+            maxWidth={700}
+            minWidth={200}
+            onMouseEnter={() => setOpen(true)}
+            onMouseLeave={handleClose}
+            sx={{ pointerEvents: 'auto' }}
           >
             {children.map((list) => {
               const { subheader, items } = list;
@@ -127,8 +138,13 @@ function MegaMenuItem({ parent }: { parent: MegaMenuItemProps }) {
               return (
                 <Stack
                   key={subheader}
-                  spacing={1.25}
-                  sx={{ mb: 2.5, ...ITEM_ON_ROW }}
+                  spacing={0.5}
+                  sx={{ ...ITEM_ON_ROW }}
+                  gridTemplateColumns={{
+                    md: 'repeat(auto-fill, 200px)',
+                  }}
+                  minWidth={200}
+                  padding={2}
                 >
                   <Typography
                     variant="subtitle1"
@@ -137,31 +153,41 @@ function MegaMenuItem({ parent }: { parent: MegaMenuItemProps }) {
                   >
                     {subheader}
                   </Typography>
-                  {items.map((link) => (
-                    <NextLink key={link.title} href={link.path} passHref>
-                      <Link
-                        noWrap
+                  {items.map((link) => {
+                    if (link.children)
+                      return <MegaMenuItem key={link.title} parent={link} />;
+                    return (
+                      <NextLink
+                        key={link.title}
+                        href={link.path}
+                        passHref
                         underline="none"
-                        sx={{
-                          typography: 'body2',
-                          color: 'text.primary',
-                          fontSize: 13,
-                          transition: (theme) =>
-                            theme.transitions.create('all'),
-                          '&:hover': { color: 'primary.main' },
-                        }}
                       >
-                        {link.title}
-                      </Link>
-                    </NextLink>
-                  ))}
+                        <Link
+                          noWrap
+                          underline="none"
+                          sx={{
+                            typography: 'body2',
+                            color: 'text.primary',
+                            textDecoration: 'none',
+                            fontSize: 13,
+                            transition: (theme) =>
+                              theme.transitions.create('all'),
+                            '&:hover': { color: 'primary.main' },
+                          }}
+                        >
+                          {link.title}
+                        </Link>
+                      </NextLink>
+                    );
+                  })}
                 </Stack>
               );
             })}
           </Stack>
 
           {!!more && !!tags && !!products && (
-            <Stack spacing={3}>
+            <Stack spacing={2}>
               <NextLink href={more?.path} passHref>
                 <Link
                   sx={{
@@ -169,6 +195,7 @@ function MegaMenuItem({ parent }: { parent: MegaMenuItemProps }) {
                     display: 'inline-flex',
                     fontSize: 13,
                   }}
+                  underline="none"
                 >
                   {more?.title}
                 </Link>

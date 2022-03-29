@@ -53,6 +53,14 @@ export type MegaMenuItemProps = {
     items: {
       title: string;
       path: string;
+      icon?: JSX.Element;
+      children?: {
+        subheader: string;
+        items:{
+          title: string;
+          path: string;
+        }[];        
+      }[];
     }[];
   }[];
 };

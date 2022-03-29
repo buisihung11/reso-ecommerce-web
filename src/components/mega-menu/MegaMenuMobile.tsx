@@ -73,7 +73,12 @@ function SubMenu({ parent, pathname }: SubMenuProps) {
   if (children) {
     return (
       <>
-        <ParentItem title={title} icon={icon} onClick={handleOpen} hasSub />
+        <ParentItem
+          title={title}
+          icon={icon}
+          onClick={handleOpen}
+          hasSub={children.length > 0}
+        />
 
         <Drawer
           open={open}
@@ -99,7 +104,6 @@ function SubMenu({ parent, pathname }: SubMenuProps) {
             <Stack spacing={5} py={3}>
               {children.map((list) => {
                 const { subheader, items } = list;
-
                 return (
                   <List key={subheader} disablePadding>
                     <Typography
@@ -110,19 +114,30 @@ function SubMenu({ parent, pathname }: SubMenuProps) {
                     >
                       {subheader}
                     </Typography>
-                    {items.map((link) => (
-                      <Link key={link.title} href={link.path}>
-                        <ListItemButton sx={{ px: 1.5 }}>
-                          <ListItemText
-                            primary={link.title}
-                            primaryTypographyProps={{
-                              typography: 'body2',
-                              noWrap: true,
-                            }}
+
+                    {items.map((link) => {
+                      if (link.children)
+                        return (
+                          <SubMenu
+                            key={link.title}
+                            parent={link}
+                            pathname={link.path}
                           />
-                        </ListItemButton>
-                      </Link>
-                    ))}
+                        );
+                      return (
+                        <Link key={link.title} href={link.path}>
+                          <ListItemButton sx={{ px: 1.5 }}>
+                            <ListItemText
+                              primary={link.title}
+                              primaryTypographyProps={{
+                                typography: 'body2',
+                                noWrap: true,
+                              }}
+                            />
+                          </ListItemButton>
+                        </Link>
+                      );
+                    })}
                   </List>
                 );
               })}
