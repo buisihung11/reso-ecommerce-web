@@ -39,6 +39,8 @@ import { ProductExtras, ProductModifiers } from '.';
 import useItemBuilder from '@/hooks/cart/useItemBuilder';
 import useProductPrice from '@/hooks/product/useProductPrice';
 import ProductBuilder from './ProductBuilder';
+import ProductContactDialog from './ProductContactDialog';
+import useIframeMessage from '@/hooks/useIframeMessage';
 
 // ----------------------------------------------------------------------
 
@@ -79,6 +81,7 @@ export default function ProductDetailsSummary({
   const theme = useTheme();
   const addItem = useAddItem();
   const context = useContext(StoreContext);
+  const { message } = useIframeMessage();
   const { buildItem, variant } = useItemBuilder();
   const status = 'sale';
   const { product_name, priceSale, pic_url: cover } = product;
@@ -167,26 +170,36 @@ export default function ProductDetailsSummary({
           </Box>
           <Box sx={{ mt: 5 }}>
             <Grid container spacing={2}>
-              <Grid item xs={12} sm={6}>
-                <Button fullWidth size="large" type="submit" variant="outlined">
-                  Mua ngay
-                </Button>
-              </Grid>
-
-              <Grid item xs={12} sm={6}>
-                <Button
-                  fullWidth
-                  disabled={isMaxQuantity}
-                  size="large"
-                  type="button"
-                  variant="contained"
-                  startIcon={<AddShoppingCart />}
-                  onClick={handleAddCart}
-                  sx={{ whiteSpace: 'nowrap' }}
-                >
-                  Thêm vào giỏ hàng
-                </Button>
-              </Grid>
+              {message?.contact.name == '' ? (
+                <>
+                  <Grid item xs={12} sm={6}>
+                    <Button
+                      fullWidth
+                      size="large"
+                      type="submit"
+                      variant="outlined"
+                    >
+                      Mua ngay
+                    </Button>
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <Button
+                      fullWidth
+                      disabled={isMaxQuantity}
+                      size="large"
+                      type="button"
+                      variant="contained"
+                      startIcon={<AddShoppingCart />}
+                      onClick={handleAddCart}
+                      sx={{ whiteSpace: 'nowrap' }}
+                    >
+                      Thêm vào giỏ hàng
+                    </Button>
+                  </Grid>
+                </>
+              ) : (
+                <ProductContactDialog />
+              )}
             </Grid>
           </Box>
         </MHidden>
