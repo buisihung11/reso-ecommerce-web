@@ -6,6 +6,7 @@ import ComboListTemplate from './combo.template';
 import HomeTemplate from './home.template';
 import OrderDetailTemplate from './order.template';
 import ProductListTemplate from './product-list.template';
+import StoreListTemplate from './store-list.template';
 
 const templates = {
   home: HomeTemplate,
@@ -16,6 +17,7 @@ const templates = {
   'product-list': ProductListTemplate,
   'combo-list': ComboListTemplate,
   'combo-detail': ComboDetailTemplate,
+  'store-list': StoreListTemplate,
 };
 
 export default templates;

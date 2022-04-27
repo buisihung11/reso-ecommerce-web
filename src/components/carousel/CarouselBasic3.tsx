@@ -39,7 +39,7 @@ const ActionWrapper = styled(Box)(({ theme }) => ({
   width: '100%',
   height: '100%',
   textAlign: 'center',
-  zIndex: 999,
+  zIndex: 1,
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
@@ -106,6 +106,13 @@ export default function CarouselBasic3() {
             onClick={() => router.push('/products')}
           >
             Xem sản phẩm
+          </Button>
+          <Button
+            variant="contained"
+            size="large"
+            onClick={() => router.push('/stores')}
+          >
+            Xem cửa hàng
           </Button>
         </Container>
       </ActionWrapper>

@@ -10,6 +10,10 @@ import OrderContentSection from './OrderContent.section';
 import ProductListContentSection from './product-list/ProductListContent.section';
 import ComboListSection from './combos/ComboList.section';
 import ComboViewSection from './combos/ComboView.section';
+import StoreListContentSection from './shop-list/ShopListContent.section';
+import StoreGridSection from './StoreListGrid.section';
+import StoreViewSection from './StoreView.section';
+
 
 const sections = {
   'collection-content': CollectionContentSection,
@@ -20,8 +24,11 @@ const sections = {
   'call-to-action': CallToActionSection,
   'product-grid': ProductGridSection,
   'product-view': ProductViewSection,
+  'store-grid': StoreGridSection,
+  'store-view': StoreViewSection,
   'order-content': OrderContentSection,
   'productlist-content': ProductListContentSection,
+  'storelist-content': StoreListContentSection,
   // COMBOS
   'combo-list': ComboListSection,
   'combo-view': ComboViewSection,
