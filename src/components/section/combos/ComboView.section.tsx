@@ -9,12 +9,8 @@ import useCombo from '@/hooks/combos/useCombo';
 import useComboBuilder from '@/hooks/combos/useComboBuilder';
 import useProduct from '@/hooks/product/useProduct';
 import { CartItem } from '@/types/cart';
-import Stepper from '@mui/material/Stepper';
-import Step from '@mui/material/Step';
-import StepLabel from '@mui/material/StepLabel';
 import { ArrowBack, ArrowLeft, ArrowLeftOutlined } from '@mui/icons-material';
 import {
-  AppBar,
   Avatar,
   AvatarGroup,
   Box,
@@ -32,7 +28,6 @@ import { NextSeo } from 'next-seo';
 import { useRouter } from 'next/router';
 import React, { useContext, useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
-import { styled, useTheme } from '@mui/material/styles';
 
 interface Props {
   imgStyle?: any;
@@ -54,22 +49,13 @@ const ComboViewSection = ({ imgStyle }: Props) => {
     reset,
     buildComboCartItem,
     selectedChoices,
-    activeStep,
     fixedGroups,
   } = useComboBuilder(combo);
   const { isLoading: loadingDetail, data: productDetail } = useProduct({
     id: productDetailid,
   });
-
   const currentGroup = choiceGroups[currentStep];
   const { pic_url, product_name } = combo || {};
-  const steps = [];
-
-  let length = Number(combo?.groups.length);
-  while (length != 1) {
-    length--;
-    steps.unshift('Bước ' + length);
-  }
 
   useEffect(() => {
     if (hasCompletedChoice) {
@@ -84,24 +70,16 @@ const ComboViewSection = ({ imgStyle }: Props) => {
     }
   }, [hasCompletedChoice]);
 
-  const ChoiceBox = styled(Stack)(({ theme }) => ({
-    [theme.breakpoints.down('md')]: {
-      direction: 'row',
-      spacing: 1,
-      textAlign: 'center',
-      alignItems: 'center',
-      justifyContent: 'center',
-      py: 2,
-    },
-    [theme.breakpoints.down('sm')]: {
-      display: 'none',
-    },
-  }));
-
   const renderSelected = () => {
     return (
-      <ChoiceBox>
-        <Typography variant="h5">Đã chọn</Typography>
+      <Stack
+        direction="row"
+        spacing={1}
+        textAlign="center"
+        alignItems="center"
+        justifyContent="center"
+        py={2}
+      >
         {fixedGroups.map((g) => (
           <AvatarGroup sx={{ justifyContent: 'center' }}>
             {g.products.map((p) => (
@@ -131,110 +109,13 @@ const ComboViewSection = ({ imgStyle }: Props) => {
             </Avatar>
           )),
         )}
-      </ChoiceBox>
+      </Stack>
     );
   };
 
   if (hasCompletedChoice) {
     return (
       <Container sx={{ py: [2, 6] }}>
-        <Box sx={{ width: '100%' }}>
-          <Stepper
-            activeStep={Number(combo?.groups.length) - 1}
-            alternativeLabel
-          >
-            {steps.map((label) => (
-              <Step key={label}>
-                <StepLabel>{label}</StepLabel>
-              </Step>
-            ))}
-          </Stepper>
-        </Box>
-        <Box textAlign="center" py={4}>
-          <Typography variant="h3">Đã hoàn tất combo</Typography>
-          {renderSelected()}
-          <Stack spacing={2} justifyContent="center" pt={2} alignItems="center">
-            <Link href="/combos">
-              <Button variant="text" startIcon={<ArrowBack />}>
-                Quay về
-              </Button>
-            </Link>
-            <Button onClick={reset} variant="contained">
-              Tiếp tục mua
-            </Button>
-          </Stack>
-        </Box>
-      </Container>
-    );
-  }
-
-  const ChoiceBoxInMobile = styled(Stack)(({ theme }) => ({
-    [theme.breakpoints.up('md')]: {
-      display: 'none',
-    },
-    [theme.breakpoints.up('xs')]: {
-      sticky: {
-        position: 'sticky',
-        top: 0,
-      },
-    },
-  }));
-
-  const renderSelectedInMobile = () => {
-    return (
-      <AppBar sx={{ backgroundColor: '#fff', color: 'black' }}>
-        <Container>
-          <ChoiceBoxInMobile>
-            {fixedGroups.map((g) => (
-              <AvatarGroup sx={{ justifyContent: 'center' }}>
-                {g.products.map((p) => (
-                  <Avatar
-                    key={`group-fixed-${p.product_id}`}
-                    alt={p.product_name}
-                    src={p.pic_url}
-                    sx={{ width: 64, height: 64 }}
-                  >
-                    {p.product_name}
-                  </Avatar>
-                ))}
-              </AvatarGroup>
-            ))}
-            {Boolean(fixedGroups.length) && (
-              <Divider orientation="vertical" flexItem />
-            )}
-            {selectedChoices.map((g) =>
-              g.products.map((p) => (
-                <Avatar
-                  key={`group-${g.groupId}-${p.product_id}`}
-                  alt={p.product_name}
-                  src={p.pic_url}
-                  sx={{ width: 64, height: 64 }}
-                >
-                  {p.product_name}
-                </Avatar>
-              )),
-            )}
-          </ChoiceBoxInMobile>
-        </Container>
-      </AppBar>
-    );
-  };
-
-  if (hasCompletedChoice) {
-    return (
-      <Container sx={{ py: [2, 6] }}>
-        <Box sx={{ width: '100%' }}>
-          <Stepper
-            activeStep={Number(combo?.groups.length) - 1}
-            alternativeLabel
-          >
-            {steps.map((label) => (
-              <Step key={label}>
-                <StepLabel>{label}</StepLabel>
-              </Step>
-            ))}
-          </Stepper>
-        </Box>
         <Box textAlign="center" py={4}>
           <Typography variant="h3">Đã hoàn tất combo</Typography>
           {renderSelected()}
@@ -322,23 +203,16 @@ const ComboViewSection = ({ imgStyle }: Props) => {
             <Box>
               {(selectedChoices.length !== 0 || fixedGroups.length !== 0) && (
                 <Stack
-                  direction="column"
+                  direction="row"
                   spacing={2}
                   alignItems="center"
                   justifyContent="center"
                   py={2}
                 >
-                  <Box sx={{ width: '100%' }}>
-                    <Stepper activeStep={activeStep} alternativeLabel>
-                      {steps.map((label) => (
-                        <Step key={label}>
-                          <StepLabel>{label}</StepLabel>
-                        </Step>
-                      ))}
-                    </Stepper>
+                  <Box>
+                    <Typography variant="h5">Đã chọn</Typography>
                   </Box>
                   <Box>{renderSelected()}</Box>
-                  <Box>{renderSelectedInMobile()}</Box>
                 </Stack>
               )}
               {/* CURRENT STEP */}
