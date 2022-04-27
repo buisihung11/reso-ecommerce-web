@@ -1,7 +1,10 @@
 import SectionInstances, { SectionProps } from '@/components/section/Section';
 import sections from '@/components/section/section-map';
+import useIframeMessage from '@/hooks/useIframeMessage';
 import layouts from '@/layouts/layouts';
-import React, { FC, useMemo } from 'react';
+import { Breadcrumbs, Link, Typography } from '@mui/material';
+import { useRouter } from 'next/router';
+import React, { FC, useEffect, useMemo, useState } from 'react';
 import templates from './template-map';
 
 type KeyOfObject<T> = keyof T;
@@ -33,7 +36,16 @@ const TemplateFactory = <T extends {}>({
 }: React.PropsWithChildren<Props<T>>) => {
   const Wrapper = wrapper ?? React.Fragment;
   const Layout = layout ? layouts[layout] : React.Fragment;
+  const { message } = useIframeMessage();
+  const router = useRouter();
+  console.log(router.pathname);
 
+  const BREADSCUMB_LINKS = [
+    { linkname: 'Trang chính', pathname: '/' },
+    { linkname: 'Cửa hàng', pathname: '/stores' },
+    { linkname: 'Sản phẩm', pathname: '/products' },
+    // { id: '3', linkname: 'Trang chính', pathname: '/' },
+  ];
   // register name instance
 
   const sectionContent = useMemo(() => {
@@ -49,10 +61,29 @@ const TemplateFactory = <T extends {}>({
     ));
   }, [sections]);
 
+  const LaypoutWrapper =
+    message && !message.hasLayout ? React.Fragment : Layout;
+
   return (
-    <Layout>
+    <LaypoutWrapper>
+      {message && !message.hasLayout && (
+        <Breadcrumbs aria-label="breadcrumb" sx={{ paddingLeft: '2rem' }}>
+          {BREADSCUMB_LINKS.map((link, index) => (
+            <Link
+              key={index}
+              underline="hover"
+              color="inherit"
+              href={link.pathname}
+            >
+              {link.linkname}
+            </Link>
+          ))}
+
+          {/* <Typography color="text.primary">Sản phẩm</Typography> */}
+        </Breadcrumbs>
+      )}
       <Wrapper>{sectionContent}</Wrapper>
-    </Layout>
+    </LaypoutWrapper>
   );
 };
 
