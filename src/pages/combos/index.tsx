@@ -11,25 +11,25 @@ const ComboListPage = () => {
   return <ComboListTemplate />;
 };
 
-export async function getStaticProps({}: GetStaticPropsContext<any>) {
-  const queryClient = new QueryClient();
+// export async function getStaticProps({}: GetStaticPropsContext<any>) {
+//   const queryClient = new QueryClient();
 
-  try {
-    await queryClient.prefetchQuery(['combos', { page: 0, size: 20 }], () =>
-      getAllProduct({
-        page: 0,
-        size: 20,
-        'product-type': ProductTypeEnum.Combo,
-      }),
-    );
-  } catch (error) {}
+//   try {
+//     await queryClient.prefetchQuery(['combos', { page: 0, size: 20 }], () =>
+//       getAllProduct({
+//         page: 0,
+//         size: 20,
+//         'product-type': ProductTypeEnum.Combo,
+//       }),
+//     );
+//   } catch (error) {}
 
-  return {
-    props: {
-      dehydratedState: dehydrate(queryClient),
-    },
-    revalidate: 60,
-  };
-}
+//   return {
+//     props: {
+//       dehydratedState: dehydrate(queryClient),
+//     },
+//     revalidate: 60,
+//   };
+// }
 
 export default ComboListPage;
