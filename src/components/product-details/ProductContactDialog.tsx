@@ -19,7 +19,7 @@ import {
   PhoneIphone,
 } from '@mui/icons-material';
 import useIframeMessage from '@/hooks/useIframeMessage';
-import { IconButton, Stack } from '@mui/material';
+import { Divider, IconButton, Stack } from '@mui/material';
 
 function SimpleDialog(props: any) {
   const { message } = useIframeMessage();
@@ -81,6 +81,7 @@ function SimpleDialog(props: any) {
           </ListItemAvatar>
           <ListItemText primary={message?.contact.address} />
         </ListItem>
+        <Divider />
         <ListItem sx={{ justifyContent: 'center' }}>
           <Button
             startIcon={<PhoneForwarded />}

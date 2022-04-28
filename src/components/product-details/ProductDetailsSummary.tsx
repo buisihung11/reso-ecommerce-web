@@ -82,6 +82,7 @@ export default function ProductDetailsSummary({
   const addItem = useAddItem();
   const context = useContext(StoreContext);
   const { message } = useIframeMessage();
+
   const { buildItem, variant } = useItemBuilder();
   const status = 'sale';
   const { product_name, priceSale, pic_url: cover } = product;
@@ -170,7 +171,9 @@ export default function ProductDetailsSummary({
           </Box>
           <Box sx={{ mt: 5 }}>
             <Grid container spacing={2}>
-              {message?.contact.name == '' ? (
+              {message ? (
+                <ProductContactDialog />
+              ) : (
                 <>
                   <Grid item xs={12} sm={6}>
                     <Button
@@ -197,8 +200,6 @@ export default function ProductDetailsSummary({
                     </Button>
                   </Grid>
                 </>
-              ) : (
-                <ProductContactDialog />
               )}
             </Grid>
           </Box>
