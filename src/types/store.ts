@@ -1,10 +1,12 @@
 export type TStore = {
-    store_id: number;
-    store_name: string;
-    rate:number;
-    email:string;
-    phone:string;
-    icon_image: string;
-    banner_image: string;
-  };
+  id: number,
+  name: string,
+  short_name: string,
+  is_available: boolean,
+  create_date: Date,
+  type: null,
+  open_time: Date,
+  close_time: Date,
+  store_code: string,
+};
   

@@ -1,4 +1,5 @@
 import Filter from '@/components/filter';
+import useStores from '@/hooks/store/useStores';
 
 import usePagination from '@/hooks/usePagination';
 import { TProductQuery } from '@/types/product';
@@ -10,13 +11,14 @@ import {
   Stack,
   Typography,
   Button,
+  Container,
 } from '@mui/material';
 
 import { NextSeo } from 'next-seo';
 import { useRouter } from 'next/router';
 import React, { useCallback, useEffect, useState } from 'react';
 import { useForm, useWatch } from 'react-hook-form';
-import ShopGridSection from '../StoreListGrid.section';
+import StoreGridSection from '../StoreListGrid.section';
 
 interface Props {}
 
@@ -35,23 +37,13 @@ const StoreListContentSection = (props: Props) => {
   const [openFilter, setOpenFilter] = useState(false);
   const filters = useWatch({ control: filterForm.control });
   const { page, size, onPageChange } = usePagination({
-    initValues: { page: 1, size: 12 },
+    initValues: { page: 1, size: 9 },
   });
   //API
-  const MOCK_SHOPS = [...Array(6)].map((_, index) => {
-    return {
-      store_id: index,
-      store_name: 'Reso Store',
-      rate: 4.5,
-      email: 'resostore@reso.vn',
-      phone: '0678333777',
-      icon_image: 'https://unibean.net/_next/static/media/huyhieu.ad29107d.png',
-      banner_image:
-        'https://cdn.shopify.com/s/files/1/1915/7471/files/Cover-good_edb89fc7-35e2-449c-9a38-7e363a44b595_2048x.jpg?v=1516989371',
-    };
+  const { metadata, data, isLoading } = useStores({
+    params: { page: page, size },
   });
-
-  //const totalPage = Math.ceil((metadata?.total ?? 1) / size);
+  const totalPage = Math.ceil((metadata?.total ?? 1) / size);
 
   const handleResetFilter = useCallback(() => {
     filterForm.reset({ 'cat-id': '', price: '', sort: '' });
@@ -111,25 +103,28 @@ const StoreListContentSection = (props: Props) => {
         </Stack>
 
         <Stack direction="row" spacing={2}>
-          {/* {(isLoading || router.isFallback) && <CircularProgress size={6} />} */}
           <Typography color="grey.400">
-            {/* {data?.length} / {metadata?.total} sản phẩm */}
-            {6} / {12} cửa hàng
+            {data?.length} / {metadata?.total} cửa hàng
           </Typography>
         </Stack>
       </Stack>
-      {/* {data && ( */}
-      <>
-        <ShopGridSection stores={MOCK_SHOPS} />
-        <Box py={4} textAlign="center" display="flex" justifyContent="center">
-          <Pagination
-            onChange={(_: any, page: number) => onPageChange(page)}
-            count={2}
-            shape="rounded"
-          />
-        </Box>
-      </>
-      {/* )} */}
+      {isLoading && (
+        <Container sx={{ width: '100%', textAlign: 'center' }}>
+          <CircularProgress size={50} />
+        </Container>
+      )}
+      {data && (
+        <>
+          <StoreGridSection stores={data} />
+          <Box py={4} textAlign="center" display="flex" justifyContent="center">
+            <Pagination
+              onChange={(_: any, page: number) => onPageChange(page)}
+              count={totalPage}
+              shape="rounded"
+            />
+          </Box>
+        </>
+      )}
     </Box>
   );
 };

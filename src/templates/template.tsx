@@ -38,7 +38,6 @@ const TemplateFactory = <T extends {}>({
   const Layout = layout ? layouts[layout] : React.Fragment;
   const { message } = useIframeMessage();
   const router = useRouter();
-  console.log(router.pathname);
 
   const BREADSCUMB_LINKS = [
     { linkname: 'Trang chính', pathname: '/' },

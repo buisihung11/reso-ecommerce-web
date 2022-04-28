@@ -12,8 +12,13 @@ import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 import StarBorder from '@mui/icons-material/StarBorder';
 import useCategories from '@/hooks/category/useCategories';
+import { TStore } from '@/types/store';
 
-export default function StoreCatesList() {
+interface StoreGCatesListProps {
+  store: TStore;
+}
+
+export default function StoreCatesList({ store }: StoreGCatesListProps) {
   const { data } = useCategories();
 
   const [open, setOpen] = React.useState(true);
@@ -59,6 +64,10 @@ export default function StoreCatesList() {
       <ListItemButton>
         <ListItemText primary="Giờ hoạt động" />
       </ListItemButton>
+      <List component="div" disablePadding sx={{ pl: 4 }}>
+        <ListItemText primary={store.open_time} />
+        <ListItemText primary={store.close_time} />
+      </List>
     </List>
   );
 }

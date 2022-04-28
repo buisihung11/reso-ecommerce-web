@@ -14,8 +14,13 @@ import {
 import ProductGridSection from '../section/ProductGrid.section';
 import useProducts from '@/hooks/product/useProducts';
 import usePagination from '@/hooks/usePagination';
+import { TStore } from '@/types/store';
 
-export default function StoreTabs() {
+interface StoreTabsProps {
+  store: TStore;
+}
+
+export default function StoreTabs({ store }: StoreTabsProps) {
   const [value, setValue] = React.useState('1');
 
   const { page, size, onPageChange } = usePagination({
@@ -41,7 +46,7 @@ export default function StoreTabs() {
         >
           <TabList onChange={handleChange} aria-label="lab API tabs example">
             <Tab label="Sản phẩm" value="1" />
-            <Tab label="Danh mục" value="2" />
+            <Tab label="Bán chạy" value="2" />
             <Tab label="Giới thiệu" value="3" />
             <Tab label="Đánh giá" value="4" />
           </TabList>
@@ -71,8 +76,23 @@ export default function StoreTabs() {
               </Container>
             )}
           </TabPanel>
-          <TabPanel value="2">Bán chạy</TabPanel>
-          <TabPanel value="3">Giới thiệu</TabPanel>
+          <TabPanel value="2">
+            {data && (
+              <>
+                <ProductGridSection products={data.slice(8, 16)} />
+              </>
+            )}
+            {isLoading && (
+              <Container sx={{ textAlign: 'center' }}>
+                <CircularProgress />
+              </Container>
+            )}
+          </TabPanel>
+          <TabPanel value="3">
+            Reso chuyên cung cấp các sản phẩm tốt nhất trên thị trường với giá
+            cả hợp lý, chính sách ưu đãi thường xuyên cho các khách hàng thân
+            thiết
+          </TabPanel>
           <TabPanel value="4">Đánh giá</TabPanel>
         </Box>
       </TabContext>

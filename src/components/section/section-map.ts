@@ -10,7 +10,7 @@ import OrderContentSection from './OrderContent.section';
 import ProductListContentSection from './product-list/ProductListContent.section';
 import ComboListSection from './combos/ComboList.section';
 import ComboViewSection from './combos/ComboView.section';
-import StoreListContentSection from './shop-list/ShopListContent.section';
+import StoreListContentSection from './store-list/StoreListContent.section';
 import StoreGridSection from './StoreListGrid.section';
 import StoreViewSection from './StoreView.section';
 
