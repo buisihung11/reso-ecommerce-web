@@ -31,7 +31,7 @@ export default function StoreCatesList({ store }: StoreGCatesListProps) {
     <List
       sx={{
         width: '100%',
-        maxWidth: 360,
+
         bgcolor: 'background.paper',
         marginLeft: '-16px',
         fontWeight: '400',

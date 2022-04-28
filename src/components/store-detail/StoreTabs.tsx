@@ -9,6 +9,7 @@ import {
   Container,
   Pagination,
   Stack,
+  Tabs,
   Typography,
 } from '@mui/material';
 import ProductGridSection from '../section/ProductGrid.section';
@@ -38,19 +39,28 @@ export default function StoreTabs({ store }: StoreTabsProps) {
   };
 
   return (
-    <Box sx={{ width: '100%', typography: 'body1' }}>
-      <TabContext value={value}>
-        <Box
-          sx={{ borderBottom: 1, borderColor: 'divider' }}
-          paddingBottom={'1rem'}
+    <Box width="100%" typography={'body2'}>
+      <Box
+        sx={{ borderBottom: 1, borderColor: 'divider' }}
+        paddingBottom={'1rem'}
+        marginBottom={{ xs: '1rem', md: 0 }}
+        typography={'h5'}
+      >
+        <Tabs
+          value={value}
+          onChange={handleChange}
+          variant="scrollable"
+          scrollButtons
+          //allowScrollButtonsMobile
+          aria-label="visible arrows tabs example"
         >
-          <TabList onChange={handleChange} aria-label="lab API tabs example">
-            <Tab label="Sản phẩm" value="1" />
-            <Tab label="Bán chạy" value="2" />
-            <Tab label="Giới thiệu" value="3" />
-            <Tab label="Đánh giá" value="4" />
-          </TabList>
-        </Box>
+          <Tab label="Sản phẩm" value="1" />
+          <Tab label="Bán chạy" value="2" />
+          <Tab label="Giới thiệu" value="3" />
+          <Tab label="Đánh giá" value="4" />
+        </Tabs>
+      </Box>
+      <TabContext value={value}>
         <Box minHeight={1000}>
           <TabPanel value="1">
             {data && (

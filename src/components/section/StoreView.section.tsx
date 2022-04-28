@@ -1,6 +1,13 @@
 import EmailIcon from '@mui/icons-material/Email';
 import PhoneIcon from '@mui/icons-material/Phone';
-import { Facebook, Instagram, Twitter, YouTube } from '@mui/icons-material';
+import {
+  EmailOutlined,
+  Facebook,
+  Instagram,
+  PhoneOutlined,
+  Twitter,
+  YouTube,
+} from '@mui/icons-material';
 import {
   Box,
   CardContent,
@@ -40,6 +47,39 @@ const StoreViewSection = () => {
   const { storeId } = router.query;
   const { data: store, isLoading, error } = useStore({ id: Number(storeId) });
 
+  const SocialMedias = () => (
+    <Box>
+      <IconButton
+        aria-label="Facebook"
+        sx={{ color: '#1B4F9B' }}
+        href="https://facebook.com/"
+      >
+        <Facebook />
+      </IconButton>
+      <IconButton
+        aria-label="Twitter"
+        sx={{ color: '#00ADEF' }}
+        href="https://twitter.com/"
+      >
+        <Twitter />
+      </IconButton>
+      <IconButton
+        aria-label="Youtube"
+        sx={{ color: 'red' }}
+        href="https://youtube.com/"
+      >
+        <YouTube />
+      </IconButton>
+      <IconButton
+        aria-label="Instagram"
+        sx={{ color: 'pink' }}
+        href="https://instagram.com/"
+      >
+        <Instagram />
+      </IconButton>
+    </Box>
+  );
+
   return (
     <Container maxWidth="xl" sx={{ py: [2, 6] }}>
       {/* Header */}
@@ -67,7 +107,7 @@ const StoreViewSection = () => {
               <Stack display="flex" paddingBottom="2rem">
                 <Box
                   width={'100%'}
-                  height="500px"
+                  height={{ xs: 700, md: 500 }}
                   sx={{
                     backgroundRepeat: 'no-repeat',
                     backgroundSize: 'cover',
@@ -76,19 +116,21 @@ const StoreViewSection = () => {
                   }}
                 />
                 <Box
-                  paddingLeft="3rem"
-                  paddingBottom={'1rem'}
+                  paddingLeft={{ md: '3rem' }}
                   marginBottom={'1rem'}
                   color="white"
                   flexWrap="wrap"
-                  marginTop="-11rem"
-                  sx={{ backgroundColor: '#22222280' }}
+                  marginTop={{ xs: '-21.5rem', md: '-10rem' }}
+                  sx={{ backgroundColor: '#22222295' }}
                   display="flex"
-                  justifyContent="space-between"
+                  justifyContent={{ xs: 'center', md: 'space-between' }}
                 >
-                  <Box flexDirection={'row'} display="flex">
+                  <Box
+                    flexDirection={{ xs: 'column', md: 'row' }}
+                    display="flex"
+                  >
                     <Stack
-                      paddingRight="3rem"
+                      paddingRight={{ md: '3rem' }}
                       paddingBottom={'1rem'}
                       justifyContent="space-between"
                       alignItems="center"
@@ -116,72 +158,70 @@ const StoreViewSection = () => {
                     </Stack>
 
                     <Box marginBottom={'1rem'}>
-                      <Typography gutterBottom variant="h3">
+                      <Typography
+                        gutterBottom
+                        variant="h3"
+                        textAlign={{ xs: 'center', md: 'left' }}
+                      >
                         {store.name}
                       </Typography>
+                      <Box
+                        paddingLeft={{ xs: 0, md: '1rem' }}
+                        display="block"
+                        justifyContent={{ xs: 'center', md: 'flex-start' }}
+                      >
+                        <Box display="flex">
+                          <EmailOutlined />
+                          <Typography
+                            variant="body2"
+                            color="grey.400"
+                            paddingLeft={'1rem'}
+                          >
+                            {MOCK_SHOP.email}
+                          </Typography>
+                        </Box>
+                        <Box display="flex">
+                          <PhoneOutlined />
+                          <Typography
+                            variant="body2"
+                            color="grey.400"
+                            paddingLeft={'1rem'}
+                          >
+                            {MOCK_SHOP.phone}
+                          </Typography>
+                        </Box>
+                      </Box>
 
-                      <Box display="flex">
-                        <EmailIcon />
-                        <Typography
-                          variant="body2"
-                          color="grey.400"
-                          paddingLeft={'1rem'}
-                        >
-                          {MOCK_SHOP.email}
-                        </Typography>
-                      </Box>
-                      <Box display="flex">
-                        <PhoneIcon />
-                        <Typography
-                          variant="body2"
-                          color="grey.400"
-                          paddingLeft={'1rem'}
-                        >
-                          {MOCK_SHOP.phone}
-                        </Typography>
-                      </Box>
+                      <Stack
+                        paddingTop={'1rem'}
+                        display={{ xs: 'flex', md: 'none' }}
+                      >
+                        <SocialMedias />
+                      </Stack>
                     </Box>
                   </Box>
-                  <Stack justifyContent={'space-between'} alignItems="center">
-                    <Box>
-                      <IconButton
-                        aria-label="Facebook"
-                        sx={{ color: '#1B4F9B' }}
-                        href="https://facebook.com/"
-                      >
-                        <Facebook />
-                      </IconButton>
-                      <IconButton
-                        aria-label="Twitter"
-                        sx={{ color: '#00ADEF' }}
-                        href="https://twitter.com/"
-                      >
-                        <Twitter />
-                      </IconButton>
-                      <IconButton
-                        aria-label="Youtube"
-                        sx={{ color: 'red' }}
-                        href="https://youtube.com/"
-                      >
-                        <YouTube />
-                      </IconButton>
-                      <IconButton
-                        aria-label="Instagram"
-                        sx={{ color: 'pink' }}
-                        href="https://instagram.com/"
-                      >
-                        <Instagram />
-                      </IconButton>
-                    </Box>
+                  <Stack display={{ xs: 'none', md: 'flex' }}>
+                    <SocialMedias />
                   </Stack>
                 </Box>
               </Stack>
               {/* Body */}
-              <Box display="flex">
-                <Box width="30%">
+              <Box flexDirection={{ xs: 'column', md: 'row' }} display="flex">
+                <Box
+                  width={{ md: '30%' }}
+                  display={{ xs: 'none', md: 'block' }}
+                >
                   <StoreCatesList store={store} />
                 </Box>
+
                 <StoreTabs store={store} />
+                {/* Mobile cate section */}
+                <Box
+                  width={{ xs: '100%', xl: '30%' }}
+                  display={{ xs: 'block', md: 'none' }}
+                >
+                  <StoreCatesList store={store} />
+                </Box>
               </Box>
             </>
           ) : (
