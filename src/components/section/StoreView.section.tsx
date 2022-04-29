@@ -107,7 +107,7 @@ const StoreViewSection = () => {
               <Stack display="flex" paddingBottom="2rem">
                 <Box
                   width={'100%'}
-                  height={{ xs: 700, md: 500 }}
+                  height={'65vh'}
                   sx={{
                     backgroundRepeat: 'no-repeat',
                     backgroundSize: 'cover',
@@ -120,7 +120,7 @@ const StoreViewSection = () => {
                   marginBottom={'1rem'}
                   color="white"
                   flexWrap="wrap"
-                  marginTop={{ xs: '-21.5rem', md: '-10rem' }}
+                  marginTop={{ xs: '-20.5rem', md: '-10rem' }}
                   sx={{ backgroundColor: '#22222295' }}
                   display="flex"
                   justifyContent={{ xs: 'center', md: 'space-between' }}

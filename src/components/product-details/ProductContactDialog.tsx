@@ -19,7 +19,7 @@ import {
   PhoneIphone,
 } from '@mui/icons-material';
 import useIframeMessage from '@/hooks/useIframeMessage';
-import { Divider, IconButton, Stack } from '@mui/material';
+import { AppBar, Divider, IconButton, Stack } from '@mui/material';
 
 function SimpleDialog(props: any) {
   const { message } = useIframeMessage();

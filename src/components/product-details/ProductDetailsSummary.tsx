@@ -151,7 +151,7 @@ export default function ProductDetailsSummary({
           <Box
             sx={{
               my: 3,
-              display: 'flex',
+              display: message ? 'none' : 'flex',
               justifyContent: 'space-between',
             }}
           >
@@ -171,9 +171,7 @@ export default function ProductDetailsSummary({
           </Box>
           <Box sx={{ mt: 5 }}>
             <Grid container spacing={2}>
-              {message ? (
-                <ProductContactDialog />
-              ) : (
+              {!message ? (
                 <>
                   <Grid item xs={12} sm={6}>
                     <Button
@@ -200,6 +198,8 @@ export default function ProductDetailsSummary({
                     </Button>
                   </Grid>
                 </>
+              ) : (
+                <ProductContactDialog />
               )}
             </Grid>
           </Box>
@@ -217,22 +217,25 @@ export default function ProductDetailsSummary({
         </Box>
 
         <MHidden width="mdUp">
-          <Controller
-            control={control}
-            name="quantity"
-            render={({ field: { onChange, value } }) => (
-              <ProductActionBottomBar
-                onAddToCart={handleAddCart}
-                btnProps={{
-                  disabled: isMaxQuantity,
-                }}
-                controlProps={{
-                  value,
-                  onChange,
-                }}
-              />
-            )}
-          />
+          <>
+            <Controller
+              control={control}
+              name="quantity"
+              render={({ field: { onChange, value } }) => (
+                <ProductActionBottomBar
+                  message={message}
+                  onAddToCart={handleAddCart}
+                  btnProps={{
+                    disabled: isMaxQuantity,
+                  }}
+                  controlProps={{
+                    value,
+                    onChange,
+                  }}
+                />
+              )}
+            />
+          </>
         </MHidden>
       </FormProvider>
     </RootStyle>
