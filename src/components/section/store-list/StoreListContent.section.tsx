@@ -25,38 +25,39 @@ interface Props {}
 const StoreListContentSection = (props: Props) => {
   //States
   const router = useRouter();
-  const queryCate = router.query.cateid;
+  //const queryCate = router.query.cateid;
 
-  const filterForm = useForm<TProductQuery>({
-    defaultValues: {
-      'cat-id': queryCate?.toString(),
-      price: '',
-      sort: '',
-    },
-  });
-  const [openFilter, setOpenFilter] = useState(false);
-  const filters = useWatch({ control: filterForm.control });
+  // const filterForm = useForm<TProductQuery>({
+  //   defaultValues: {
+  //     'cat-id': queryCate?.toString(),
+  //     price: '',
+  //     sort: '',
+  //   },
+  // });
+  // const [openFilter, setOpenFilter] = useState(false);
+
   const { page, size, onPageChange } = usePagination({
-    initValues: { page: 1, size: 9 },
+    initValues: { page: 1, size: 4 },
   });
   //API
   const { metadata, data, isLoading } = useStores({
     params: { page: page, size },
   });
+
   const totalPage = Math.ceil((metadata?.total ?? 1) / size);
 
-  const handleResetFilter = useCallback(() => {
-    filterForm.reset({ 'cat-id': '', price: '', sort: '' });
-    setOpenFilter(false);
-  }, [filterForm]);
+  // const handleResetFilter = useCallback(() => {
+  //   filterForm.reset({ 'cat-id': '', price: '', sort: '' });
+  //   setOpenFilter(false);
+  // }, [filterForm]);
 
-  const handleOpenFilter = useCallback(() => {
-    setOpenFilter(true);
-  }, []);
+  // const handleOpenFilter = useCallback(() => {
+  //   setOpenFilter(true);
+  // }, []);
 
-  const handleCloseFilter = useCallback(() => {
-    setOpenFilter(false);
-  }, []);
+  // const handleCloseFilter = useCallback(() => {
+  //   setOpenFilter(false);
+  // }, []);
 
   return (
     <Box px={[4, 12]} pt={{ xs: 6, md: 12 }} pb={10}>
@@ -78,7 +79,7 @@ const StoreListContentSection = (props: Props) => {
         justifyContent="space-between"
         alignItems="center"
       >
-        <Stack direction="row">
+        {/* <Stack direction="row">
           <Filter
             isOpenFilter={openFilter}
             onOpenFilter={handleOpenFilter}
@@ -86,7 +87,7 @@ const StoreListContentSection = (props: Props) => {
             onResetFilter={handleResetFilter}
             control={filterForm.control}
           />
-          {/* {currentfilteredCate && (
+          {currentfilteredCate && (
             <Button
               disableRipple
               color="success"
@@ -99,8 +100,8 @@ const StoreListContentSection = (props: Props) => {
             >
               {categoryFiltered?.cate_name}
             </Button>
-          )} */}
-        </Stack>
+          )}
+        </Stack> */}
 
         <Stack direction="row" spacing={2}>
           <Typography color="grey.400">

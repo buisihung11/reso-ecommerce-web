@@ -31,9 +31,9 @@ export default function StoreCatesList({ store }: StoreGCatesListProps) {
     <List
       sx={{
         width: '100%',
-
         bgcolor: 'background.paper',
-        marginLeft: '-16px',
+        marginLeft: { xl: '-16px' },
+        marginRight: { xs: '16px', xl: 0 },
         fontWeight: '400',
       }}
       component="nav"

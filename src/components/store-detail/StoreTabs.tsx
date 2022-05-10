@@ -25,7 +25,7 @@ export default function StoreTabs({ store }: StoreTabsProps) {
   const [value, setValue] = React.useState('1');
 
   const { page, size, onPageChange } = usePagination({
-    initValues: { page: 1, size: 12 },
+    initValues: { page: 1, size: 6 },
   });
 
   const { data, isLoading, metadata, error } = useProducts({
@@ -50,8 +50,8 @@ export default function StoreTabs({ store }: StoreTabsProps) {
           value={value}
           onChange={handleChange}
           variant="scrollable"
-          scrollButtons
-          //allowScrollButtonsMobile
+          //scrollButtons
+          allowScrollButtonsMobile
           aria-label="visible arrows tabs example"
         >
           <Tab label="Sản phẩm" value="1" />

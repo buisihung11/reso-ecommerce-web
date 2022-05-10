@@ -84,9 +84,7 @@ const StoreViewSection = () => {
     <Container maxWidth="xl" sx={{ py: [2, 6] }}>
       {/* Header */}
       {isLoading || router.isFallback ? (
-        <Container>
-          <LinearProgress />
-        </Container>
+        <Container></Container>
       ) : (
         <>
           {error && (
@@ -97,7 +95,7 @@ const StoreViewSection = () => {
               alignItems="center"
             >
               <Typography variant="h4">
-                {error.message ?? 'Không tìm thấy sản phẩm'}
+                {error.message ?? 'Không tìm thấy cửa hàng'}
               </Typography>
               <Empty />
             </Stack>
@@ -107,7 +105,7 @@ const StoreViewSection = () => {
               <Stack display="flex" paddingBottom="2rem">
                 <Box
                   width={'100%'}
-                  height={'65vh'}
+                  height={'60vh'}
                   sx={{
                     backgroundRepeat: 'no-repeat',
                     backgroundSize: 'cover',
