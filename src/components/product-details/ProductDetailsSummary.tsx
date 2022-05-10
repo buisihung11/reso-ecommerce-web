@@ -171,7 +171,9 @@ export default function ProductDetailsSummary({
           </Box>
           <Box sx={{ mt: 5 }}>
             <Grid container spacing={2}>
-              {!message ? (
+              {message ? (
+                <ProductContactDialog />
+              ) : (
                 <>
                   <Grid item xs={12} sm={6}>
                     <Button
@@ -197,9 +199,7 @@ export default function ProductDetailsSummary({
                       Thêm vào giỏ hàng
                     </Button>
                   </Grid>
-                </>
-              ) : (
-                <ProductContactDialog />
+                </> 
               )}
             </Grid>
           </Box>

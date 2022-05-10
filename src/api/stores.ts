@@ -9,8 +9,6 @@ export const getAllStoresPath = (params: any = {}) =>
   request
     .get<BaseResponse<TStore>>('/stores', {
       params: {
-        page:1,
-        size:50,
         ...params,
       },
     })

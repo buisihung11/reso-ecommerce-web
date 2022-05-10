@@ -129,11 +129,9 @@ const CollectionGridSection: FC<Props> = ({ settings = {} }) => {
               justifyContent={{
                 xs: 'center',
                 sm: 'space-between',
-                md: 'space-between',
-                xl: 'space-between',
               }}
             >
-              {collections?.slice(46, 50).map((col) => (
+              {collections?.slice(0, 4).map((col) => (
                 <>
                   <Grid container item sm={5} md={4} py={5} key={col.id}>
                     <Link href={`/collections/${col.id}`} underline="none">
