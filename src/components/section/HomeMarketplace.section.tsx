@@ -22,6 +22,8 @@ import {
   Button,
   TextField,
   IconButton,
+  InputAdornment,
+  styled,
 } from '@mui/material';
 import React, { FC } from 'react';
 
@@ -35,6 +37,27 @@ interface Props {
     [key: string]: any;
   };
 }
+
+const StyledTextField = styled(TextField)({
+  '& label.Mui-focused': {
+    color: '#00AB55',
+  },
+  '& .MuiInput-underline:after': {
+    borderBottomColor: '#000000',
+  },
+  '& .MuiOutlinedInput-root': {
+    '& fieldset': {
+      borderColor: '#000000',
+    },
+    '&:hover fieldset': {
+      borderColor: '#000000',
+    },
+    '&.Mui-focused fieldset': {
+      borderColor: '#00AB55',
+    },
+  },
+});
+
 const HomeMarketSection: FC<Props> = ({ settings = {} }) => {
   const { page, size, onPageChange } = usePagination({
     initValues: { page: 1, size: 15 },
@@ -48,22 +71,28 @@ const HomeMarketSection: FC<Props> = ({ settings = {} }) => {
 
   return (
     <Box bgcolor={bgColorSetting} py={[6, 10]} alignItems="center">
-      <Container maxWidth="lg" sx={{ paddingBottom: '2rem' }}>
+      <Container maxWidth="lg" sx={{ paddingBottom: '5rem' }}>
         <Stack
           flexDirection={'row'}
           width={'100%'}
-          justifyContent="space-between"
+          justifyContent="space-evenly"
           alignItems="center"
-          sx={{ backgroundColor: '#00000010' }}
-          paddingX={'2rem'}
+          sx={{ backgroundColor: '#00AB5590' }}
         >
-          <Box display="flex" alignItems={'flex-end'} marginY="0.5rem">
-            <Search />
-            <TextField
-              sx={{ width: '30vw' }}
+          <Box display="flex" marginY="0.5rem">
+            <StyledTextField
+              sx={{ width: '50vw' }}
               id="search"
-              label="Tìm kiếm"
-              variant="standard"
+              placeholder="Tìm kiếm"
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <Search />
+                  </InputAdornment>
+                ),
+              }}
+              variant="outlined"
+              color="primary"
             />
           </Box>
           <IconButton>
@@ -86,20 +115,21 @@ const HomeMarketSection: FC<Props> = ({ settings = {} }) => {
             container
             direction="row"
             sx={{ justifyContent: 'space-between' }}
+            spacing={[2, 4]}
           >
-            <Grid item xs={3}>
+            <Grid item xs={6} md={3}>
               <Category fontSize="large" />
               <Typography variant="h5">Sản phẩm an toàn</Typography>
             </Grid>
-            <Grid item xs={3}>
+            <Grid item xs={6} md={3}>
               <SentimentSatisfied fontSize="large" />
               <Typography variant="h5">Chất lượng cam kết</Typography>
             </Grid>
-            <Grid item xs={3}>
+            <Grid item xs={6} md={3}>
               <DeliveryDining fontSize="large" />
               <Typography variant="h5">Giao hàng nhanh chóng</Typography>
             </Grid>
-            <Grid item xs={3}>
+            <Grid item xs={6} md={3}>
               <SupportAgent fontSize="large" />
               <Typography variant="h5">Dịch vụ vượt trội</Typography>
             </Grid>
