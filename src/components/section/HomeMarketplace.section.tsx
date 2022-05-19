@@ -8,6 +8,7 @@ import {
   Search,
   SentimentSatisfied,
   ShoppingCart,
+  SupportAgent,
 } from '@mui/icons-material';
 import {
   Box,
@@ -75,7 +76,7 @@ const HomeMarketSection: FC<Props> = ({ settings = {} }) => {
 
       <Stack spacing={[2, 4]}>
         <Container
-          maxWidth="md"
+          maxWidth="lg"
           sx={{ textAlign: 'center', margin: '0 auto', paddingTop: '2rem' }}
         >
           {/* <Typography variant="h1" sx={{ paddingBottom: '1rem' }}>
@@ -86,16 +87,20 @@ const HomeMarketSection: FC<Props> = ({ settings = {} }) => {
             direction="row"
             sx={{ justifyContent: 'space-between' }}
           >
-            <Grid item xs={4}>
+            <Grid item xs={3}>
               <Category fontSize="large" />
               <Typography variant="h5">Sản phẩm an toàn</Typography>
             </Grid>
-            <Grid item xs={4}>
+            <Grid item xs={3}>
               <SentimentSatisfied fontSize="large" />
               <Typography variant="h5">Chất lượng cam kết</Typography>
             </Grid>
-            <Grid item xs={4}>
+            <Grid item xs={3}>
               <DeliveryDining fontSize="large" />
+              <Typography variant="h5">Giao hàng nhanh chóng</Typography>
+            </Grid>
+            <Grid item xs={3}>
+              <SupportAgent fontSize="large" />
               <Typography variant="h5">Dịch vụ vượt trội</Typography>
             </Grid>
           </Grid>
