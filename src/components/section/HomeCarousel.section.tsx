@@ -5,12 +5,13 @@ import {
   CarouselBasic2,
   CarouselBasic3,
   CarouselBasic4,
+  MultiCarousel,
 } from '../carousel';
 import { TSetting } from './Section';
 
 interface Props {
   settings?: TSetting & {
-    carouselType?: 'type1' | 'type2' | 'type3' | 'type4';
+    carouselType?: 'type1' | 'type2' | 'type3' | 'type4' | 'typemulti';
   };
 }
 
@@ -26,6 +27,8 @@ const HomeCarouselSection = ({ settings = {} }: Props) => {
         return <CarouselBasic3 />;
       case 'type4':
         return <CarouselBasic4 />;
+      case 'typemulti':
+        return <MultiCarousel />;
       default:
         return <CarouselBasic3 />;
     }

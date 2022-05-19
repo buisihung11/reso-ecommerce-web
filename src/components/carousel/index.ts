@@ -4,3 +4,4 @@ export { default as CarouselBasic3 } from './CarouselBasic3';
 export { default as CarouselBasic2 } from './CarouselBasic2';
 export { default as CarouselBasic1 } from './CarouselBasic1';
 export { default as ProductCarousel } from './ProductCarousel';
+export { default as MultiCarousel } from './MultiCarousel';

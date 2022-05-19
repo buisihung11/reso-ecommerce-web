@@ -47,7 +47,7 @@ function ParentItem({
 
   return (
     <Box onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
-      <NextLink href={path ?? '#'} underline="none">
+      <NextLink href={path ?? '#'} underline="none" passHref>
         <Link
           noWrap
           underline="none"

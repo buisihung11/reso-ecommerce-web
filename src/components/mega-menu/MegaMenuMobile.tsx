@@ -125,7 +125,7 @@ function SubMenu({ parent, pathname }: SubMenuProps) {
                           />
                         );
                       return (
-                        <Link key={link.title} href={link.path}>
+                        <Link key={link.title} href={link.path} passHref>
                           <ListItemButton sx={{ px: 1.5 }}>
                             <ListItemText
                               primary={link.title}

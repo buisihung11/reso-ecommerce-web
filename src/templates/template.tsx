@@ -2,7 +2,7 @@ import SectionInstances, { SectionProps } from '@/components/section/Section';
 import sections from '@/components/section/section-map';
 import useIframeMessage from '@/hooks/useIframeMessage';
 import layouts from '@/layouts/layouts';
-import { Breadcrumbs, Link, Typography } from '@mui/material';
+import { Breadcrumbs, Button, Link, Typography } from '@mui/material';
 import { useRouter } from 'next/router';
 import React, { FC, useEffect, useMemo, useState } from 'react';
 import templates from './template-map';
@@ -41,8 +41,6 @@ const TemplateFactory = <T extends {}>({
 
   const BREADSCUMB_LINKS = [
     { linkname: 'Trang chính', pathname: '/' },
-    { linkname: 'Cửa hàng', pathname: '/stores' },
-    { linkname: 'Sản phẩm', pathname: '/products' },
     // { id: '3', linkname: 'Trang chính', pathname: '/' },
   ];
   // register name instance
@@ -65,7 +63,7 @@ const TemplateFactory = <T extends {}>({
 
   return (
     <LaypoutWrapper>
-      {message && !message.hasLayout && (
+      {message && !message.hasLayout && router.pathname != '/' && (
         <Breadcrumbs aria-label="breadcrumb" sx={{ paddingLeft: '2rem' }}>
           {BREADSCUMB_LINKS.map((link, index) => (
             <Link

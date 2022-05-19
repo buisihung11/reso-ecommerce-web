@@ -13,6 +13,8 @@ import ComboViewSection from './combos/ComboView.section';
 import StoreListContentSection from './store-list/StoreListContent.section';
 import StoreGridSection from './StoreListGrid.section';
 import StoreViewSection from './StoreView.section';
+import HomeMarketSection from './HomeMarketplace.section';
+import CateMarketView from '../market/CateMarketView.section';
 
 
 const sections = {
@@ -29,6 +31,8 @@ const sections = {
   'order-content': OrderContentSection,
   'productlist-content': ProductListContentSection,
   'storelist-content': StoreListContentSection,
+  'home-market': HomeMarketSection,
+  'cate-market-view': CateMarketView,
   // COMBOS
   'combo-list': ComboListSection,
   'combo-view': ComboViewSection,
