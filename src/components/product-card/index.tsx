@@ -1,5 +1,5 @@
 import { TProduct } from '@/types/product';
-import { Box, Stack, Typography } from '@mui/material';
+import { Box, Card, Stack, Typography } from '@mui/material';
 import { Theme } from '@mui/material/styles';
 import { makeStyles } from '@mui/styles';
 import clsx from 'clsx';
@@ -55,30 +55,35 @@ const ProductCard: FC<ProductCardProps> = ({
   const price = product.product_in_menu?.price1 ?? product.price;
 
   return (
-    <Box className={classes.wrapper}>
-      <Stack spacing={2}>
-        <ProductThumbnail
-          ImgProps={{
-            className: clsx({
-              [classes.thumbnail]: imgStyle === 'auto',
-              [classes.squareImg]: imgStyle === 'square',
-            }),
-          }}
-          src={pic_url!}
-          title={product_name!}
-        />
+    <Card
+      sx={{
+        minHeight: { xs: '16rem', sm: '18rem', lg: '20rem' },
+        ':hover': { borderWidth: 0.5 },
+      }}
+    >
+      <Box className={classes.wrapper}>
+        <Stack spacing={2}>
+          <ProductThumbnail
+            ImgProps={{
+              className: clsx({
+                [classes.thumbnail]: imgStyle === 'auto',
+                [classes.squareImg]: imgStyle === 'square',
+              }),
+            }}
+            src={pic_url!}
+            title={product_name!}
+          />
 
-        {hasImage && (
-          <Typography className={classes.productTitle} noWrap>
-            {product_name}
-          </Typography>
-        )}
-
-        <Typography variant="body1" noWrap>
-          Từ {price} VND
-        </Typography>
-      </Stack>
-    </Box>
+          {/* {hasImage && <Typography variant="h6">{product_name}</Typography>} */}
+          <Box paddingLeft={1}>
+            <Typography variant="h6">{product_name}</Typography>
+            <Typography variant="body1" noWrap>
+              {price} vnđ
+            </Typography>
+          </Box>
+        </Stack>
+      </Box>
+    </Card>
   );
 };
 

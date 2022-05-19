@@ -10,7 +10,6 @@ import DialogTitle from '@mui/material/DialogTitle';
 import Dialog from '@mui/material/Dialog';
 import Typography from '@mui/material/Typography';
 import {
-  Business,
   Close,
   Email,
   Image,
@@ -19,7 +18,7 @@ import {
   PhoneIphone,
 } from '@mui/icons-material';
 import useIframeMessage from '@/hooks/useIframeMessage';
-import { AppBar, Divider, IconButton, Stack } from '@mui/material';
+import { AppBar, Container, Divider, IconButton, Stack } from '@mui/material';
 
 function SimpleDialog(props: any) {
   const { message } = useIframeMessage();
@@ -32,7 +31,7 @@ function SimpleDialog(props: any) {
   return (
     <Dialog onClose={handleClose} open={open}>
       <DialogTitle>
-        <Typography variant="h5">Thông tin người bán</Typography>
+        <Typography variant="h5">Thông tin liên hệ</Typography>
         {onClose ? (
           <IconButton
             aria-label="close"
@@ -73,14 +72,7 @@ function SimpleDialog(props: any) {
           </ListItemAvatar>
           <ListItemText primary={message?.contact.email} />
         </ListItem>
-        <ListItem>
-          <ListItemAvatar>
-            <Avatar>
-              <Business />
-            </Avatar>
-          </ListItemAvatar>
-          <ListItemText primary={message?.contact.address} />
-        </ListItem>
+
         <Divider />
         <ListItem sx={{ justifyContent: 'center' }}>
           <Button
@@ -113,7 +105,7 @@ export default function ProductContactDialog() {
   };
 
   return (
-    <>
+    <Container maxWidth="md">
       <Button
         fullWidth
         size="large"
@@ -126,6 +118,6 @@ export default function ProductContactDialog() {
         Vui Lòng Liên hệ
       </Button>
       <SimpleDialog open={open} onClose={handleClose} />
-    </>
+    </Container>
   );
 }

@@ -12,12 +12,20 @@ interface ProductGridProps {
 const ProductGridSection = ({ products }: ProductGridProps) => {
   return (
     <Box>
-      <Grid container spacing={[2, 4]}>
+      <Grid container spacing={[2, 2]} sx={{ justifyContent: 'space-between' }}>
         {products?.map((product) => (
-          <Grid key={product.product_id} item xs={6} sm={4} md={3}>
+          <Grid
+            key={product.product_id}
+            item
+            xs={6}
+            sm={4}
+            md={2}
+            minWidth={{ md: '12rem', lg: '14rem' }}
+          >
             <Link
               href={`/products/${product.product_id}`}
               aria-label={`View ${product.product_name} product page`}
+              sx={{ ':hover': { textDecoration: 'none' } }}
             >
               <ProductCard product={product} />
             </Link>

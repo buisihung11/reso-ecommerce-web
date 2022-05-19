@@ -2,7 +2,7 @@ import Empty from '@/components/Empty';
 import Filter from '@/components/filter';
 import ProductGridSection from '@/components/section/ProductGrid.section';
 import useProducts from '@/hooks/product/useProducts';
-import useCategories from '@/hooks/category/useCategories';
+
 import usePagination from '@/hooks/usePagination';
 import { TProductQuery } from '@/types/product';
 import { ErrorResponse } from '@/types/request';
@@ -19,6 +19,7 @@ import { NextSeo } from 'next-seo';
 import { useRouter } from 'next/router';
 import React, { useCallback, useEffect, useState } from 'react';
 import { useForm, useWatch } from 'react-hook-form';
+import useCategory from '@/hooks/category/useCategory';
 
 interface Props {}
 
@@ -43,14 +44,11 @@ const ProductListContentSection = (props: Props) => {
   const { data, isLoading, metadata, error } = useProducts({
     params: { ...filters, page: page, size },
   });
-  const { data: categories } = useCategories();
+  const { data: categoryFiltered } = useCategory({ id: Number(queryCate) });
   const currentfilteredCate = filters['cat-id'];
   //
   const totalPage = Math.ceil((metadata?.total ?? 1) / size);
   const [previousCate, setPreviousCate] = useState('');
-  const categoryFiltered = categories?.find(
-    (c) => c.cate_id.toString() == currentfilteredCate?.toString(),
-  );
   const handleResetFilter = useCallback(() => {
     filterForm.reset({ 'cat-id': '', price: '', sort: '' });
     setOpenFilter(false);
@@ -125,6 +123,7 @@ const ProductListContentSection = (props: Props) => {
           <ProductGridSection products={data} />
           <Box py={4} textAlign="center" display="flex" justifyContent="center">
             <Pagination
+              page={page}
               onChange={(_: any, page: number) => onPageChange(page)}
               count={totalPage}
               shape="rounded"

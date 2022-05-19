@@ -67,7 +67,7 @@ const ProductThumbnail = ({
             }}
             {...LoaderProps}
           >
-            {title}
+            <Typography noWrap>{'Chưa có ảnh'}</Typography>
           </Box>
         }
         unloader={
@@ -86,7 +86,7 @@ const ProductThumbnail = ({
             }}
             {...UnloaderProps}
           >
-            <Typography noWrap>{title}</Typography>
+            <Typography noWrap>{'Chưa có ảnh'}</Typography>
           </Box>
         }
       />

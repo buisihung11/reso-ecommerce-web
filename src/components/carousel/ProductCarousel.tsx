@@ -69,6 +69,7 @@ const ProductCarousel = ({ products, CardProps = {} }: Props) => {
           <Link
             href={`/products/${item.product_id}`}
             aria-label={`View ${item.product_name} product page`}
+            sx={{ ':hover': { textDecoration: 'none' } }}
           >
             <ProductCard
               key={`relate-product-${item.product_id}`}
