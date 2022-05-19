@@ -39,7 +39,7 @@ export default function StoreTabs({ store }: StoreTabsProps) {
   };
 
   return (
-    <Box width="100%" typography={'body2'}>
+    <Box width="100%" typography={'body2'} paddingTop={'2rem'}>
       <Box
         sx={{ borderBottom: 1, borderColor: 'divider' }}
         paddingBottom={'1rem'}
@@ -61,7 +61,7 @@ export default function StoreTabs({ store }: StoreTabsProps) {
         </Tabs>
       </Box>
       <TabContext value={value}>
-        <Box minHeight={1000}>
+        <Box>
           <TabPanel value="1">
             {data && (
               <>
@@ -76,6 +76,7 @@ export default function StoreTabs({ store }: StoreTabsProps) {
                     onChange={(_: any, page: number) => onPageChange(page)}
                     count={totalPage}
                     shape="rounded"
+                    page={page}
                   />
                 </Box>
               </>

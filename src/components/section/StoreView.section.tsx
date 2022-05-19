@@ -10,6 +10,7 @@ import {
 } from '@mui/icons-material';
 import {
   Box,
+  Card,
   CardContent,
   CircularProgress,
   Container,
@@ -18,6 +19,7 @@ import {
   LinearProgress,
   Paper,
   Rating,
+  Skeleton,
   Stack,
   Typography,
 } from '@mui/material';
@@ -84,7 +86,15 @@ const StoreViewSection = () => {
     <Container maxWidth="xl" sx={{ py: [2, 6] }}>
       {/* Header */}
       {isLoading || router.isFallback ? (
-        <Container></Container>
+        <Container>
+          <Skeleton variant="rectangular" width={'100%'} height={'40vh'} />
+          <Skeleton variant="text" height={'10vh'} />
+          <Box display="flex">
+            <Skeleton variant="rectangular" width={'25%'} height={400} />
+            <Box width={'5%'} height={400}></Box>
+            <Skeleton variant="rectangular" width={'70%'} height={400} />
+          </Box>
+        </Container>
       ) : (
         <>
           {error && (
@@ -102,108 +112,6 @@ const StoreViewSection = () => {
           )}
           {!error && store ? (
             <>
-              <Stack display="flex" paddingBottom="2rem">
-                <Box
-                  width={'100%'}
-                  height={'60vh'}
-                  sx={{
-                    backgroundRepeat: 'no-repeat',
-                    backgroundSize: 'cover',
-                    backgroundImage:
-                      'url(https://avatars.mds.yandex.net/get-zen_doc/1881616/pub_5d3922bdce44a000aca3c722_5d3923af78125e00acc0414f/scale_1200)',
-                  }}
-                />
-                <Box
-                  paddingLeft={{ md: '3rem' }}
-                  marginBottom={'1rem'}
-                  color="white"
-                  flexWrap="wrap"
-                  marginTop={{ xs: '-20.5rem', md: '-10rem' }}
-                  sx={{ backgroundColor: '#22222295' }}
-                  display="flex"
-                  justifyContent={{ xs: 'center', md: 'space-between' }}
-                >
-                  <Box
-                    flexDirection={{ xs: 'column', md: 'row' }}
-                    display="flex"
-                  >
-                    <Stack
-                      paddingRight={{ md: '3rem' }}
-                      paddingBottom={'1rem'}
-                      justifyContent="space-between"
-                      alignItems="center"
-                      height="10rem"
-                    >
-                      <Box
-                        height={80}
-                        width={80}
-                        sx={{
-                          backgroundRepeat: 'no-repeat',
-                          backgroundSize: 'cover',
-                          backgroundImage: `url(${MOCK_SHOP.icon_image})`,
-                        }}
-                      />{' '}
-                      <Box display="flex">
-                        <Rating
-                          name="read-only"
-                          value={MOCK_SHOP.rate}
-                          precision={0.1}
-                          size="small"
-                          readOnly
-                        />
-                        <Typography>{MOCK_SHOP.rate}</Typography>
-                      </Box>
-                    </Stack>
-
-                    <Box marginBottom={'1rem'}>
-                      <Typography
-                        gutterBottom
-                        variant="h3"
-                        textAlign={{ xs: 'center', md: 'left' }}
-                      >
-                        {store.name}
-                      </Typography>
-                      <Box
-                        paddingLeft={{ xs: 0, md: '1rem' }}
-                        display="block"
-                        justifyContent={{ xs: 'center', md: 'flex-start' }}
-                      >
-                        <Box display="flex">
-                          <EmailOutlined />
-                          <Typography
-                            variant="body2"
-                            color="grey.400"
-                            paddingLeft={'1rem'}
-                          >
-                            {MOCK_SHOP.email}
-                          </Typography>
-                        </Box>
-                        <Box display="flex">
-                          <PhoneOutlined />
-                          <Typography
-                            variant="body2"
-                            color="grey.400"
-                            paddingLeft={'1rem'}
-                          >
-                            {MOCK_SHOP.phone}
-                          </Typography>
-                        </Box>
-                      </Box>
-
-                      <Stack
-                        paddingTop={'1rem'}
-                        display={{ xs: 'flex', md: 'none' }}
-                      >
-                        <SocialMedias />
-                      </Stack>
-                    </Box>
-                  </Box>
-                  <Stack display={{ xs: 'none', md: 'flex' }}>
-                    <SocialMedias />
-                  </Stack>
-                </Box>
-              </Stack>
-              {/* Body */}
               <Box flexDirection={{ xs: 'column', md: 'row' }} display="flex">
                 <Box
                   width={{ md: '30%' }}
@@ -211,8 +119,84 @@ const StoreViewSection = () => {
                 >
                   <StoreCatesList store={store} />
                 </Box>
+                <Box
+                  display="flex"
+                  alignItems={'center'}
+                  width={{ md: '100%' }}
+                  flexDirection={'column'}
+                >
+                  <Card>
+                    <Box
+                      height={{ md: '20vh' }}
+                      width={{ xs: '100vw', md: '70vw' }}
+                      flexWrap="wrap"
+                      flexDirection={'row'}
+                      display="flex"
+                      alignItems={'center'}
+                      justifyContent={{ xs: 'center', md: 'space-between' }}
+                      marginX="2rem"
+                    >
+                      <Stack alignItems="center" flexDirection={'row'}>
+                        <Box
+                          paddingRight={{ md: '3rem' }}
+                          paddingBottom={'1rem'}
+                          height={80}
+                          width={80}
+                          sx={{
+                            backgroundRepeat: 'no-repeat',
+                            backgroundSize: 'cover',
+                            backgroundImage: `url(${MOCK_SHOP.icon_image})`,
+                          }}
+                        />
+                        <Box marginBottom={'1rem'}>
+                          <Typography
+                            gutterBottom
+                            variant="h3"
+                            textAlign={{ xs: 'center', md: 'left' }}
+                          >
+                            {store.name}
+                          </Typography>
+                          <Box display="flex">
+                            <Rating
+                              name="read-only"
+                              value={MOCK_SHOP.rate}
+                              precision={0.1}
+                              size="small"
+                              readOnly
+                            />
+                            <Typography>{MOCK_SHOP.rate}</Typography>
+                          </Box>
+                        </Box>
+                      </Stack>
 
-                <StoreTabs store={store} />
+                      <Box
+                        paddingLeft={{ xs: 0, md: '1rem' }}
+                        display="block"
+                        justifyContent={{ xs: 'center', md: 'flex-start' }}
+                      >
+                        <Box display="flex">
+                          <EmailOutlined />
+                          <Typography variant="body2" paddingLeft={'1rem'}>
+                            {MOCK_SHOP.email}
+                          </Typography>
+                        </Box>
+                        <Box display="flex">
+                          <PhoneOutlined />
+                          <Typography variant="body2" paddingLeft={'1rem'}>
+                            {MOCK_SHOP.phone}
+                          </Typography>
+                        </Box>
+                        <Stack paddingTop={'1rem'}>
+                          <SocialMedias />
+                        </Stack>
+                      </Box>
+                    </Box>
+                  </Card>
+                  {/* Body */}
+
+                  <StoreTabs store={store} />
+                </Box>
+
                 {/* Mobile cate section */}
                 <Box
                   width={{ xs: '100%', xl: '30%' }}

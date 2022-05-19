@@ -35,6 +35,7 @@ export default function StoreCatesList({ store }: StoreGCatesListProps) {
         marginLeft: { xl: '-16px' },
         marginRight: { xs: '16px', xl: 0 },
         fontWeight: '400',
+        paddingRight: '1rem',
       }}
       component="nav"
       aria-labelledby="nested-list-subheader"

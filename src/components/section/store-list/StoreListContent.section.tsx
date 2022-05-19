@@ -119,7 +119,8 @@ const StoreListContentSection = (props: Props) => {
           <StoreGridSection stores={data} />
           <Box py={4} textAlign="center" display="flex" justifyContent="center">
             <Pagination
-              onChange={(_: any, page: number) => onPageChange(page)}
+              page={page}
+              onChange={(_: any, page) => onPageChange(page)}
               count={totalPage}
               shape="rounded"
             />
