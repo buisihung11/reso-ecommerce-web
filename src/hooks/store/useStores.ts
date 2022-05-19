@@ -6,8 +6,11 @@ type Props = {
 };
 
 const useStores = ({ params }: Props = {}) => {
-  const stores = useQuery(['stores'], () =>
+  const stores = useQuery(['stores',params], () =>
   storeApi.getAllStores(params),
+  {
+    refetchOnWindowFocus: false,
+  }
   );
 
   return {
