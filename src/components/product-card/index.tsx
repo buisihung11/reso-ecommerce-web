@@ -1,5 +1,5 @@
 import { TProduct } from '@/types/product';
-import { Box, Card, Stack, Typography } from '@mui/material';
+import { Box, Button, Stack, Typography } from '@mui/material';
 import { Theme } from '@mui/material/styles';
 import { makeStyles } from '@mui/styles';
 import clsx from 'clsx';
@@ -28,14 +28,16 @@ const useProductStyles = makeStyles((theme: Theme) => ({
     },
   },
   thumbnail: {
-    borderWidth: `1px solid ${theme.palette.grey[400]}`,
+    borderWidth: `1px solid ${theme.palette.grey[100]}`,
     transition: 'all ease-in-out 300ms',
     height: 'auto',
   },
   squareImg: {
-    width: '100%',
+    width: '12rem',
     aspectRatio: '1/1',
     objectFit: 'cover',
+    borderRadius: '50%',
+    boxShadow: '1px 1px 1px 1px',
   },
   productTitle: {
     ...theme.typography.caption,
@@ -55,35 +57,87 @@ const ProductCard: FC<ProductCardProps> = ({
   const price = product.product_in_menu?.price1 ?? product.price;
 
   return (
-    <Card
+    // <Box
+    //   sx={{
+    //     minHeight: { xs: '16rem', sm: '18rem', lg: '20rem' },
+    //     ':hover': { borderWidth: 1 },
+    //     borderWidth: 0.5,
+    //   }}
+    // >
+    //   <Box className={classes.wrapper}>
+    //     <Stack spacing={2} justifyContent="center" alignItems={'center'}>
+    //       <ProductThumbnail
+    //         ImgProps={{
+    //           className: clsx({
+    //             [classes.thumbnail]: imgStyle === 'auto',
+    //             [classes.squareImg]: imgStyle === 'square',
+    //           }),
+    //         }}
+    //         src={pic_url!}
+    //         title={product_name!}
+    //       />
+
+    //       {/* {hasImage && <Typography variant="h6">{product_name}</Typography>} */}
+    //       <Box paddingLeft={1} textAlign="center">
+    //         <Typography variant="h6">{product_name}</Typography>
+    //         <Typography variant="body1" noWrap>
+    //           {price} vnđ
+    //         </Typography>
+    //       </Box>
+    //     </Stack>
+    //   </Box>
+    // </Box>
+    <Box
       sx={{
-        minHeight: { xs: '16rem', sm: '18rem', lg: '20rem' },
-        ':hover': { borderWidth: 0.5 },
+        minHeight: { xs: '15rem', md: '18rem', lg: '22rem' },
+        ':hover': { borderWidth: 1 },
+        borderWidth: 0.5,
+        borderRadius: 5,
+        bgcolor: '#FFFFFF',
+        // boxShadow: '1px -1px 2px 0px',
       }}
     >
-      <Box className={classes.wrapper}>
-        <Stack spacing={2}>
-          <ProductThumbnail
-            ImgProps={{
-              className: clsx({
-                [classes.thumbnail]: imgStyle === 'auto',
-                [classes.squareImg]: imgStyle === 'square',
-              }),
-            }}
-            src={pic_url!}
-            title={product_name!}
-          />
+      <Stack
+        paddingY={'1rem'}
+        marginBottom="2rem"
+        justifyContent="center"
+        alignItems={'center'}
+      >
+        <ProductThumbnail
+          type="list"
+          ImgProps={{
+            className: clsx({
+              [classes.thumbnail]: imgStyle === 'auto',
+              [classes.squareImg]: imgStyle === 'square',
+            }),
+          }}
+          src={pic_url!}
+          title={product_name!}
+        />
+        {/* {hasImage && <Typography variant="h6">{product_name}</Typography>} */}
 
-          {/* {hasImage && <Typography variant="h6">{product_name}</Typography>} */}
-          <Box paddingLeft={1}>
-            <Typography variant="h6">{product_name}</Typography>
-            <Typography variant="body1" noWrap>
-              {price} vnđ
-            </Typography>
-          </Box>
-        </Stack>
+        <Box paddingX={'2rem'} height="2rem" textAlign={'center'}>
+          <Typography variant="h4">{product_name}</Typography>
+        </Box>
+      </Stack>
+      <Box className={classes.wrapper}>
+        <Box
+          marginX={'2rem'}
+          textAlign="center"
+          justifyContent={'space-between'}
+          sx={{ borderTopStyle: 'dashed', borderTopWidth: 1 }}
+          paddingY="1rem"
+          display={'flex'}
+        >
+          <Typography variant="h6" noWrap>
+            {price} vnđ
+          </Typography>
+          <Button variant="outlined" sx={{ borderRadius: 2 }}>
+            Thêm
+          </Button>
+        </Box>
       </Box>
-    </Card>
+    </Box>
   );
 };
 

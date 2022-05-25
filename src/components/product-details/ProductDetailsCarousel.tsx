@@ -79,6 +79,7 @@ function LargeItem({
   return (
     <Box sx={{ cursor: 'zoom-in', position: 'relative' }}>
       <ProductThumbnailStyle
+        type="detail"
         src={item}
         title={title}
         ImgProps={{

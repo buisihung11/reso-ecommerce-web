@@ -7,6 +7,7 @@ import { Img, ImgProps } from 'react-image';
 import clsx from 'clsx';
 import { motion } from 'framer-motion';
 interface Props {
+  type: string;
   src: string;
   title?: string;
   LoaderProps?: BoxProps;
@@ -30,6 +31,7 @@ const useProductStyles = makeStyles((theme: Theme) => ({
 }));
 
 const ProductThumbnail = ({
+  type,
   src,
   title,
   ImgProps,
@@ -40,12 +42,33 @@ const ProductThumbnail = ({
   const classes = useProductStyles();
 
   return (
-    <motion.div
-      whileHover={{
-        scale: 1.05,
-        transition: { type: 'spring', duration: 1, bounce: 0.5, mass: 0.5 },
-        opacity: 0.9,
-      }}
+    <Box
+      component={motion.div}
+      position={'relative'}
+      top={-60}
+      whileHover={
+        type == 'list'
+          ? {
+              // scale: 1.05,
+              transition: {
+                type: 'ease-out',
+                duration: 1,
+                bounce: 0.5,
+                mass: 0.5,
+              },
+              //opacity: 0.9,
+              top: -80,
+            }
+          : {
+              transition: {
+                type: 'spring',
+                duration: 1,
+                bounce: 0.5,
+                mass: 0.5,
+              },
+              opacity: 0.95,
+            }
+      }
     >
       <Img
         className={clsx({
@@ -56,14 +79,15 @@ const ProductThumbnail = ({
         src={src}
         loader={
           <Box
-            p={2}
             bgcolor="grey.100"
-            width="100%"
+            width={type == 'list' ? '12rem' : '100%'}
             sx={{
               aspectRatio: '1 / 1',
               display: 'flex',
               justifyContent: 'center',
               alignItems: 'center',
+              borderRadius: type == 'list' ? '50%' : 0,
+              boxShadow: '2px 0px 4px 0px',
             }}
             {...LoaderProps}
           >
@@ -72,17 +96,17 @@ const ProductThumbnail = ({
         }
         unloader={
           <Box
-            p={2}
             textAlign="center"
             bgcolor="grey.100"
-            width="100%"
+            width={type == 'list' ? '12rem' : '100%'}
             position="relative"
             sx={{
               aspectRatio: '1 / 1',
               display: 'flex',
               justifyContent: 'center',
               alignItems: 'center',
-              maxHeight: '400px',
+              borderRadius: type == 'list' ? '50%' : 0,
+              boxShadow: '2px 0px 4px 0px',
             }}
             {...UnloaderProps}
           >
@@ -90,7 +114,7 @@ const ProductThumbnail = ({
           </Box>
         }
       />
-    </motion.div>
+    </Box>
   );
 };
 

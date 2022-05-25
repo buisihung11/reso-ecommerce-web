@@ -154,7 +154,7 @@ export default function CarouselBasic3() {
     //     </Slider>
     //   </Stack>
     // </Stack>
-    <Container sx={{ paddingBottom: '2rem' }} maxWidth="lg">
+    <Container sx={{ paddingBottom: '2rem', paddingTop: '5rem' }} maxWidth="lg">
       <Grid container spacing={5}>
         <Grid item xs={12} sm={6}>
           <Slider ref={carouselRef} {...settingsMain}>

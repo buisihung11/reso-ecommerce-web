@@ -24,14 +24,20 @@ import {
   IconButton,
   InputAdornment,
   styled,
+  Divider,
+  Card,
+  Paper,
 } from '@mui/material';
+
 import React, { FC } from 'react';
 
 import useCategories from '@/hooks/category/useCategories';
 import { MultiCarousel } from '../carousel';
 import ProductGridSection from './ProductGrid.section';
 import usePagination from '@/hooks/usePagination';
-
+import useMenu from '@/hooks/menu/useMenu';
+import CateImageButton from '../category/CateImageButton';
+import CategoryCarousel from '../carousel/CategoryCarousel';
 interface Props {
   settings?: {
     [key: string]: any;
@@ -66,56 +72,66 @@ const HomeMarketSection: FC<Props> = ({ settings = {} }) => {
     params: { page: page, size },
   });
   const { data: categories, isLoading: cateLoading } = useCategories({});
+  const { data: menu } = useMenu({ id: 40 });
   const totalPage = Math.ceil((metadata?.total ?? 1) / size);
   const bgColorSetting = settings['bgColor'];
+  console.log(menu);
 
   return (
-    <Box bgcolor={bgColorSetting} py={[6, 10]} alignItems="center">
-      <Container maxWidth="lg" sx={{ paddingBottom: '5rem' }}>
-        <Stack
-          flexDirection={'row'}
-          width={'100%'}
-          justifyContent="space-evenly"
-          alignItems="center"
-          sx={{ backgroundColor: '#00AB5590' }}
-        >
-          <Box display="flex" marginY="0.5rem">
-            <StyledTextField
-              sx={{ width: '50vw' }}
-              id="search"
-              placeholder="Tìm kiếm"
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">
-                    <Search />
-                  </InputAdornment>
-                ),
-              }}
-              variant="outlined"
-              color="primary"
-            />
-          </Box>
-          <IconButton>
-            <ShoppingCart />
-          </IconButton>
-        </Stack>
-      </Container>
+    <Box bgcolor={bgColorSetting} alignItems="center">
+      <Box width={'100%'} sx={{ backgroundColor: '#00AB5590' }}>
+        <Container maxWidth="lg">
+          <Stack
+            flexDirection={'row'}
+            width={'100%'}
+            justifyContent="space-between"
+            alignItems="center"
+          >
+            <Typography variant="h6">CHỢ CƯ DÂN</Typography>
+            <Box display="flex" marginY="0.5rem">
+              <StyledTextField
+                sx={{ width: '50vw' }}
+                id="search"
+                placeholder="Tìm kiếm"
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <Search />
+                    </InputAdornment>
+                  ),
+                }}
+                variant="outlined"
+                color="primary"
+              />
+            </Box>
+            <IconButton>
+              <ShoppingCart />
+            </IconButton>
+          </Stack>
+        </Container>
+      </Box>
 
       <MultiCarousel />
 
       <Stack spacing={[2, 4]}>
-        <Container
-          maxWidth="lg"
-          sx={{ textAlign: 'center', margin: '0 auto', paddingTop: '2rem' }}
-        >
-          {/* <Typography variant="h1" sx={{ paddingBottom: '1rem' }}>
-            Daily essentials delivered in minutes.
-          </Typography> */}
+        <Container maxWidth="lg">
+          {/* <Divider sx={{ borderBottomWidth: 'medium' }}>
+            <Typography variant="h2" sx={{ paddingBottom: '1rem' }}>
+              Chợ Cư Dân có
+            </Typography>
+          </Divider> */}
+
           <Grid
             container
             direction="row"
-            sx={{ justifyContent: 'space-between' }}
-            spacing={[2, 4]}
+            sx={{
+              justifyContent: 'space-between',
+              borderStyle: 'solid',
+              borderWidth: 'thin',
+              borderColor: '#00000030',
+              paddingY: '2rem',
+              textAlign: 'center',
+            }}
           >
             <Grid item xs={6} md={3}>
               <Category fontSize="large" />
@@ -145,38 +161,16 @@ const HomeMarketSection: FC<Props> = ({ settings = {} }) => {
               paddingY: '5rem',
             }}
           >
-            <Container
-              maxWidth="lg"
-              sx={{
-                margin: '0 auto',
-                paddingBottom: '1rem',
-              }}
-            >
-              <Typography variant="h2">#Danh mục phổ biến</Typography>
-            </Container>
+            <Typography variant="h3" sx={{ paddingBottom: '3rem' }}>
+              Danh mục phổ biến
+            </Typography>
+
             {cateLoading ? (
               <Container sx={{ textAlign: 'center' }}>
                 <CircularProgress />
               </Container>
             ) : (
-              <Grid container spacing={[2, 4]}>
-                {categories?.slice(0, 8).map((cate) => (
-                  <Grid key={cate.cate_id} item xs={6} sm={4} md={3}>
-                    <Link
-                      href={`/categories/${cate.cate_id}`}
-                      aria-label={`Xem danh mục ${cate.cate_name}`}
-                    >
-                      <Button
-                        variant="outlined"
-                        color="primary"
-                        sx={{ width: '100%', height: '8vh', borderRadius: 3 }}
-                      >
-                        <Typography variant="h6">{cate.cate_name}</Typography>
-                      </Button>
-                    </Link>
-                  </Grid>
-                ))}
-              </Grid>
+              categories && <CategoryCarousel categories={categories} />
             )}
           </Container>
         </Box>
@@ -188,23 +182,43 @@ const HomeMarketSection: FC<Props> = ({ settings = {} }) => {
             alignSelf: 'center',
           }}
         >
-          <Container
-            maxWidth="lg"
-            sx={{
-              margin: '0 auto',
-              paddingBottom: '1rem',
-            }}
-          >
-            <Typography variant="h2">#Sản phẩm nổi bật</Typography>
-          </Container>
+          <Divider />
+          <Typography variant="h3" sx={{ paddingBottom: '1rem' }}>
+            Sản phẩm gợi ý
+          </Typography>
+
           {isLoading ? (
             <Container sx={{ textAlign: 'center' }}>
               <CircularProgress />
             </Container>
           ) : (
             data && (
-              <>
-                <ProductGridSection products={data} />
+              <Box paddingY={{ xs: '5rem', md: '3rem' }}>
+                <ProductGridSection products={data.slice(0, 6)} />
+              </Box>
+            )
+          )}
+        </Container>
+
+        <Container
+          maxWidth="lg"
+          style={{
+            alignContent: 'center',
+            alignSelf: 'center',
+          }}
+        >
+          <Typography variant="h3" sx={{ paddingBottom: '1rem' }}>
+            Sản phẩm nổi bật
+          </Typography>
+
+          {isLoading ? (
+            <Container sx={{ textAlign: 'center' }}>
+              <CircularProgress />
+            </Container>
+          ) : (
+            data && (
+              <Box paddingY={{ xs: '5rem', md: '3rem' }}>
+                <ProductGridSection products={data.slice(6, data.length)} />
                 <Box
                   py={4}
                   textAlign="center"
@@ -218,7 +232,7 @@ const HomeMarketSection: FC<Props> = ({ settings = {} }) => {
                     shape="rounded"
                   />
                 </Box>
-              </>
+              </Box>
             )
           )}
         </Container>

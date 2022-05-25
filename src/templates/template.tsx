@@ -2,11 +2,11 @@ import SectionInstances, { SectionProps } from '@/components/section/Section';
 import sections from '@/components/section/section-map';
 import useIframeMessage from '@/hooks/useIframeMessage';
 import layouts from '@/layouts/layouts';
-import { Breadcrumbs, Button, Link, Typography } from '@mui/material';
+import { Box, Breadcrumbs, Button, Link, Typography } from '@mui/material';
 import { useRouter } from 'next/router';
 import React, { FC, useEffect, useMemo, useState } from 'react';
 import templates from './template-map';
-
+import { ArrowLeft } from '@mui/icons-material';
 type KeyOfObject<T> = keyof T;
 
 type Props<T extends {}> = {
@@ -40,7 +40,15 @@ const TemplateFactory = <T extends {}>({
   const router = useRouter();
 
   const BREADSCUMB_LINKS = [
-    { linkname: 'Trang chính', pathname: '/' },
+    {
+      linkname: (
+        <Box display="flex">
+          <ArrowLeft />
+          {'Về trang chính'}
+        </Box>
+      ),
+      pathname: '/',
+    },
     // { id: '3', linkname: 'Trang chính', pathname: '/' },
   ];
   // register name instance
@@ -75,7 +83,6 @@ const TemplateFactory = <T extends {}>({
               {link.linkname}
             </Link>
           ))}
-
           {/* <Typography color="text.primary">Sản phẩm</Typography> */}
         </Breadcrumbs>
       )}

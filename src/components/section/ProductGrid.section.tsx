@@ -12,15 +12,20 @@ interface ProductGridProps {
 const ProductGridSection = ({ products }: ProductGridProps) => {
   return (
     <Box>
-      <Grid container spacing={[2, 2]} sx={{ justifyContent: 'space-between' }}>
+      <Grid
+        container
+        spacing={[4, 8]}
+        sx={{ justifyContent: { xs: 'center', md: 'space-between' } }}
+      >
         {products?.map((product) => (
           <Grid
             key={product.product_id}
             item
-            xs={6}
-            sm={4}
-            md={2}
-            minWidth={{ md: '12rem', lg: '14rem' }}
+            xs={12}
+            sm={5}
+            md={4}
+            paddingY={{ xs: '2rem', md: '3rem' }}
+            maxWidth={{ xs: '18rem', md: '21rem', lg: '23rem' }}
           >
             <Link
               href={`/products/${product.product_id}`}

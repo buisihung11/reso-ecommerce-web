@@ -9,9 +9,11 @@ import { EmailOutlined, PhoneOutlined } from '@mui/icons-material';
 import {
   Box,
   Button,
+  Card,
   CircularProgress,
   Container,
   Grid,
+  Link,
   Rating,
   Stack,
   Typography,
@@ -42,7 +44,7 @@ const ShopOfProductViewSection = () => {
     <Container maxWidth="md">
       <Box flexWrap="wrap" display="flex">
         <Stack
-          borderBottom={'groove'}
+          // borderBottom={'groove'}
           justifyContent={{ xs: 'center', md: 'space-between' }}
           alignItems="center"
           direction={{ xs: 'column', md: 'row' }}
@@ -73,7 +75,45 @@ const ShopOfProductViewSection = () => {
               {MOCK_SHOP.store_name}
             </Typography>
 
-            <Button href="/stores/1260">Xem cửa hàng</Button>
+            {/* <Button href="/stores/1260">Xem cửa hàng</Button> */}
+            <Link
+              href="/stores/1260"
+              sx={{ ':hover': { textDecoration: 'none' } }}
+            >
+              <Box
+                display="block"
+                //position="absolute"
+                zIndex={1}
+                bottom={50}
+                right={20}
+                marginRight="0"
+                borderRadius={30}
+                sx={{
+                  height: 80,
+                  width: 80,
+                  backgroundColor: '#00000050',
+                }}
+              >
+                <Box
+                  sx={{
+                    right: 0,
+                    ':hover': { right: -15 },
+                    transition: 'right 0.5s ease 0s',
+                    backgroundColor: '#00AB5590',
+                    color: '#000000',
+                    borderRadius: '50%',
+                    height: 80,
+                    width: 80,
+                    textAlign: 'center',
+                    position: 'relative',
+                  }}
+                >
+                  <Typography paddingTop={'15px'} variant="body1">
+                    Xem cửa hàng
+                  </Typography>
+                </Box>
+              </Box>
+            </Link>
           </Stack>
         </Stack>
       </Box>
@@ -133,19 +173,12 @@ const ProductViewSection = ({ imgStyle }: Props) => {
           )}
           {!error && product ? (
             <ProductBuilderProvider product={product}>
-              <Box display={{ xs: 'block', md: 'none' }}>
-                <ShopOfProductViewSection />
-              </Box>
-              <Box>
+              <Card>
                 <Grid container spacing={[2, 4, 6]}>
                   <Grid item xs={12} lg={5} xl={4}>
                     <ProductDetailsCarousel product={product} />
                   </Grid>
                   <Grid item xs={12} lg={7} xl={8}>
-                    <Box display={{ xs: 'none', md: 'block' }}>
-                      <ShopOfProductViewSection />
-                    </Box>
-
                     <ProductDetailsSummary
                       product={product}
                       quantity={1}
@@ -154,7 +187,7 @@ const ProductViewSection = ({ imgStyle }: Props) => {
                     />
                   </Grid>
                 </Grid>
-              </Box>
+              </Card>
             </ProductBuilderProvider>
           ) : (
             <Typography>Không tìm thấy sản phẩm</Typography>
@@ -162,19 +195,29 @@ const ProductViewSection = ({ imgStyle }: Props) => {
         </>
       )}
 
-      {relatedProducts && (
-        <Box textAlign="center" py={[2, 4]}>
-          <Typography variant="h4" mb={2}>
-            Có thể bạn cần từ cửa hàng
-          </Typography>
-          <ProductCarousel
-            CardProps={{
-              imgStyle,
-            }}
-            products={relatedProducts}
-          />
-        </Box>
-      )}
+      <Box paddingY="2rem">
+        <Card>
+          <ShopOfProductViewSection />
+        </Card>
+      </Box>
+
+      <Box paddingY="2rem">
+        <Card>
+          {relatedProducts && (
+            <Box textAlign="center" py={[2, 4]}>
+              <Typography variant="h4" mb={2}>
+                Có thể bạn cần từ cửa hàng
+              </Typography>
+              <ProductCarousel
+                CardProps={{
+                  imgStyle,
+                }}
+                products={relatedProducts}
+              />
+            </Box>
+          )}
+        </Card>
+      </Box>
     </Container>
   );
 };

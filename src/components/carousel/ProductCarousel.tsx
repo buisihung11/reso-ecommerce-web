@@ -71,11 +71,13 @@ const ProductCarousel = ({ products, CardProps = {} }: Props) => {
             aria-label={`View ${item.product_name} product page`}
             sx={{ ':hover': { textDecoration: 'none' } }}
           >
-            <ProductCard
-              key={`relate-product-${item.product_id}`}
-              product={item}
-              {...CardProps}
-            />
+            <Box paddingY="4rem">
+              <ProductCard
+                key={`relate-product-${item.product_id}`}
+                product={item}
+                {...CardProps}
+              />
+            </Box>
           </Link>
         ))}
       </Slider>
