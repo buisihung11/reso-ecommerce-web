@@ -15,4 +15,6 @@ export type TCategory = {
   active: boolean;
   brand_id: number;
   product_category_code?: any;
+  description: string;
+  pic_url:string; 
 };

@@ -21,7 +21,7 @@ const RootStyle = styled(Box)(({ theme }) => ({
   display: 'flex',
   position: 'absolute',
   padding: theme.spacing(0, 2),
-  justifyContent: 'space-between'
+  justifyContent: 'space-between',
 }));
 
 const ArrowStyle = styled(MIconButton)(({ theme }) => ({
@@ -34,12 +34,12 @@ const ArrowStyle = styled(MIconButton)(({ theme }) => ({
   justifyContent: 'center',
   color: theme.palette.common.white,
   background: theme.palette.grey[900],
-  borderRadius: theme.shape.borderRadiusSm,
+  borderRadius: theme.shape.borderRadiusMd,
   transition: theme.transitions.create('opacity'),
   '&:hover': {
     opacity: 1,
-    background: theme.palette.grey[900]
-  }
+    background: theme.palette.grey[900],
+  },
 }));
 
 // ----------------------------------------------------------------------
@@ -59,12 +59,20 @@ export default function CarouselControlsArrowsBasic2({
 
   return (
     <RootStyle {...other}>
-      <ArrowStyle size="small" onClick={onPrevious}>
-        <Icon width={20} height={20} icon={isRTL ? arrowRightFill : arrowLeftFill} />
+      <ArrowStyle size="medium" onClick={onPrevious}>
+        <Icon
+          width={20}
+          height={20}
+          icon={isRTL ? arrowRightFill : arrowLeftFill}
+        />
       </ArrowStyle>
 
-      <ArrowStyle size="small" onClick={onNext}>
-        <Icon width={20} height={20} icon={isRTL ? arrowLeftFill : arrowRightFill} />
+      <ArrowStyle size="medium" onClick={onNext}>
+        <Icon
+          width={20}
+          height={20}
+          icon={isRTL ? arrowLeftFill : arrowRightFill}
+        />
       </ArrowStyle>
     </RootStyle>
   );
