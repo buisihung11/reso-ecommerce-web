@@ -44,9 +44,10 @@ export type TProduct = {
 };
 
 export type ProductInMenu = {
-  menu_id: number;
-  cat_id?: any;
-  cate_name?: any;
+  product_id: number;
+  product_name: string;
+  cate_id:number
+  cate_name: string;
   price1: number;
   price2: number;
   price3: number;

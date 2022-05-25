@@ -16,6 +16,10 @@ import ProductGridSection from '../section/ProductGrid.section';
 import useProducts from '@/hooks/product/useProducts';
 import usePagination from '@/hooks/usePagination';
 import { TStore } from '@/types/store';
+import useMenu from '@/hooks/menu/useMenu';
+import useMenuProducts from '@/hooks/menu/useMenuProducts';
+import useStoreCurMenu from '@/hooks/store/useStoreCurMenu';
+import { TProduct } from '@/types/product';
 
 interface StoreTabsProps {
   store: TStore;
@@ -24,13 +28,28 @@ interface StoreTabsProps {
 export default function StoreTabs({ store }: StoreTabsProps) {
   const [value, setValue] = React.useState('1');
 
+  //API
   const { page, size, onPageChange } = usePagination({
-    initValues: { page: 1, size: 6 },
+    initValues: { page: 1, size: 10 },
   });
 
-  const { data, isLoading, metadata, error } = useProducts({
+  const { data: storemenu } = useStoreCurMenu({ id: store.id });
+  const { data: menuproducts } = useMenuProducts({
+    id: storemenu?.menu_id,
     params: { page: page, size },
   });
+  const { data: products, isLoading, metadata, error } = useProducts({});
+  //
+  var productsinmenu: TProduct[] = [];
+
+  const getProductInfos = menuproducts?.map((pro) => {
+    let product = products?.find((p) => p.product_id === pro.product_id);
+    if (product) productsinmenu.push(product);
+  });
+  console.log(menuproducts);
+  console.log(menuproducts);
+
+  console.log(productsinmenu);
 
   const totalPage = Math.ceil((metadata?.total ?? 1) / size);
 
@@ -63,9 +82,9 @@ export default function StoreTabs({ store }: StoreTabsProps) {
       <TabContext value={value}>
         <Box>
           <TabPanel value="1">
-            {data && (
-              <>
-                <ProductGridSection products={data} />
+            {products && (
+              <Box paddingTop="5rem">
+                <ProductGridSection products={productsinmenu} />
                 <Box
                   py={4}
                   textAlign="center"
@@ -79,7 +98,7 @@ export default function StoreTabs({ store }: StoreTabsProps) {
                     page={page}
                   />
                 </Box>
-              </>
+              </Box>
             )}
             {isLoading && (
               <Container sx={{ textAlign: 'center' }}>
@@ -88,10 +107,10 @@ export default function StoreTabs({ store }: StoreTabsProps) {
             )}
           </TabPanel>
           <TabPanel value="2">
-            {data && (
-              <>
-                <ProductGridSection products={data.slice(8, 16)} />
-              </>
+            {products && (
+              <Box paddingTop="5rem">
+                <ProductGridSection products={productsinmenu.slice(0, 6)} />
+              </Box>
             )}
             {isLoading && (
               <Container sx={{ textAlign: 'center' }}>

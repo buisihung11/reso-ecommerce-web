@@ -13,3 +13,4 @@ export const getAllMenuPaths = (params: any = {}) =>
 
 export const getAllMenu = (params: any): Promise<BaseResponse<TMenu>> =>
   request.get('/menus', { params }).then((res) => res.data);
+

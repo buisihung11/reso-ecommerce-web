@@ -83,7 +83,7 @@ const StoreViewSection = () => {
   );
 
   return (
-    <Container maxWidth="xl" sx={{ py: [2, 6] }}>
+    <Container maxWidth="xl">
       {/* Header */}
       {isLoading || router.isFallback ? (
         <Container>
@@ -127,7 +127,7 @@ const StoreViewSection = () => {
                 >
                   <Card>
                     <Box
-                      height={{ md: '20vh' }}
+                      minHeight={{ md: '20vh' }}
                       width={{ xs: '100vw', md: '70vw' }}
                       flexWrap="wrap"
                       flexDirection={'row'}
