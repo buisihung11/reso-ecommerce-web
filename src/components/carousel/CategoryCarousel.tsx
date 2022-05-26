@@ -36,6 +36,29 @@ export default function CategoryCarousel({
     slidesToScroll: 6,
     slidesPerRow: 1,
     zIndex: 2,
+    responsive: [
+      {
+        breakpoint: 900,
+        settings: {
+          slidesToShow: 4,
+          slidesToScroll: 4,
+        },
+      },
+      {
+        breakpoint: 550,
+        settings: {
+          slidesToShow: 3,
+          slidesToScroll: 3,
+        },
+      },
+      {
+        breakpoint: 425,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 2,
+        },
+      },
+    ],
   };
 
   const handlePrevious = () => {
@@ -50,7 +73,7 @@ export default function CategoryCarousel({
     <Box position={'relative'}>
       <Slider ref={carouselRef} {...settings}>
         {categories.map((cate: TCategory) => (
-          <Box paddingX={'2rem'}>
+          <Box paddingX={{ xs: '1rem', md: '1.5rem', xl: '2rem' }}>
             <CateImageButton key={cate.cate_id} category={cate} />
           </Box>
         ))}

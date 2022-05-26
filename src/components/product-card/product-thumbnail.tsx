@@ -45,7 +45,8 @@ const ProductThumbnail = ({
     <Box
       component={motion.div}
       position={'relative'}
-      top={-60}
+      top={{ xs: -45, md: -60 }}
+      width={{ xs: '90%', md: '80%' }}
       whileHover={
         type == 'list'
           ? {
@@ -57,7 +58,7 @@ const ProductThumbnail = ({
                 mass: 0.5,
               },
               //opacity: 0.9,
-              top: -80,
+              //top: '-5vh',
             }
           : {
               transition: {
@@ -80,7 +81,7 @@ const ProductThumbnail = ({
         loader={
           <Box
             bgcolor="grey.100"
-            width={type == 'list' ? '12rem' : '100%'}
+            width={'100%'}
             sx={{
               aspectRatio: '1 / 1',
               display: 'flex',
@@ -98,7 +99,7 @@ const ProductThumbnail = ({
           <Box
             textAlign="center"
             bgcolor="grey.100"
-            width={type == 'list' ? '12rem' : '100%'}
+            width={'100%'}
             position="relative"
             sx={{
               aspectRatio: '1 / 1',

@@ -33,7 +33,7 @@ const useProductStyles = makeStyles((theme: Theme) => ({
     height: 'auto',
   },
   squareImg: {
-    width: '12rem',
+    width: '100%',
     aspectRatio: '1/1',
     objectFit: 'cover',
     borderRadius: '50%',
@@ -89,7 +89,7 @@ const ProductCard: FC<ProductCardProps> = ({
     // </Box>
     <Box
       sx={{
-        minHeight: { xs: '15rem', md: '18rem', lg: '22rem' },
+        minHeight: { xs: '16rem', md: '18rem', lg: '22rem' },
         ':hover': { borderWidth: 1 },
         borderWidth: 0.5,
         borderRadius: 5,
@@ -99,7 +99,7 @@ const ProductCard: FC<ProductCardProps> = ({
     >
       <Stack
         paddingY={'1rem'}
-        marginBottom="2rem"
+        marginBottom={{ xs: 0, md: '2rem' }}
         justifyContent="center"
         alignItems={'center'}
       >
@@ -117,22 +117,33 @@ const ProductCard: FC<ProductCardProps> = ({
         {/* {hasImage && <Typography variant="h6">{product_name}</Typography>} */}
 
         <Box paddingX={'2rem'} height="2rem" textAlign={'center'}>
-          <Typography variant="h4">{product_name}</Typography>
+          <Typography fontSize={{ xs: '0.9rem', md: '1.5rem' }} variant="h4">
+            {product_name}
+          </Typography>
         </Box>
       </Stack>
       <Box className={classes.wrapper}>
         <Box
-          marginX={'2rem'}
           textAlign="center"
           justifyContent={'space-between'}
           sx={{ borderTopStyle: 'dashed', borderTopWidth: 1 }}
           paddingY="1rem"
           display={'flex'}
+          flexDirection={{ xs: 'column', md: 'row' }}
         >
-          <Typography variant="h6" noWrap>
+          <Typography
+            fontSize={{ xs: '0.7rem', md: '1rem' }}
+            variant="h6"
+            noWrap
+            marginX={{ xs: 0, md: '2rem' }}
+            paddingBottom={{ xs: '1rem', md: '0.5rem' }}
+          >
             {price} vnđ
           </Typography>
-          <Button variant="outlined" sx={{ borderRadius: 2 }}>
+          <Button
+            variant="outlined"
+            sx={{ borderRadius: 2, marginX: { xs: '1rem', md: '2rem' } }}
+          >
             Thêm
           </Button>
         </Box>

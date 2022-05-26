@@ -21,11 +21,11 @@ const ProductGridSection = ({ products }: ProductGridProps) => {
           <Grid
             key={product.product_id}
             item
-            xs={12}
+            xs={6}
             sm={5}
             md={4}
             paddingY={{ xs: '2rem', md: '3rem' }}
-            maxWidth={{ xs: '18rem', md: '21rem', lg: '23rem' }}
+            maxWidth={{ md: '21rem', lg: '23rem' }}
           >
             <Link
               href={`/products/${product.product_id}`}
