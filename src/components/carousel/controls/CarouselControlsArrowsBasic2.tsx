@@ -59,7 +59,7 @@ export default function CarouselControlsArrowsBasic2({
 
   return (
     <RootStyle {...other}>
-      <ArrowStyle size="medium" onClick={onPrevious}>
+      <ArrowStyle size="medium" sx={{ right: 30 }} onClick={onPrevious}>
         <Icon
           width={20}
           height={20}
@@ -67,7 +67,7 @@ export default function CarouselControlsArrowsBasic2({
         />
       </ArrowStyle>
 
-      <ArrowStyle size="medium" onClick={onNext}>
+      <ArrowStyle size="medium" sx={{ left: 30 }} onClick={onNext}>
         <Icon
           width={20}
           height={20}

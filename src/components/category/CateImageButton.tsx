@@ -11,10 +11,19 @@ interface CategoryImageProps {
 }
 
 const ImageButton = styled(ButtonBase)(({ theme }) => ({
+  borderRadius: '15px',
   position: 'relative',
+  [theme.breakpoints.down('lg')]: {
+    width: '8rem !important', // Overrides inline-style
+    height: '7rem !important', // Overrides inline-style
+  },
   [theme.breakpoints.down('sm')]: {
-    width: '100% !important', // Overrides inline-style
-    height: 100,
+    width: '6rem !important', // Overrides inline-style
+    height: '5rem !important', // Overrides inline-style
+  },
+  [theme.breakpoints.down('xs')]: {
+    width: '6rem !important', // Overrides inline-style
+    height: '4rem !important', // Overrides inline-style
   },
   '&:hover, &.Mui-focusVisible': {
     zIndex: 1,
@@ -31,6 +40,7 @@ const ImageButton = styled(ButtonBase)(({ theme }) => ({
 }));
 
 const ImageSrc = styled('span')({
+  borderRadius: '15px',
   position: 'absolute',
   left: 0,
   right: 0,
@@ -41,6 +51,7 @@ const ImageSrc = styled('span')({
 });
 
 const Image = styled('span')(({ theme }) => ({
+  borderRadius: '15px',
   position: 'absolute',
   left: 0,
   right: 0,
@@ -53,6 +64,7 @@ const Image = styled('span')(({ theme }) => ({
 }));
 
 const ImageBackdrop = styled('span')(({ theme }) => ({
+  borderRadius: '15px',
   position: 'absolute',
   left: 0,
   right: 0,
@@ -80,7 +92,7 @@ export default function CateImageButton({ category }: CategoryImageProps) {
         href={`/categories/${category.cate_id}`}
         aria-label={`Xem danh mục ${category.cate_name}`}
       >
-        <Box sx={{ display: 'flex', flexWrap: 'wrap' }}>
+        <Box display="flex" flexWrap="wrap">
           <ImageButton
             focusRipple
             style={{

@@ -116,7 +116,12 @@ const ProductCard: FC<ProductCardProps> = ({
         />
         {/* {hasImage && <Typography variant="h6">{product_name}</Typography>} */}
 
-        <Box paddingX={'2rem'} height="2rem" textAlign={'center'}>
+        <Box
+          paddingX={'2rem'}
+          minWidth="10rem"
+          height={{ xs: '4rem', md: '2rem' }}
+          textAlign={'center'}
+        >
           <Typography fontSize={{ xs: '0.9rem', md: '1.5rem' }} variant="h4">
             {product_name}
           </Typography>
@@ -126,17 +131,18 @@ const ProductCard: FC<ProductCardProps> = ({
         <Box
           textAlign="center"
           justifyContent={'space-between'}
+          alignItems="center"
           sx={{ borderTopStyle: 'dashed', borderTopWidth: 1 }}
           paddingY="1rem"
           display={'flex'}
           flexDirection={{ xs: 'column', md: 'row' }}
         >
           <Typography
-            fontSize={{ xs: '0.7rem', md: '1rem' }}
+            fontSize={{ xs: '0.7rem', md: '1.2rem' }}
             variant="h6"
             noWrap
             marginX={{ xs: 0, md: '2rem' }}
-            paddingBottom={{ xs: '1rem', md: '0.5rem' }}
+            paddingBottom={{ xs: '0.5rem', md: 0 }}
           >
             {price} vnđ
           </Typography>
